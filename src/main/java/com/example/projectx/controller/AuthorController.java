@@ -11,7 +11,7 @@ public class AuthorController {
 	
 	@RequestMapping(path = "/author", method = RequestMethod.GET)
 	public String author(Model model) {
-		return "authorhtml/authorindex";
+		return "author/authorindex";
 	}
 
 }

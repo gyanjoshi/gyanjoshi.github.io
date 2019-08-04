@@ -1,54 +1,38 @@
 package com.example.projectx.config;
 
-import javax.sql.DataSource;
+
+//import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+
+import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-
+import com.example.projectx.component.CustomSuccessHandler;
 import com.example.projectx.service.UserDetailsServiceImpl;
 
 
-
+@Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
-//
-//@ComponentScan(basePackages = "com.example.projectx.service")
+@EnableGlobalMethodSecurity(securedEnabled=true)
 
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
 	@Autowired
-    private UserDetailsServiceImpl userDetailsService;
- 
-    @Autowired
-    private DataSource dataSource;
- 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
-    
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
- 
-        // Setting Service to find User in the database.
-        // And Setting PassswordEncoder
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
- 
-    }
-    
+	private UserDetailsServiceImpl userDetailsService;
+	
+	@Autowired
+    CustomSuccessHandler customSuccessHandler;
+	
+	
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -56,14 +40,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
  
         // The pages does not require login
-        http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
+        
+        http.authorizeRequests().antMatchers("/", "/login", "/logout", "/register").permitAll();
  
         // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
         // If no login, it will redirect to /login page.
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        //http.authorizeRequests().antMatchers("/secure/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
  
         // For ADMIN only.
-        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
+        
+     // For Editor only.
+        http.authorizeRequests().antMatchers("/editor/**").access("hasRole('ROLE_EDITOR')");
+        
+     // For Editor only.
+        http.authorizeRequests().antMatchers("/author/**").access("hasRole('ROLE_AUTHOR')");
  
         // When the user has logged in as XX.
         // But access a page that requires role YY,
@@ -74,25 +65,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.
                 .loginProcessingUrl("/doLogin") // Submit URL
+                
                 .loginPage("/login")//
-                .defaultSuccessUrl("/welcome")//
+                //.defaultSuccessUrl("/postLogin")
+                .successHandler(customSuccessHandler)//
                 .failureUrl("/login?error=true")//
                 .usernameParameter("email")//
                 .passwordParameter("pass")
                 // Config for Logout Page
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
- 
-        // Config Remember Me.
-        http.authorizeRequests().and() //
-                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/");       
  
     }
-    
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-        db.setDataSource(dataSource);
-        return db;
-    }
+    @Autowired
+   	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    	      BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+              auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	}
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/*.css");
+		web.ignoring().antMatchers("/*.js");
+	}
 }

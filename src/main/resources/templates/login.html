@@ -32,9 +32,17 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
-				<form class="login100-form validate-form" action="doLogin" method="post">
+				<form class="login100-form validate-form" th:action="@{/doLogin}" method="post">
+				
+					<legend>Please Login</legend>
+	                <div th:if="${param.error}" class="alert alert-error">    
+	                    Invalid username and password.
+	                </div>
+	                <div th:if="${param.logout}" class="alert alert-success"> 
+	                    You have been logged out.
+	                </div>
 					<span class="login100-form-title p-b-33">
-						Account Login
+						Please Login
 					</span>
 
 					<div class="wrap-input100" data-validate = "Valid email is required: ex@abc.xyz">

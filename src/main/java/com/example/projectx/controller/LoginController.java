@@ -1,7 +1,9 @@
 package com.example.projectx.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.example.projectx.model.MyUserDetails;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import com.example.projectx.service.UserDetailsServiceImpl;
 import com.example.projectx.utils.WebUtils;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +29,9 @@ import javax.servlet.http.HttpSession;
 //@SessionAttributes({"currentUser"})
 @Controller
 public class LoginController {
+	@Autowired
+	private UserDetailsServiceImpl userInfoService;
+	
     private static final Logger log = LogManager.getLogger(LoginController.class);
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -41,32 +49,24 @@ public class LoginController {
         session.setComplete();
         return "redirect:/index";
     }
-    @RequestMapping(value = "/doLogin", method = RequestMethod.POST)
-    public String postLogin(Model model,  Principal principal) {
-        log.info("doLogin()");
+    @RequestMapping(value = "/postLogin", method = RequestMethod.GET)
+    public String postLogin(Model model) {
+        log.info("postLogin()");
         
-     // After user login successfully.
-        String userName = principal.getName();
- 
-        System.out.println("User Name: " + userName);
- 
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
- 
-        String userInfo = WebUtils.toString(loginedUser);
-        model.addAttribute("userInfo", userInfo);
-        System.out.println("thia is user info:" +userInfo);
-        System.out.println("user info found");
-//        // read principal out of security context and set it to session
-//        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-//        validatePrinciple(authentication.getPrincipal());
-//        User loggedInUser = ((MyUserDetails) authentication.getPrincipal()).getUserDetails();
-//        model.addAttribute("currentUser", loggedInUser.getUsername());
-//        session.setAttribute("userId", loggedInUser.getId());
-        return "redirect:/index";
+       // UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        
+        System.out.println("LoggedIn User: "+username);
+        
+        
+        
+        model.addAttribute("userInfo", userInfoService.loadUserByUsername(username));   
+        
+       
+        return "redirect:/welcome";
     }
-//    private void validatePrinciple(Object principal) {
-//        if (!(principal instanceof MyUserDetails)) {
-//            throw new  IllegalArgumentException("Principal can not be null!");
-//        }
-//    }
-}
+
+  }
+    
+

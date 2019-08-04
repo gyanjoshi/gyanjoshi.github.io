@@ -44,7 +44,7 @@ public class IndexController {
         String userInfo = WebUtils.toString(loginedUser);
         model.addAttribute("userInfo", userInfo);
          
-        return "/admin/adminPage";
+        return "/admin/adminpage";
     }
     @RequestMapping(value = "/editor", method = RequestMethod.GET)
     public String editorPage(Model model, Principal principal) {

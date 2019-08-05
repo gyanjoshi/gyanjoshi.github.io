@@ -26,7 +26,7 @@ public class IndexController {
     public String indexPage(Model model) {
         model.addAttribute("title", "Welcome");
         model.addAttribute("message", "This is welcome page!");
-        return "index";
+        return "/admin/adminpage";
     }
 	
 	@RequestMapping(value = { "/welcome" }, method = RequestMethod.GET)

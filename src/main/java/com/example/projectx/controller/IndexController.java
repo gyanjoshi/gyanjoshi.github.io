@@ -9,12 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.projectx.repository.UserRepository;
 import com.example.projectx.utils.WebUtils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 
 @Controller
 public class IndexController {
+	
+	@Autowired
+	private UserRepository userrepo;
 
 	
 	@RequestMapping(path = "register", method = RequestMethod.GET)
@@ -43,6 +48,7 @@ public class IndexController {
  
         String userInfo = WebUtils.toString(loginedUser);
         model.addAttribute("userInfo", userInfo);
+        
          
         return "/admin/adminpage";
     }
@@ -52,7 +58,8 @@ public class IndexController {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
  
         String userInfo = WebUtils.toString(loginedUser);
-        model.addAttribute("userInfo", userInfo);
+        model.addAttribute("userinfo", userInfo);
+     
          
         return "/editor/editorPage";
     }
@@ -67,4 +74,15 @@ public class IndexController {
 	    mav.setViewName("403");
 	    return mav;
         }
+    
+    @RequestMapping(value = "user", method = RequestMethod.GET)
+    public String userPage(Model model) {
+    	model.addAttribute("users", userrepo.findAll());
+        return "user/user-list";
+    }
+    
+    
+    
+    
+    
 }

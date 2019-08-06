@@ -30,6 +30,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             return;
         }
 
+        
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 

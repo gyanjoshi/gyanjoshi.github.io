@@ -47,6 +47,7 @@ public class FileStorageService {
             fileName = file.getOriginalFilename();
             InputStream is = file.getInputStream();
 
+            System.out.println("File :"+path + fileName);
             Files.copy(is, Paths.get(path + fileName),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {

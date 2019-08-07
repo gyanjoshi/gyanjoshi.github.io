@@ -22,7 +22,9 @@
 
 <body>
 <div class="page-wrapper chiller-theme toggled">
-<div th:fragment = "sidebar">
+
+<!--fragment part commented  -->
+<!-- <div th:fragment = "sidebar">
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
     <i class="fas fa-bars"></i>
   </a>
@@ -50,7 +52,7 @@
           </span>
         </div>
       </div>
-      <!-- sidebar-header  -->
+      sidebar-header 
       <div class="sidebar-search">
         <div>
           <div class="input-group">
@@ -63,7 +65,7 @@
           </div>
         </div>
       </div>
-      <!-- sidebar-search  -->
+      sidebar-search 
       <div class="sidebar-menu">
         <ul>
           <li class="header-menu">
@@ -73,13 +75,13 @@
             <a href="#">
               <i class="fa fa-tachometer-alt"></i>
               <span>User</span>
-             <!--  <span class="badge badge-pill badge-warning">New</span> -->
+              <span class="badge badge-pill badge-warning">New</span>
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li>
                   <a href="#">Add User
-                    <!-- <span class="badge badge-pill badge-success">Pro</span> -->
+                    <span class="badge badge-pill badge-success">Pro</span>
                   </a>
                 </li>
                 <li>
@@ -173,30 +175,30 @@
           <li class="header-menu">
             <span>Extra</span>
           </li>
-        <!--   <li>
+          <li>
             <a href="#">
               <i class="fa fa-book"></i>
               <span>Documentation</span>
               <span class="badge badge-pill badge-primary">Beta</span>
             </a>
-          </li> -->
+          </li>
           <li>
             <a href="#">
               <i class="fa fa-calendar"></i>
               <span>Calendar</span>
             </a>
           </li>
-          <!-- <li>
+          <li>
             <a href="#">
               <i class="fa fa-folder"></i>
               <span>Examples</span>
             </a>
-          </li> -->
+          </li>
         </ul>
       </div>
-      <!-- sidebar-menu  -->
+      sidebar-menu 
     </div>
-    <!-- sidebar-content  -->
+    sidebar-content 
     <div class="sidebar-footer">
       <a href="#">
         <i class="fa fa-bell"></i>
@@ -215,34 +217,39 @@
       </a>
     </div>
   </nav>
-  <!-- sidebar-wrapper  -->
+  sidebar-wrapper 
   </div>
-  <!-- <main class="page-content">
+  -->
+  <!-- fragment part commented -->
+   <div th:replace = "admin/adminpage :: sidebar"></div>
+ 
+  <main class="page-content">
     <div class="container-fluid">
       <hr>
-      <div class = "row">
+       <div class = "row">
       <div class="container">
 			<h1 class="title">Users List</h1>
 		</div>
       
-      </div>
+      </div> 
       
-      start of main body
+      <!-- start of main body -->
       <div class="container">
 		<div class="columns">
 			<div class="column is-full">
 				<div class="field is-grouped">
 					<div class="control">
-						<a th:href="@{/add-student}" class="button is-success is-small">Add Student</a>
+						<a th:href="@{/add-student}" class="button is-success is-small">Add Users</a>
 					</div>
 				</div>
 				<table class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
 						<tr>
-							<th>User Name</th>
-							<th>Full Name</th>
-							<th>Role</th>
-							<th>Reset password</th>
+							<th>Name</th>
+							<th>Age</th>
+							<th>Gender</th>
+							<th>Address</th>
+							<th>Phone No.</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -256,26 +263,24 @@
 					</tfoot>
 					<tbody>
 						<tr th:each="user : ${users}">
-							<td th:text="${users.username}"></td>
-							<td th:text="${users.full_name}"></td>
-							<td th:text="${users.role}"></td>
-							<td th:text="${users.state}"></td>
+							<td th:text="${user.size()}"></td>
+							<td th:text="${user.size()}"></td>
+							<td th:text="${user.size()}"></td>
+							<td th:text="${user.size()}"></td>
+							<td th:text="${user.size()}"></td>
 							<td>
-								<a th:href="@{/edit-student(id=${student.id})}" class="button is-primary is-small">Edit</a>
-								<a th:href="@{/delete-student(id=${student.id})}" class="button is-danger is-small">Delete</a>
+								<td th:text="${user.size()}"></td>
 							</td>
 						</tr>
 					</tbody>
-				
 				</table>
 			</div>
 		</div>
 	</div>
-      
-      end of main body
+      <!-- end of main body -->
       
 
-  </main> -->
+  </main>
   <!-- page-content" -->
 </div>
 <!-- page-wrapper -->

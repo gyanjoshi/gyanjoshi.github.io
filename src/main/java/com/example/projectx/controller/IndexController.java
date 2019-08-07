@@ -78,7 +78,7 @@ public class IndexController {
     @RequestMapping(value = "user", method = RequestMethod.GET)
     public String userPage(Model model) {
     	model.addAttribute("users", userrepo.findAll());
-        return "user/user-list";
+        return "admin/user/user-list";
     }
     
     

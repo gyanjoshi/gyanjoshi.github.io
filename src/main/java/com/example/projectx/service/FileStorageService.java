@@ -22,19 +22,9 @@ import com.example.projectx.repository.ArticleStorageRepository;
 @Service
 public class FileStorageService {
 	
-	@Value("${upload.path}")
-    private String path;
 	
-	@Autowired
-    private ArticleRepository articleRepo;
-	
-	@Autowired
-    private ArticleAuthorRepository articleAuthorRepo;
-	
-	@Autowired
-    private ArticleStorageRepository articleStoreRepo;
 
-    public void uploadFile(String topic, String author, MultipartFile file) 
+    public void uploadFile(String path, MultipartFile file) 
     {
     	
     	String fileName=null;
@@ -55,34 +45,8 @@ public class FileStorageService {
             String msg = String.format("Failed to store file", file.getName());
 
             throw new StorageException(msg, e);
-        }
+        }       
         
-        // create 3 objects to be stores in database.
-        
-        // Article Object
-        Article article = new Article();
-        article.setTopic(topic);
-        article.setStatus("Submitted");
-        
-        Article a = articleRepo.save(article);
-        
-        //Article Author Object
-        ArticleAuthor aa = new ArticleAuthor();
-        
-        aa.setArticleId(a.getId());
-        aa.setAuthorId(1);
-        
-        articleAuthorRepo.save(aa);
-        
-        //Article Storage Object
-        
-        ArticleStore as = new ArticleStore();
-        
-        as.setArticleId(a.getId());
-        as.setUploadedBy(author);
-        as.setFileName(fileName);
-        
-        articleStoreRepo.save(as);
 
     }
 

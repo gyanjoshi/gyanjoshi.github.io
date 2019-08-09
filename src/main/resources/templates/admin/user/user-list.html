@@ -245,17 +245,17 @@
 				<table class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
 						<tr>
-							<th>Name</th>
-							<th>Age</th>
-							<th>Gender</th>
+							<th>Name</th>							
 							<th>Address</th>
-							<th>Phone No.</th>
-							<th>Action</th>
+							
+							<th>E-mail</th>
+							<th>User Name</th>
+							<th>Role</th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
-							<td colspan="6">
+							<td colspan="5">
 								<strong>Total Records :</strong>
 								<span th:text="${users.size()}"></span>
 							</td>
@@ -263,14 +263,11 @@
 					</tfoot>
 					<tbody>
 						<tr th:each="user : ${users}">
-							<td th:text="${user.size()}"></td>
-							<td th:text="${user.size()}"></td>
-							<td th:text="${user.size()}"></td>
-							<td th:text="${user.size()}"></td>
-							<td th:text="${user.size()}"></td>
-							<td>
-								<td th:text="${user.size()}"></td>
-							</td>
+							<td th:text="${user.getFullName()}"></td>
+							<td th:text="${user.getAddress1()}"></td>
+							<td th:text="${user.getEmail()}"></td>
+							<td th:text="${user.getUserName()}"></td>
+							<td th:text="${user.getRole()}"></td>
 						</tr>
 					</tbody>
 				</table>

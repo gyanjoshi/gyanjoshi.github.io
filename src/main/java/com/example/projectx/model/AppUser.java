@@ -15,6 +15,7 @@ import javax.persistence.UniqueConstraint;
                 @UniqueConstraint(name = "APP_USER_UK", columnNames = "username") })
 public class AppUser implements Serializable 
 {
+	@Id
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="username")

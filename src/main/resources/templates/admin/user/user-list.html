@@ -16,8 +16,6 @@
  <link href="adminstatic/css/admin.css" rel="stylesheet">
  <script src="adminstatic/js/admin.js"></script>
 
- 
-
 </head>
 
 <body>
@@ -239,16 +237,16 @@
 			<div class="column is-full">
 				<div class="field is-grouped">
 					<div class="control">
-						<a th:href="@{/add-student}" class="button is-success is-small">Add Users</a>
+						<a th:href="@{/add-user}" class="button is-success is-small">Add Users</a>
 					</div>
 				</div>
 				<table class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
 						<tr>
 							<th>Name</th>
-							<th>Age</th>
-							<th>Gender</th>
-							<th>Address</th>
+							<th>username</th>
+							<th>Role</th>
+							<th>state</th>
 							<th>Phone No.</th>
 							<th>Action</th>
 						</tr>
@@ -261,18 +259,20 @@
 							</td>
 						</tr>
 					</tfoot>
-					<tbody>
+					 <tbody>
 						<tr th:each="user : ${users}">
-							<td th:text="${user.size()}"></td>
-							<td th:text="${user.size()}"></td>
-							<td th:text="${user.size()}"></td>
-							<td th:text="${user.size()}"></td>
-							<td th:text="${user.size()}"></td>
+							<td th:text="${user.fullName}"></td>
+							<td th:text="${user.userName}"></td>
+							<td th:text="${user.role}"></td>
+							<td th:text="${user.state}"></td>
+							<td th:text="${users.size()}"></td>
 							<td>
-								<td th:text="${user.size()}"></td>
+								<a th:href="@{/edit-user(uname=${user.userName})}"  class="button is-primary is-small">Edit</a>
+								<a th:href=@{/delete-user(uname=${user.userName})} class="button is-danger is-small">Delete</a>
 							</td>
+								 
 						</tr>
-					</tbody>
+					</tbody> 
 				</table>
 			</div>
 		</div>

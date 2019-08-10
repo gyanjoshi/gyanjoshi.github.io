@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <!--=============================================== 
     Template Design By WpFreeware Team.
@@ -41,6 +41,8 @@
     <link id="switcher" href="css/themes/default-theme.css" rel="stylesheet">
     <!-- Main structure css file -->
     <link href="style.css" rel="stylesheet">
+    
+     <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
    
     <!-- Google fonts -->
     <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>   
@@ -146,12 +148,14 @@
         <!-- Start about us area -->
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div class="aboutus_area wow fadeInLeft">
-            <h2 class="titile">About Us</h2>
-            <p><div th:each="a : ${about}">
-                <span th:utext="${a.pageDesc}"></span>
+            <h2 class="title">About Us</h2>
+             <p><div th:each="p : ${page}">
+                <span th:utext="${p.html}"></span>
                
-            </div>
+            </div> 
         </p>
+       
+       
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6">

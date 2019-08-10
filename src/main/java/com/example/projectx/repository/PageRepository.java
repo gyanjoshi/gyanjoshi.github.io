@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.projectx.model.Page;
 
 
-public interface PageRepository extends JpaRepository<Page , Long> {
+public interface PageRepository extends JpaRepository<Page , Integer> {
 
 }

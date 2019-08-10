@@ -101,7 +101,6 @@
               <ul>
                 <li>
                   <a href="#">Add pages
-
                   </a>
                 </li>
                 <li>
@@ -243,21 +242,13 @@
 				<table class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
 						<tr>
-<<<<<<< HEAD
 							<th>Name</th>
 							<th>username</th>
 							<th>Role</th>
 							<th>state</th>
 							<th>Phone No.</th>
 							<th>Action</th>
-=======
-							<th>Name</th>							
-							<th>Address</th>
-							
-							<th>E-mail</th>
-							<th>User Name</th>
-							<th>Role</th>
->>>>>>> branch 'master' of https://github.com/Nabins/Journal.git
+/
 						</tr>
 					</thead>
 					<tfoot>
@@ -270,7 +261,7 @@
 					</tfoot>
 					 <tbody>
 						<tr th:each="user : ${users}">
-<<<<<<< HEAD
+
 							<td th:text="${user.fullName}"></td>
 							<td th:text="${user.userName}"></td>
 							<td th:text="${user.role}"></td>
@@ -281,13 +272,7 @@
 								<a th:href=@{/delete-user(uname=${user.userName})} class="button is-danger is-small">Delete</a>
 							</td>
 								 
-=======
-							<td th:text="${user.getFullName()}"></td>
-							<td th:text="${user.getAddress1()}"></td>
-							<td th:text="${user.getEmail()}"></td>
-							<td th:text="${user.getUserName()}"></td>
-							<td th:text="${user.getRole()}"></td>
->>>>>>> branch 'master' of https://github.com/Nabins/Journal.git
+
 						</tr>
 					</tbody> 
 				</table>

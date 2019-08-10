@@ -43,6 +43,8 @@ public class IndexController {
         model.addAttribute("message", "This is welcome page!");
         return "welcome";
     }
+	
+	
  
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage(Model model, Principal principal) {
@@ -52,8 +54,8 @@ public class IndexController {
         String userInfo = WebUtils.toString(loginedUser);
         model.addAttribute("userInfo", userInfo);
         
-         
-        return "/admin/adminpage";
+       // model.addAttribute("users", userrepo.findAll()); 
+        return "admin/adminpage";
     }
     @RequestMapping(value = "/editor", method = RequestMethod.GET)
     public String editorPage(Model model, Principal principal) {
@@ -122,6 +124,8 @@ public class IndexController {
     	System.out.println(uname);
         return "admin/user/user-list";
     }
+    
+    
     
    
     

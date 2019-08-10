@@ -1,5 +1,7 @@
 package com.example.projectx.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +24,11 @@ public class FileController {
 
 	
 	@RequestMapping(value = { "/upload" }, method = RequestMethod.GET)
-    public String singleFileUpload(Model model) {
+    public String singleFileUpload(HttpServletRequest request,Model model) {
+		
+//		String referrer = request.getRequestURL().toString();
+//        request.getSession().setAttribute("url_prior_login", referrer);
+        
         return "fileupload";
     }
 	

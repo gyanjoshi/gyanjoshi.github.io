@@ -19,6 +19,9 @@ public class ArticleService {
     private String path;
 	
 	@Autowired
+	private FileStorageService fileService;
+	
+	@Autowired
     private ArticleRepository articleRepo;
 	
 	@Autowired
@@ -31,6 +34,8 @@ public class ArticleService {
 	{
 
 		String fileName = file.getOriginalFilename();
+		
+		fileService.uploadFile(path, file);
 		// create 3 objects to be stores in database.
         
         // Article Object
@@ -57,6 +62,8 @@ public class ArticleService {
         as.setFileName(fileName);
         
         articleStoreRepo.save(as);
+        
+        // After successful upload, send email to editor.
 	}
 
 }

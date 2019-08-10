@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 //@SessionAttributes({"currentUser"})
@@ -34,7 +35,11 @@ public class LoginController {
 	
     private static final Logger log = LogManager.getLogger(LoginController.class);
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
+    public String loginPage(HttpServletRequest request, Model model) {
+//        String referrer = request.getHeader("Referer");
+//        request.getSession().setAttribute("url_prior_login", referrer);
+        // some other stuff
+    	//request.getH
         return "login";
     }
     @RequestMapping(value = "/loginFailed", method = RequestMethod.GET)

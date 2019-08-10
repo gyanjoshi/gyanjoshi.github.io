@@ -37,6 +37,13 @@ public class IndexController {
         return "index";
     }
 	
+	@RequestMapping(value = { "/index"}, method = RequestMethod.GET)
+    public String indexPage1(Model model) {
+        model.addAttribute("title", "Welcome");
+        model.addAttribute("message", "This is home page!");
+        return "index";
+    }
+	
 	@RequestMapping(value = { "/welcome" }, method = RequestMethod.GET)
     public String welcomePage(Model model) {
         model.addAttribute("title", "Welcome");

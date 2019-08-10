@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.projectx.model.AppUser;
+import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
 import com.example.projectx.utils.WebUtils;
 
@@ -23,6 +24,8 @@ public class IndexController {
 	
 	@Autowired
 	private UserRepository userrepo;
+	@Autowired
+	private PageRepository pagerepo;
 
 	
 	@RequestMapping(path = "register", method = RequestMethod.GET)
@@ -33,6 +36,7 @@ public class IndexController {
 	@RequestMapping(value = { "/"}, method = RequestMethod.GET)
     public String indexPage(Model model) {
         model.addAttribute("title", "Welcome");
+        model.addAttribute("page", pagerepo.getOne(3));
         model.addAttribute("message", "This is welcome page!");
         return "index";
     }

@@ -1,5 +1,8 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- <script type="text/javascript" src="../ckeditor/ckeditor.js"></script> -->
+</head>
 <body>
 <div th:fragment = "header">
 <!--=========== BEGIN HEADER SECTION ================-->
@@ -37,9 +40,56 @@
                 <li><a href="contact.html">Contact</a></li>
                <!--  <li><a href="register">Register</a></li> -->
                <li>
-					<a href="upload">upload article</a>
+				 <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">Upload article</a>
                </li>
-               
+            <!-- div for bootstrap modal -->
+           <div class="bs-example">
+    <!-- Button HTML (to Trigger Modal) -->
+    
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"
+              aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Upload File</h4>
+          </div>
+          
+          <div class="modal-body">
+             <form action="upload" method="post" enctype="multipart/form-data"> 
+           <div class="form-group">
+      <label for="usr">Topic:</label>
+      <input type="text" class="form-control" id="usr">
+    		</div>
+    <div class = "form-group">
+     <input type="file" name="file" value="file" id="file">
+    </div>
+    
+     <div class="form-group">
+     <label for="usr">Abstract:</label>
+      <textarea cols="20" rows="10" id="content" name="content"> 
+      </textarea>
+      <script type="text/javascript">
+        CKEDITOR.replace('content' );
+      </script>
+    </div> 
+<div class = "form-group">
+			<button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+		  </form>
+	  </div>
+	  
+         
+         
+         </div>
+      </div>
+    </div>
+  </div>
+            
+            <!-- div for bootstrap modal -->   
               
  <!-------------------------------------------------------------------------------------------------------------------->              
 

@@ -5,6 +5,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -22,9 +25,24 @@ public class EmailService {
         helper.setSubject(mail.getSubject());
         helper.setText(mail.getContent());
         helper.setTo(mail.getTo());
-        helper.setFrom(mail.getTo());
+        helper.setFrom(mail.getTo());       
+       
 
-      //  helper.addAttachment("attachment-document-name.jpg", new ClassPathResource("memorynotfound-logo.jpg"));
+        emailSender.send(message);
+
+    }
+    
+    public void sendSimpleMessage(Mail mail, File file) throws MessagingException {
+
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setSubject(mail.getSubject());
+        helper.setText(mail.getContent());
+        helper.setTo(mail.getTo());
+        helper.setFrom(mail.getTo());
+        
+        helper.addAttachment(file.getName(), file);      
 
         emailSender.send(message);
 

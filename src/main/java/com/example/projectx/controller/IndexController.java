@@ -72,21 +72,9 @@ public class IndexController {
         model.addAttribute("userInfo", userInfo);
         
        // model.addAttribute("users", userrepo.findAll()); 
-        return "admin/adminpage";
-    }
-    @RequestMapping(value = "/editor", method = RequestMethod.GET)
-    public String editorPage(Model model, Principal principal) {
-         
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
- 
-        String userInfo = WebUtils.toString(loginedUser);
-        model.addAttribute("userinfo", userInfo);
-     
-         
-        return "/editor/editorPage";
+        return "/admin/adminpage";
     }
     
- 
  
     @RequestMapping(value="403", method = RequestMethod.GET)
 	public ModelAndView error() {
@@ -119,13 +107,13 @@ public class IndexController {
     @RequestMapping(value = "add-user", method = RequestMethod.GET)
     public String addUser(Model model) {
     	model.addAttribute("user", new AppUser());
-        return "admin/user/user-form";
+        return "/admin/user/user-form";
     }
     @RequestMapping(value = "add-user", method = RequestMethod.POST)
     public String addUser(@ModelAttribute AppUser user,Model model) {
     	userrepo.save(user);
     	model.addAttribute("users", userrepo.findAll());
-        return "admin/user/user-list";
+        return "/admin/user/user-list";
     }
     
     
@@ -133,7 +121,7 @@ public class IndexController {
 	  @RequestMapping(value = "user", method = RequestMethod.GET) 
 	  public String userPage(Model model) { 
 	  model.addAttribute("users", userrepo.findAll());
-	  return "admin/user/user-list"; }
+	  return "/admin/user/user-list"; }
 	 
     
     
@@ -141,7 +129,7 @@ public class IndexController {
     public String editUser(@RequestParam String uname, Model model) {
     	AppUser user = userrepo.findById(uname).get();
 		model.addAttribute("user", user);
-		return "admin/user/user-form";
+		return "/admin/user/user-form";
     }
     
     @RequestMapping(value = "edit-user", method = RequestMethod.POST)
@@ -156,7 +144,7 @@ public class IndexController {
     	userrepo.deleteById(uname);
     	model.addAttribute("users", userrepo.findAll());
     	System.out.println(uname);
-        return "admin/user/user-list";
+        return "/admin/user/user-list";
     }
     
     

@@ -1,0 +1,8 @@
+
+.datatable tfoot {
+  display: table-header-group;
+}
+
+.datatable tfoot .filter-column {
+  width: 100% !important;
+}

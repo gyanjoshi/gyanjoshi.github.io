@@ -84,6 +84,18 @@ public class IndexController {
 	    return mav;
         }
     
+    
+    @RequestMapping(value = { "contact" }, method = RequestMethod.GET)
+    public String contactPage(Model model) {
+    	System.out.println("hello"+ "world");
+        return "contactpage/contact-page-index";
+    }
+    
+    
+    @RequestMapping(value = { "archive" }, method = RequestMethod.GET)
+    public String archivePage(Model model) {
+        return "journal-archives";
+    }
     //testing purpose only
     
     @RequestMapping(value = "add-user", method = RequestMethod.GET)

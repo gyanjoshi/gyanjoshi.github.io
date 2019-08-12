@@ -58,39 +58,6 @@ public class FileController {
 	 
 	   }
 	
-	
-//	@RequestMapping(value = { "/upload" }, method = RequestMethod.POST)
-//    //@PostMapping("/upload") // //new annotation since 4.3
-//    public String singleFileUpload(@RequestParam("file") MultipartFile file,
-////    							   @RequestParam("topic") String topic,
-////    							   @RequestParam("abstract") String articleAbstract,
-//                                   RedirectAttributes redirectAttributes) 
-//	{
-//
-//        if (file.isEmpty()) 
-//        {
-//            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-//            return "authorhtml/authorindex";
-//        } 
-//        
-//        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-//        String username = loggedInUser.getName();
-//        
-//    	//String uploadedBy="gyan";
-//        String topic="test topic";
-//        String articleAbstract="this is abstract";
-//
-//    	System.out.println("Author="+username);
-//    	
-//    	articleService.saveArticle(topic,articleAbstract, file, username);
-//        return "index";
-//    }
-
-//    @GetMapping("/uploadStatus")
-//    public String uploadStatus() {
-//        return "authorhtml/authorindex";
-//    }
-	
 	private String doUpload(HttpServletRequest request, Model model, ArticleUploadForm articleUploadForm) {
 		
 			String topic = articleUploadForm.getTopic();

@@ -10,18 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.example.projectx.service.UserDetailsServiceImpl;
+
 
 public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler  {
 
-   // private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	@Autowired
+	private UserDetailsServiceImpl userInfoService;
     
         public CustomSuccessHandler(String defaultTargetUrl) {
             setDefaultTargetUrl(defaultTargetUrl);
@@ -31,18 +37,20 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException 
         {
-            HttpSession session = request.getSession();
-            
            
-            String referer = request.getRequestURL().toString();
-            String targetUrl = determineTargetUrl(session, authentication);
+            String targetUrl = determineTargetUrl(authentication);
+            
+            Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+            String username = loggedInUser.getName();
+            
+            System.out.println("LoggedIn User: "+username);
             
             
+            HttpSession session = request.getSession();
+            session.setAttribute("userInfo", userInfoService.loadUserByUsername(username));      
             
-            System.out.println("Request Url="+referer);
-            
-            System.out.println("Target Url="+targetUrl);
-            
+            //authentication.getPrincipal().getUser().getFullName()
+          
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
             
             
@@ -53,7 +61,7 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
      * This method extracts the roles of currently logged-in user and returns
      * appropriate URL according to his/her role.
      */
-    protected String determineTargetUrl(HttpSession session, Authentication authentication) {
+    protected String determineTargetUrl(Authentication authentication) {
         String url = "";
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -62,29 +70,11 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
         
         String redirectUrl = null;
         
-        if (session != null) 
-        {
-            redirectUrl = (String) session.getAttribute("url_prior_login");
-            if (redirectUrl != null) 
-            {
-                // we do not forget to clean this attribute from session
-                session.removeAttribute("url_prior_login");     
-                
-            } 
-            
-        }
-
         for (GrantedAuthority a : authorities) {
             roles.add(a.getAuthority());
         }
 
-        if (isAuthor(roles)) 
-        {
-        	if (redirectUrl != null)
-        		url = redirectUrl;
-        	else
-        		url = "/author";
-        } else if (isAdmin(roles)) {
+        if (isAdmin(roles)) {
             url = "/admin";
         } else if (isEditor(roles)) {
             url = "/editor";
@@ -102,12 +92,12 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
 		return false;
 	}
 
-	private boolean isAuthor(List<String> roles) {
-        if (roles.contains("ROLE_AUTHOR")) {
-            return true;
-        }
-        return false;
-    }
+//	private boolean isAuthor(List<String> roles) {
+//        if (roles.contains("ROLE_AUTHOR")) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     private boolean isAdmin(List<String> roles) {
         if (roles.contains("ROLE_ADMIN")) {

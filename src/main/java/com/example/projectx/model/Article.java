@@ -1,5 +1,7 @@
 package com.example.projectx.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +26,18 @@ public class Article {
 	@Column(name="abstract")
 	private String articleAbstract;
 	
+	@Column(name="authorid")
+	private String authorid;// matches with username of AppUser
+	
+	@Column(name="filename")
+	private String fileName;
+	
+	@Column(name="fileUploadDate")
+	private Date uploadDate;
+	
+	@Column(name="uploadedBy")
+	private String uploadedBy;
+	
 	public String getTopic() {
 		return topic;
 	}
@@ -47,6 +61,36 @@ public class Article {
 	}
 	public void setArticleAbstract(String articleAbstract) {
 		this.articleAbstract = articleAbstract;
+	}
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
+	}
+
+	public String getUploadedBy() {
+		return uploadedBy;
+	}
+
+	public void setUploadedBy(String uploadedBy) {
+		this.uploadedBy = uploadedBy;
+	}
+	public String getAuthorid() {
+		return authorid;
+	}
+	public void setAuthorid(String authorid) {
+		this.authorid = authorid;
 	}
 	
 	

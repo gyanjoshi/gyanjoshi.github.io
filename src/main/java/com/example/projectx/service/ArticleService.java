@@ -1,5 +1,9 @@
 package com.example.projectx.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +13,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
+import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Article;
-import com.example.projectx.model.ArticleAuthor;
-import com.example.projectx.model.ArticleStore;
-import com.example.projectx.repository.ArticleAuthorRepository;
+
 import com.example.projectx.repository.ArticleRepository;
-import com.example.projectx.repository.ArticleStorageRepository;
+
 
 @Service
 public class ArticleService {
 	
 	@Value("${upload.path}")
     private String path;
+	
+	@Autowired
+	private UserDetailsServiceImpl userDetailsService;
 	
 	@Autowired
     private EmailService emailService;
@@ -31,11 +37,6 @@ public class ArticleService {
 	@Autowired
     private ArticleRepository articleRepo;
 	
-	@Autowired
-    private ArticleAuthorRepository articleAuthorRepo;
-	
-	@Autowired
-    private ArticleStorageRepository articleStoreRepo;
 	
 	public void saveArticle(String topic, String articleAbstract, MultipartFile file,String uploadedBy)
 	{
@@ -43,48 +44,53 @@ public class ArticleService {
 		String fileName = file.getOriginalFilename();
 		
 		fileService.uploadFile(path, file);
-		// create 3 objects to be stores in database.
-        
+		
         // Article Object
         Article article = new Article();
         article.setTopic(topic);
         article.setArticleAbstract(articleAbstract);
         article.setStatus("Submitted");
+        article.setAuthorid(uploadedBy);
+        article.setUploadedBy(uploadedBy);
+        article.setFileName(fileName);
+        article.setUploadDate(new java.sql.Date(System.currentTimeMillis()));
+        
         
         Article a = articleRepo.save(article);
         
-        //Article Author Object
-        ArticleAuthor aa = new ArticleAuthor();
+        List<AppUser> editors = userDetailsService.getAllEditors();
         
-        aa.setArticleId(a.getId());
-        aa.setAuthorId(1);
+        AppUser author = userDetailsService.getUserByUsername(uploadedBy);
         
-        articleAuthorRepo.save(aa);
-        
-        //Article Storage Object
-        
-        ArticleStore as = new ArticleStore();
-        
-        as.setArticleId(a.getId());
-        as.setUploadedBy(uploadedBy);
-        as.setFileName(fileName);
-        
-        articleStoreRepo.save(as);
-        
-        // After successful upload, send email to editor.
-        
-//        Mail mail = new Mail();
-//
-//        mail.setSubject("Sending Email Attachment Configuration Example");
-//        mail.setContent("This tutorial demonstrates how to send an email with attachment using Spring Framework.");
-//
-//        try {
-//			emailService.sendSimpleMessage(mail);
-//		} catch (MessagingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-        
+        for(AppUser user: editors)
+        {
+        	Mail mail = new Mail();
+
+            
+             mail.setTo(user.getEmail());
+             mail.setSubject("Article submited: "+a.getTopic());
+             mail.setContent("Hi "+user.getFullName()+","+
+            		 		 author.getFullName()+" has uploaded new article titled "+a.getTopic()+
+            		 		 ". Please review this article.");
+             
+             
+             
+             try {
+     			emailService.sendSimpleMessage(mail,multipartToFile(file,file.getOriginalFilename()));
+     		} catch (MessagingException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+	}
+	
+	public  static File multipartToFile(MultipartFile multipart, String fileName) throws IllegalStateException, IOException {
+	    File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
+	    multipart.transferTo(convFile);
+	    return convFile;
 	}
 	
 

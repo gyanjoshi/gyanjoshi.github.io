@@ -2,7 +2,7 @@ package com.example.projectx.service;
 
 
 import java.util.Arrays;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.example.projectx.dao.AppUserDao;
+import com.example.projectx.model.AppUser;
 
 
 @Service
@@ -38,5 +39,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				user.getPassword(), Arrays.asList(authority));
 		return userDetails;		
 		
-	} 
+	}
+    
+    public List<AppUser> getAllEditors()
+    {
+    	return userDao.getAllEditors();
+    }
+    
+    public AppUser getUserByUsername(String userName)
+    {
+    	return userDao.findUserAccount(userName);
+    }
+    
 }

@@ -21,6 +21,9 @@ public class Article {
 	private String topic;
 	@Column(name="status")
 	private String status;
+	@Column(name="abstract")
+	private String articleAbstract;
+	
 	public String getTopic() {
 		return topic;
 	}
@@ -39,6 +42,13 @@ public class Article {
 	public void setId(Integer id) {
 		Id = id;
 	}
+	public String getArticleAbstract() {
+		return articleAbstract;
+	}
+	public void setArticleAbstract(String articleAbstract) {
+		this.articleAbstract = articleAbstract;
+	}
+	
 	
 	
 

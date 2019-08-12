@@ -5,34 +5,57 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-@Component
-public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+import com.example.projectx.service.UserDetailsServiceImpl;
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-    @Override
-    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-            throws IOException {
-        String targetUrl = determineTargetUrl(authentication);
+public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler  {
 
-        if (response.isCommitted()) {
-            System.out.println("Can't redirect");
-            return;
+	@Autowired
+	private UserDetailsServiceImpl userInfoService;
+    
+        public CustomSuccessHandler(String defaultTargetUrl) {
+            setDefaultTargetUrl(defaultTargetUrl);
+            setUseReferer(true);
         }
 
-        
-        redirectStrategy.sendRedirect(request, response, targetUrl);
-    }
+        @Override
+        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException 
+        {
+           
+            String targetUrl = determineTargetUrl(authentication);
+            
+            Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+            String username = loggedInUser.getName();
+            
+            System.out.println("LoggedIn User: "+username);
+            
+            
+            HttpSession session = request.getSession();
+            session.setAttribute("userInfo", userInfoService.loadUserByUsername(username));      
+            
+            //authentication.getPrincipal().getUser().getFullName()
+          
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
+            
+            
+        }
+
 
     /*
      * This method extracts the roles of currently logged-in user and returns
@@ -44,14 +67,14 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         List<String> roles = new ArrayList<String>();
-
+        
+        String redirectUrl = null;
+        
         for (GrantedAuthority a : authorities) {
             roles.add(a.getAuthority());
         }
 
-        if (isAuthor(roles)) {
-            url = "/author";
-        } else if (isAdmin(roles)) {
+        if (isAdmin(roles)) {
             url = "/admin";
         } else if (isEditor(roles)) {
             url = "/editor";
@@ -69,12 +92,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		return false;
 	}
 
-	private boolean isAuthor(List<String> roles) {
-        if (roles.contains("ROLE_AUTHOR")) {
-            return true;
-        }
-        return false;
-    }
+//	private boolean isAuthor(List<String> roles) {
+//        if (roles.contains("ROLE_AUTHOR")) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     private boolean isAdmin(List<String> roles) {
         if (roles.contains("ROLE_ADMIN")) {
@@ -82,13 +105,4 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
         return false;
     }
-
-    public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
-        this.redirectStrategy = redirectStrategy;
-    }
-
-    protected RedirectStrategy getRedirectStrategy() {
-        return redirectStrategy;
-    }
-
 }

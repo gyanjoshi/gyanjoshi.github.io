@@ -1,11 +1,13 @@
 package com.example.projectx.config;
 
 //import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-
-import java.util.Properties;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.JavaMailSenderImpl;
+//import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+//import org.thymeleaf.spring5.SpringTemplateEngine;
+//
+//import java.util.Properties;
 
 //@Configuration
 public class BeanConfig {
@@ -26,4 +28,11 @@ public class BeanConfig {
 //
 //        return mailSender;
 //    }
+//	@Bean
+//	public SpringTemplateEngine templateEngine() {
+//	   SpringTemplateEngine engine = new SpringTemplateEngine();
+//	  // engine.setTemplateResolver(templateResolver());
+//	   engine.addDialect(new SpringSecurityDialect());
+//	   return engine;
+	//}
 }

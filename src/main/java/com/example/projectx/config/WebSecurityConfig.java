@@ -4,7 +4,7 @@ package com.example.projectx.config;
 //import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.example.projectx.component.CustomSuccessHandler;
 import com.example.projectx.service.UserDetailsServiceImpl;
@@ -29,11 +30,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 	
-	@Autowired
-    CustomSuccessHandler customSuccessHandler;
+//	@Autowired
+//    CustomSuccessHandler customSuccessHandler;
+//	
 	
+	@Bean
+	public AuthenticationSuccessHandler successHandler() {
+	    return new CustomSuccessHandler("/");
+	}
 	
-    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
  
@@ -54,13 +59,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/editor/**").access("hasRole('ROLE_EDITOR')");
         
      // For Editor only.
-        http.authorizeRequests().antMatchers("/author/**").access("hasRole('ROLE_AUTHOR')");
+        http.authorizeRequests().antMatchers("/upload").access("hasRole('ROLE_AUTHOR')");
  
         // When the user has logged in as XX.
         // But access a page that requires role YY,
         // AccessDeniedException will be thrown.
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
- 
+        
+      //  http.headers()
         // Config for Login Form
         http.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.
@@ -68,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 
                 .loginPage("/login")//
                 //.defaultSuccessUrl("/postLogin")
-                .successHandler(customSuccessHandler)//
+                .successHandler(successHandler())//
                 .failureUrl("/login?error=true")//
                 .usernameParameter("email")//
                 .passwordParameter("pass")

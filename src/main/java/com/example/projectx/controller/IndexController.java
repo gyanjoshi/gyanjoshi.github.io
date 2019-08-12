@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.projectx.form.ArticleUploadForm;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
@@ -35,9 +36,21 @@ public class IndexController {
 		
 	@RequestMapping(value = { "/"}, method = RequestMethod.GET)
     public String indexPage(Model model) {
+		ArticleUploadForm articleUploadForm = new ArticleUploadForm();
+	    model.addAttribute("articleUploadForm", articleUploadForm);
+	    
         model.addAttribute("title", "Welcome");
         model.addAttribute("page", pagerepo.getOne(3));
         model.addAttribute("message", "This is welcome page!");
+        return "index";
+    }
+	
+	@RequestMapping(value = { "/index"}, method = RequestMethod.GET)
+    public String indexPage1(Model model) {
+		ArticleUploadForm articleUploadForm = new ArticleUploadForm();
+	    model.addAttribute("articleUploadForm", articleUploadForm);
+        model.addAttribute("title", "Welcome");
+        model.addAttribute("message", "This is home page!");
         return "index";
     }
 	

@@ -39,15 +39,22 @@
                 <li><a href="/archive">Archives</a></li>              
                
                <!--  <li><a href="register">Register</a></li> -->
-               <li>
-				 <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">Upload article</a>
+               <li th:if="${#authorization.expression('isAuthenticated()')}">
+				 <a href="upload#upload" class="btn btn-lg btn-primary" data-toggle="modal">Upload article</a>
                </li>
+               <li th:if="${#authorization.expression('isAuthenticated()')}">
+				 <a href="/logout" class="btn btn-lg btn-primary" data-toggle="modal">Logout</a>
+               </li>
+               <li th:if="${#authorization.expression('not isAuthenticated()')}">
+				 <a href="/login" class="btn btn-lg btn-primary" data-toggle="modal">Login</a>
+               </li>
+              
             <!-- div for bootstrap modal -->
            <div class="bs-example">
     <!-- Button HTML (to Trigger Modal) -->
     
     <!-- Modal HTML -->
-    <div id="myModal" class="modal fade">
+    <div id="upload" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -56,22 +63,22 @@
             <h4 class="modal-title">Upload File</h4>
           </div>
           
-          <div class="modal-body">
-             <form action="upload" method="post" enctype="multipart/form-data"> 
+ <div class="modal-body">
+    <form th:object="${articleUploadForm}" action="upload" method="post" enctype="multipart/form-data"> 
            <div class="form-group">
       <label for="usr">Topic:</label>
-      <input type="text" class="form-control" id="usr">
+      <input th:field="*{topic}" type="text" class="form-control" id="topic" name="topic">
     		</div>
     <div class = "form-group">
-     <input type="file" name="file" value="file" id="file">
+     <input th:field="*{fileData}" type="file" name="file" value="file" id="file">
     </div>
     
      <div class="form-group">
      <label for="usr">Abstract:</label>
-      <textarea cols="20" rows="10" id="content" name="content"> 
+      <textarea th:field="*{articleAbstract}" cols="20" rows="10"  name="abstract" id="abstract"> 
       </textarea>
       <script type="text/javascript">
-        CKEDITOR.replace('content' );
+        CKEDITOR.replace('abstract' );
       </script>
     </div> 
 <div class = "form-group">

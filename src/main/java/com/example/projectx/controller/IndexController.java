@@ -100,6 +100,9 @@ public class IndexController {
     
     @RequestMapping(value = { "contact" }, method = RequestMethod.GET)
     public String contactPage(Model model) {
+    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
+	    model.addAttribute("articleUploadForm", articleUploadForm);
+	    
     	System.out.println("hello"+ "world");
         return "contactpage/contact-page-index";
     }
@@ -107,6 +110,8 @@ public class IndexController {
     
     @RequestMapping(value = { "archive" }, method = RequestMethod.GET)
     public String archivePage(Model model) {
+    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
+	    model.addAttribute("articleUploadForm", articleUploadForm);
         return "journal-archives";
     }
     //testing purpose only

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -38,6 +40,16 @@ public class Article {
 	@Column(name="uploadedBy")
 	private String uploadedBy;
 	
+	@ManyToOne
+    @JoinColumn
+    private Journal journal;
+	
+	public Journal getJournal() {
+		return journal;
+	}
+	public void setJournal(Journal journal) {
+		this.journal = journal;
+	}
 	public String getTopic() {
 		return topic;
 	}

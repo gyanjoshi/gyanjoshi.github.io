@@ -1,27 +1,56 @@
 package com.example.projectx.model;
 
+import java.io.File;
 import java.sql.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "journaltbl")
+@Table(name = "Journals")
 public class Journal {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="journal_seq_gen")
+	@SequenceGenerator(name="journal_seq_gen", sequenceName="journal_seq")
+	
+	@Column(name="journal_id")
 	private Integer Id;
+	@Column(name="journal_title")
 	private String JournalTopic;
-	private Integer VolumeNum;
-	private Integer IssueNum;
-	private String coverImgPath;
-	private String JornalFilePath;
+	@Column(name="volume")
+	private String VolumeNum;
+	@Column(name="issue")
+	private String IssueNum;
+	@Column(name="year")
+	private String year;
+	@Column(name="month")
+	private String month;
+	@Column(name="coverimagefile")
+	private String coverImageFileName;
+	@Column(name="journalfile")
+	private String journalFileName;
+	@Column(name="publishdate")
 	private Date uploaded_date;
+	@Column(name="uploadedby")
 	private String uploaded_by;
+	
+	@Column(name="status")
+	private String status;
+	
+	@OneToMany(mappedBy = "journal", cascade = CascadeType.ALL)
+    private Set<Article> articles;
+	
+	//private File coverPage;
+	
 	public Integer getId() {
 		return Id;
 	}
@@ -34,29 +63,41 @@ public class Journal {
 	public void setJournalTopic(String journalTopic) {
 		JournalTopic = journalTopic;
 	}
-	public Integer getVolumeNum() {
+	public String getVolumeNum() {
 		return VolumeNum;
 	}
-	public void setVolumeNum(Integer volumeNum) {
+	public void setVolumeNum(String volumeNum) {
 		VolumeNum = volumeNum;
 	}
-	public Integer getIssueNum() {
+	public String getIssueNum() {
 		return IssueNum;
 	}
-	public void setIssueNum(Integer issueNum) {
+	public void setIssueNum(String issueNum) {
 		IssueNum = issueNum;
 	}
-	public String getCoverImgPath() {
-		return coverImgPath;
+	public String getYear() {
+		return year;
 	}
-	public void setCoverImgPath(String coverImgPath) {
-		this.coverImgPath = coverImgPath;
+	public void setYear(String year) {
+		this.year = year;
 	}
-	public String getJornalFilePath() {
-		return JornalFilePath;
+	public String getMonth() {
+		return month;
 	}
-	public void setJornalFilePath(String jornalFilePath) {
-		JornalFilePath = jornalFilePath;
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public String getCoverImageFileName() {
+		return coverImageFileName;
+	}
+	public void setCoverImageFileName(String coverImageFileName) {
+		this.coverImageFileName = coverImageFileName;
+	}
+	public String getJournalFileName() {
+		return journalFileName;
+	}
+	public void setJournalFileName(String journalFileName) {
+		this.journalFileName = journalFileName;
 	}
 	public Date getUploaded_date() {
 		return uploaded_date;
@@ -70,5 +111,19 @@ public class Journal {
 	public void setUploaded_by(String uploaded_by) {
 		this.uploaded_by = uploaded_by;
 	}
+	public Set<Article> getArticles() {
+		return articles;
+	}
+	public void setArticles(Set<Article> articles) {
+		this.articles = articles;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 	
 }

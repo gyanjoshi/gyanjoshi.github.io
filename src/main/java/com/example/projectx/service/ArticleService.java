@@ -9,8 +9,11 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.projectx.dao.AppUserDao;
+import com.example.projectx.dto.PendingArticleDto;
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
@@ -22,7 +25,7 @@ import com.example.projectx.repository.ArticleRepository;
 @Service
 public class ArticleService {
 	
-	@Value("${upload.path}")
+	@Value("${upload.path.article}")
     private String path;
 	
 	@Autowired
@@ -30,9 +33,6 @@ public class ArticleService {
 	
 	@Autowired
     private EmailService emailService;
-	
-	@Autowired
-	private FileStorageService fileService;
 	
 	@Autowired
     private ArticleRepository articleRepo;
@@ -43,7 +43,7 @@ public class ArticleService {
 
 		String fileName = file.getOriginalFilename();
 		
-		fileService.uploadFile(path, file);
+		FileStorageService.uploadFile(path, file);
 		
         // Article Object
         Article article = new Article();
@@ -76,7 +76,7 @@ public class ArticleService {
              
              
              try {
-     			emailService.sendSimpleMessage(mail,multipartToFile(file,file.getOriginalFilename()));
+     			emailService.sendSimpleMessage(mail,FileStorageService.multipartToFile(file,file.getOriginalFilename()));
      		} catch (MessagingException e) {
      			// TODO Auto-generated catch block
      			e.printStackTrace();
@@ -87,11 +87,42 @@ public class ArticleService {
         }
 	}
 	
-	public  static File multipartToFile(MultipartFile multipart, String fileName) throws IllegalStateException, IOException {
-	    File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
-	    multipart.transferTo(convFile);
-	    return convFile;
+	public List<PendingArticleDto> getPendingArticles()
+	{
+		return articleRepo.getPendingArticles();
 	}
 	
+	public Article getArticleById(int id)
+	{
+		return articleRepo.findById(id).get();
+	}
+	
+	public void sendFeedback(int article,String authorid, String message)
+	{
+		Article a = articleRepo.findById(article).get();
+		AppUser user = userDetailsService.getUserByUsername(authorid);
+		
+		
+		Mail mail = new Mail();
+
+        
+        mail.setTo(user.getEmail());
+        mail.setSubject("Review feedback for your article "+a.getTopic());
+        mail.setContent(message);
+        
+        try {
+ 			emailService.sendSimpleMessage(mail);
+ 		} catch (MessagingException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        a.setStatus("feedback-sent");
+        
+        articleRepo.save(a);
+	}
 
 }

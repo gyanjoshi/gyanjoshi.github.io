@@ -50,5 +50,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     {
     	return userDao.findUserAccount(userName);
     }
+
+	public List<AppUser> getAllAuthors() {
+		
+		return userDao.getAllAuthors();
+	}
     
 }

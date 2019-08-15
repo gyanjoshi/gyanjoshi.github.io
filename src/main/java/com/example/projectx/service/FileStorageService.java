@@ -1,5 +1,6 @@
 package com.example.projectx.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -18,21 +19,39 @@ public class FileStorageService {
 	
 	
 
-    public void uploadFile(String path, MultipartFile file) 
+    public static void uploadFile(String path, MultipartFile file) 
     {
     	
     	String fileName=null;
+    	String directoryPath = null;
 
         if (file.isEmpty()) {
             throw new StorageException("Failed to store empty file");
         }
+        
+        String separator = File.separator;
+        
+        if(path.endsWith(separator))
+        	directoryPath = path.substring(0, path.length()-1);
+        else
+        	directoryPath = path;
+        
+        File directory = new File(directoryPath);
+        
+        boolean status = directory.mkdirs();
+        
+        
+        if(status)
+        	System.out.println("Directory created: "+directoryPath);
+        else
+        	System.out.println("Directory already exists: "+directoryPath);
 
         try {
             fileName = file.getOriginalFilename();
             InputStream is = file.getInputStream();
 
-            System.out.println("File :"+path + fileName);
-            Files.copy(is, Paths.get(path + fileName),
+            System.out.println("File :"+directoryPath + separator+fileName);
+            Files.copy(is, Paths.get(directoryPath + separator+fileName),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
 
@@ -43,5 +62,10 @@ public class FileStorageService {
         
 
     }
+    public  static File multipartToFile(MultipartFile multipart, String fileName) throws IllegalStateException, IOException {
+	    File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
+	    multipart.transferTo(convFile);
+	    return convFile;
+	}
 
 }

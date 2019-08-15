@@ -72,6 +72,29 @@ public class AppUserDao {
 			return null;
     	
     }
+
+	public List<AppUser> getAllAuthors() {
+		short enabled = 1;
+    	String role="ROLE_AUTHOR";
+    	
+    	List<AppUser> users = new ArrayList<AppUser>();
+    	
+		List<?> list = entityManager.createQuery("SELECT u FROM "+AppUser.class.getName()+" u WHERE enabled=:enabled AND role=:role ")
+				.setParameter("role", role).setParameter("enabled", enabled).getResultList();
+		
+		if(!list.isEmpty()) 
+		{
+			for(Object user: list)
+			{
+				AppUser au = (AppUser)user;
+				users.add(au);
+			}
+			return users;
+		}
+    	
+		else
+			return null;
+	}
     
 
  

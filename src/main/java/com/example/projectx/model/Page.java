@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "Page")
 
@@ -29,6 +31,7 @@ public class Page {
 	private String url;
 	
 	@Column (name="html")
+	@Type(type="text")
 	private String html;
 	@Column(name="added_date")
 	private Date added_date;

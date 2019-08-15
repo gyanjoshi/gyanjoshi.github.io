@@ -1,0 +1,129 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+   
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <title>LOTUS EYE</title>
+
+    <link rel="icon" type="image/png" href="contactpagestatic/images/icons/favicon.ico"/>
+
+         <!-- CSS
+    ================================================== -->       
+    <!-- Bootstrap css file-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font awesome css file-->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Superslide css file-->
+    <link rel="stylesheet" href="css/superslides.css">
+    <!-- Slick slider css file -->
+    <link href="css/slick.css" rel="stylesheet"> 
+    <!-- Circle counter cdn css file -->
+    <link rel='stylesheet prefetch' href='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/css/jquery.circliful.css'>  
+    <!-- smooth animate css file -->
+    <link rel="stylesheet" href="css/animate.css"> 
+    <!-- preloader -->
+    <link rel="stylesheet" href="css/queryLoader.css" type="text/css" />
+    <!-- gallery slider css -->
+    <link type="text/css" media="all" rel="stylesheet" href="css/jquery.tosrus.all.css" />    
+    <!-- Default Theme css file -->
+    <link id="switcher" href="css/themes/default-theme.css" rel="stylesheet">
+    <!-- Main structure css file -->
+    <link href="style.css" rel="stylesheet">
+    
+     <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+   
+    <!-- Google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>   
+    <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>    
+     
+     
+     <link rel="stylesheet" type="text/css" href="contactpagestatic/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--  <link rel="stylesheet" type="text/css" href="contactpagestatic/vendor/bootstrap/css/bootstrap.min.css"> -->
+    
+    <link rel="stylesheet" type="text/css" href="contactpagestatic/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="contactpagestatic/vendor/animate/animate.css">
+    
+    <link rel="stylesheet" type="text/css" href="contactpagestatic/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="contactpagestatic/vendor/animsition/css/animsition.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="contactpagestatic/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="contactpagestatic/vendor/daterangepicker/daterangepicker.css">
+	
+	<link rel="stylesheet" type="text/css" href="contactpagestatic/css/util.css">
+	<link rel="stylesheet" type="text/css" href="contactpagestatic/css/main.css">
+  </head>
+  <body>    
+    <div th:replace = "fixedlayout :: header"></div>
+    
+    <hr><hr><hr>
+ 
+	  <main class="page-content">
+    <div class="container-fluid">
+      <hr>
+       <div class = "row">
+      <div class="container">
+			<h1 class="title">Downloads List</h1>
+		</div>
+      
+      </div> 
+      
+      <!-- start of main body -->
+      <div class="container">
+		<div class="columns">
+			<div class="column is-full">
+				<div class="field is-grouped">
+					
+				</div>
+				<table class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+					<thead>
+						<tr>
+							<th>Downloads Topic</th>
+							<th>Uploaded Date</th>
+							<th>Action</th>
+
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<strong>Total Records :</strong>
+								<span th:text="${downloads.size()}"></span>
+							</td>
+						</tr>
+					</tfoot>
+					 <tbody>
+						<tr th:each="download : ${downloads}">
+							<td th:text="${download.downloadTopic}"></td>
+							<td th:text="${download.UploadedDate}"></td>
+							
+							
+							<td>
+								<a th:href="@{'/download/file/'+${download.DownloadFilePath}}"  class="button is-primary is-small">Download</a>
+							</td>
+								 
+
+						</tr>
+					</tbody> 
+				</table>
+			</div>
+		</div>
+	</div>
+      <!-- end of main body -->
+      
+</div>
+  </main>
+.
+
+    <script src="js/custom.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    
+  </body>
+     
+
+</html>

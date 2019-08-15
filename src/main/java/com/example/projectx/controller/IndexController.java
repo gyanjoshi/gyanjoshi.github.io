@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.projectx.form.ArticleUploadForm;
 import com.example.projectx.model.AppUser;
+import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
 import com.example.projectx.utils.WebUtils;
@@ -27,6 +28,8 @@ public class IndexController {
 	private UserRepository userrepo;
 	@Autowired
 	private PageRepository pagerepo;
+	@Autowired
+	private DownloadRepository downloadrepo;
 
 	
 	@RequestMapping(path = "register", method = RequestMethod.GET)
@@ -40,7 +43,8 @@ public class IndexController {
 	    model.addAttribute("articleUploadForm", articleUploadForm);
 	    
         model.addAttribute("title", "Welcome");
-        model.addAttribute("page", pagerepo.getOne(3));
+        model.addAttribute("page", pagerepo.getOne(2));
+        model.addAttribute("downloads",downloadrepo.findAll() );
         model.addAttribute("message", "This is welcome page!");
         return "index";
     }
@@ -95,6 +99,24 @@ public class IndexController {
         return "contactpage/contact-page-index";
     }
     
+    
+    
+    @RequestMapping(value = "/guidelines", method = RequestMethod.GET)
+    public String authorGuideline(Model model) {
+    	model.addAttribute("guidelines", pagerepo.getOne(2));
+    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
+	    model.addAttribute("articleUploadForm", articleUploadForm);
+        return "/author-guidelines";
+    }
+    
+   
+    @RequestMapping(value = "/downloads", method = RequestMethod.GET)
+    public String getDownloads(Model model) {
+    	model.addAttribute("downloads",downloadrepo.findAll() );
+    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
+	    model.addAttribute("articleUploadForm", articleUploadForm);
+        return "downloads";
+    }
     
    
     //testing purpose only

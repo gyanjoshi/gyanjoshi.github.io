@@ -1,0 +1,96 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta>
+<title>Approve Article</title>
+
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <link href="/adminstatic/css/admin.css" rel="stylesheet">
+ <script src="/adminstatic/js/admin.js"></script>
+</head>
+
+<body>
+<div class="page-wrapper chiller-theme toggled">
+ <div th:replace = "/editor/editorpage :: sidebar"></div>
+ <main class="page-content">
+    <div class="container-fluid">
+      <hr>
+      
+       	<section class="section">
+		<div class="container">
+			<h1 class="title">Approve Article</h1>
+			<h2 background-color="red" th:if="*{message != null}" th:text="${message}" ></h2>
+		</div>
+	</section>
+      
+      <!-- start of main body -->
+     <div class="container">
+		<div class="columns">
+			<div class="column is-full">
+				<div class="box">
+					<form th:object="${article}" action="/editor/approve" method="POST">
+						<input type="hidden" th:field="${article.Id}" />
+						<input type="hidden" th:field="${author.userName}" />
+						
+						<div class="field">
+							<label class="label is-small">Article title</label>
+							<div class="control">
+								<span th:utext="*{topic}" class="form-control" ></span>
+							</div>
+						</div>
+						<div class="field">
+							<label class="label is-small">Abstract</label>
+							<div class="control">
+								<span th:utext="*{articleAbstract}" class="form-control" ></span>
+							</div>
+						</div>
+						<div class="field">
+							<label class="label is-small">Author</label>
+							<div class="control">
+								<span th:utext="${author.userName}" class="form-control" ></span>
+							</div>
+						</div>
+						
+						<div class="field">
+							<select class="form-control" id="journalId" name="journalId" required="required">
+						    <option value="0">Select Journal</option>
+						    <option th:each="journal : ${journals}" th:value="${journal.journalId}" th:text="${journal.journalText}"></option>
+						    </select>
+						</div>
+						
+						<div class="form-group">
+					     <label for="usr">Approval Message (to be sent to authors):</label>
+					      <textarea cols="20" rows="10"  name="message" id="message"> 
+					      </textarea>					      
+					    </div>
+						
+						<div class="field is-grouped">
+							<div class="control">
+								<button  class="button is-success is-small">Submit</button>
+							</div>
+							<div class="control">
+								<a th:href="@{/editor/pendingreview}" class="button is-danger is-small">Cancel</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+      <!-- end of main body -->
+      
+
+  </main>
+</div>
+</body>
+</html> 

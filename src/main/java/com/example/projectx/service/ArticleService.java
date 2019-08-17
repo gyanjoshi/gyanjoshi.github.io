@@ -2,7 +2,9 @@ package com.example.projectx.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 
@@ -13,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.projectx.dao.AppUserDao;
-import com.example.projectx.dto.PendingArticleDto;
+import com.example.projectx.dto.ArticleDto;
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Article;
-
+import com.example.projectx.model.Journal;
 import com.example.projectx.repository.ArticleRepository;
+import com.example.projectx.repository.JournalRepository;
 
 
 @Service
@@ -36,6 +39,12 @@ public class ArticleService {
 	
 	@Autowired
     private ArticleRepository articleRepo;
+	
+	@Autowired
+	private JournalRepository journalRepository;
+	
+	@Autowired
+	private JournalService journalService;
 	
 	
 	public void saveArticle(String topic, String articleAbstract, MultipartFile file,String uploadedBy)
@@ -87,7 +96,7 @@ public class ArticleService {
         }
 	}
 	
-	public List<PendingArticleDto> getPendingArticles()
+	public List<ArticleDto> getPendingArticles()
 	{
 		return articleRepo.getPendingArticles();
 	}
@@ -123,6 +132,50 @@ public class ArticleService {
         a.setStatus("feedback-sent");
         
         articleRepo.save(a);
+	}
+
+	public void approve(int id, String userName, String message, int journalId) {
+		// TODO Auto-generated method stub
+		
+		Article a = articleRepo.findById(id).get();
+		AppUser user = userDetailsService.getUserByUsername(userName);
+		
+		Journal j = journalRepository.findById(journalId).get();
+		
+		
+		
+		Mail mail = new Mail();
+
+        
+        mail.setTo(user.getEmail());
+        mail.setSubject("Your article "+a.getTopic()+" is approved");
+        mail.setContent(message);
+        
+        try {
+ 			emailService.sendSimpleMessage(mail);
+ 		} catch (MessagingException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        a.setStatus("Approved");
+        a.setJournal(j);
+        
+        journalService.addArticle(j, a);        
+        
+        articleRepo.save(a);
+        journalRepository.saveAndFlush(j);
+		
+	}
+
+
+	
+	public List<ArticleDto> getApprovedArticles(int journalId)
+	{
+		return articleRepo.getApprovedArticles(journalId);
 	}
 
 }

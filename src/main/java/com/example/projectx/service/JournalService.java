@@ -1,26 +1,36 @@
 package com.example.projectx.service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.projectx.dao.JournalDao;
+import com.example.projectx.dto.JournalDropDownDto;
+import com.example.projectx.dto.PreparedJournalDto;
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Article;
 import com.example.projectx.model.Journal;
+import com.example.projectx.repository.ArticleRepository;
 import com.example.projectx.repository.JournalRepository;
+import com.example.projectx.utils.PdfMerger;
 
 @Service
 public class JournalService {
@@ -31,11 +41,17 @@ public class JournalService {
 	@Value("${upload.path.coverimage}")
 	private String coverpage;
 	
+	@Value("${upload.path.article}")
+	private String articlePath;
+	
 	@Autowired
     private EmailService emailService;
 	
 	@Autowired
 	private JournalRepository journalRepo;
+	
+	@Autowired
+	private ArticleRepository articleRepo;
 	
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
@@ -54,11 +70,15 @@ public class JournalService {
 		
 		List<Journal> journals = journalDao.getAllJournals();
 		
-		for(Journal j: journals)
+		if(journals != null)
 		{
-			byte[] bytes = getCoverPage(j.getId());
-			coverPageMap.put(j.getId(), bytes);
+			for(Journal j: journals)
+			{
+				byte[] bytes = getCoverPage(j.getId());
+				coverPageMap.put(j.getId(), bytes);
+			}
 		}
+		
 		
 		return coverPageMap;
 	}
@@ -143,5 +163,154 @@ public class JournalService {
 		
 		
 		
+	}
+	
+	public List<JournalDropDownDto> getJournalsDropdown()
+	{
+		List<Journal> journals = journalDao.getAllJournals();
+		
+		List<JournalDropDownDto> list = new ArrayList<JournalDropDownDto>();
+		
+		if(journals != null)
+		{
+			for(Journal j: journals)
+			{
+				JournalDropDownDto jdto = new JournalDropDownDto();
+				jdto.setJournalId(j.getId());
+				jdto.setJournalText("Journal-(year-"+j.getYear()+", month-"+j.getMonth()+") (Volume# "+j.getVolumeNum()+", Issue# "+j.getIssueNum()+")");
+				list.add(jdto);
+			}
+		}
+		
+		
+		return list;
+		
+	}
+	
+	public List<PreparedJournalDto> getPreparedJournals()
+	{
+		List<Journal> journals = journalDao.getAllPreparedJournals();
+		
+		List<PreparedJournalDto> list = new ArrayList<PreparedJournalDto>();
+		
+		if(journals != null)
+		{
+			for(Journal j: journals)
+			{
+				PreparedJournalDto jdto = new PreparedJournalDto();
+				
+				jdto.setJournalId(j.getId());
+				jdto.setTitle(j.getJournalTopic());
+				jdto.setIssue(j.getIssueNum());
+				jdto.setVolume(j.getVolumeNum());
+				jdto.setYear(j.getYear());
+				jdto.setMonth(j.getMonth());
+				jdto.setFileName(j.getJournalFileName());
+				list.add(jdto);
+			}
+		}
+		
+		
+		return list;
+		
+	}
+	public void addArticle(Journal j, Article a)
+	{
+		j.addArticle(a);
+	}
+
+	public void publish(int journalId) {
+		// TODO Auto-generated method stub
+		Journal journal = journalRepo.getOne(journalId);
+		
+		journal.setStatus("Published");
+		journal.setUploaded_date(new java.sql.Date(System.currentTimeMillis()));
+		
+		
+		File file = new File(path+journal.getJournalFileName());
+		
+		Set<Article> sa  = journal.getArticles();
+		
+		for(Article a: sa)
+		{
+			a.setStatus("Published");
+			AppUser user = userDetailsService.getUserByUsername(a.getAuthorid());
+			
+			// send email to the author
+			
+			Mail mail = new Mail();
+
+            
+            mail.setTo(user.getEmail());
+            mail.setSubject("Article "+a.getTopic()+" is published");
+            mail.setContent("Your article has been published");
+            
+            try {
+     			emailService.sendSimpleMessage(mail,file);
+     		} catch (MessagingException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+            // save article
+            articleRepo.save(a);
+			
+		}
+		
+		journalRepo.save(journal);
+		
+		
+	}
+
+
+	public File prepare(int journalId, MultipartFile editorial) throws IOException {
+		// TODO Auto-generated method stub
+		Journal journal = journalRepo.getOne(journalId);
+		journal.setEditorialFileName(editorial.getOriginalFilename());
+		
+		journal.setJournalFileName(journal.getJournalTopic()+"_Issue"+journal.getIssueNum()+"_Vol"+journal.getVolumeNum()+".pdf");
+		//journal.set
+		journal.setStatus("Prepared");
+		
+		FileStorageService.uploadFile(path, editorial);
+		
+		//FileStorageService.uploadFile(path, journalfile);
+		
+		// prepare for merging pdf files
+		List<File> files = new ArrayList<File>();
+		
+		String coverFile=journalRepo.getCoverPageFileName(journalId);
+		
+		File coverPage = new File(coverpage+coverFile);
+		
+		files.add(coverPage);
+		
+		
+		File editorialPage = new File(path+editorial.getOriginalFilename());
+		
+		files.add(editorialPage);		
+		
+		Set<Article> sa  = journal.getArticles();
+		
+	
+		
+		for(Article a: sa)
+		{
+			a.setStatus("Prepared");
+			File articleFile = new File(articlePath+a.getFileName());			
+			files.add(articleFile);
+			
+			articleRepo.save(a);
+			
+		}
+		
+		File f = PdfMerger.mergePdfs(files, path+journal.getJournalTopic()+"_Issue"+journal.getIssueNum()+"_Vol"+journal.getVolumeNum()+".pdf");
+		
+		journalRepo.save(journal);
+		
+		return f;
 	}
 }

@@ -1,6 +1,6 @@
 package com.example.projectx.dto;
 
-public class PendingArticleDto {
+public class ArticleDto {
 	
 	private Integer articleId;
 	private String authorId;
@@ -12,8 +12,9 @@ public class PendingArticleDto {
 	private String status;
 	
 	private String articleAbstract;
+	private String fileName;
 	
-	public PendingArticleDto(int id, String authorid, String topic, String fullName, String address1, String city, String email, String status, String articleAbstract) 
+	public ArticleDto(int id, String authorid, String topic, String fullName, String address1, String city, String email, String status, String articleAbstract, String fileName) 
 	
 	{
 		this.articleId = id;
@@ -25,6 +26,7 @@ public class PendingArticleDto {
 		this.email = email;
 		this.status = status;
 		this.articleAbstract = articleAbstract;
+		this.fileName  = fileName;
 	}
 	
 	public Integer getArticleId() {
@@ -80,6 +82,14 @@ public class PendingArticleDto {
 	}
 	public void setArticleAbstract(String articleAbstract) {
 		this.articleAbstract = articleAbstract;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	
 	

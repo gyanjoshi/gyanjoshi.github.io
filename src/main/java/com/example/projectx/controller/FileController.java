@@ -139,10 +139,10 @@ public class FileController {
 			/**
 			 * Here we have mentioned it to show inline
 			 */
-			response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
+			//response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
 
 			 //Here we have mentioned it to show as attachment
-			// response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + file.getName() + "\""));
+			 response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + file.getName() + "\""));
 
 			response.setContentLength((int) file.length());
 

@@ -36,8 +36,14 @@ public class Journal {
 	private String month;
 	@Column(name="coverimagefile")
 	private String coverImageFileName;
+	
+	@Column(name="editorialfile")
+	private String editorialFileName;
+	
 	@Column(name="journalfile")
 	private String journalFileName;
+	
+	
 	@Column(name="publishdate")
 	private Date uploaded_date;
 	@Column(name="uploadedby")
@@ -122,6 +128,17 @@ public class Journal {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public void addArticle(Article a)
+	{
+		articles.add(a);
+	}
+	public String getEditorialFileName() {
+		return editorialFileName;
+	}
+	public void setEditorialFileName(String editorialFileName) {
+		this.editorialFileName = editorialFileName;
 	}
 	
 	

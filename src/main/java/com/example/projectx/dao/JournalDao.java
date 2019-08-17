@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.example.projectx.dto.PreparedJournalDto;
 import com.example.projectx.model.Journal;
 
 @Repository
@@ -26,7 +26,7 @@ public class JournalDao {
     	
     	List<Journal> journals = new ArrayList<Journal>();
     	
-		List<?> list = entityManager.createQuery("SELECT u FROM "+Journal.class.getName()+" u ").getResultList();
+		List<?> list = entityManager.createQuery("SELECT u FROM "+Journal.class.getName()+" u where status not in ('Published', 'Prepared')").getResultList();
 		
 		if(!list.isEmpty()) 
 		{
@@ -41,6 +41,28 @@ public class JournalDao {
 		else
 			return null;
     	
-    }	
+    }
+	
+	public List<Journal> getAllPreparedJournals()
+    {
+    	
+    	List<Journal> journals = new ArrayList<Journal>();
+    	
+		List<?> list = entityManager.createQuery("SELECT u FROM "+Journal.class.getName()+" u where status ='Prepared'").getResultList();
+		
+		if(!list.isEmpty()) 
+		{
+			for(Object journal: list)
+			{
+				Journal j = (Journal)journal;
+				journals.add(j);
+			}
+			return journals;
+		}
+    	
+		else
+			return null;
+    	
+    }
 
 }

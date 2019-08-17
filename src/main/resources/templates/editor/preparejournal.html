@@ -1,0 +1,103 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta>
+<title>Prepare Journal</title>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+	content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
+	rel="stylesheet">
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="/adminstatic/css/admin.css" rel="stylesheet">
+<script src="/adminstatic/js/admin.js"></script>
+
+
+
+</head>
+
+<body>
+	<div class="page-wrapper chiller-theme toggled">
+		<div th:replace="/editor/editorpage :: sidebar"></div>
+		<main class="page-content">
+		<div class="container-fluid">
+			<hr>
+
+			<section class="section">
+				<div class="container">
+					<h1 class="title">Prepare Journal</h1>
+
+				</div>
+			</section>
+
+			<!-- start of main body -->
+			<div class="container">
+				<span th:if="*{journals == null}" th:text="${message}"></span>
+				<form th:if="*{journals != null}" action="/editor/preparejournal" method="POST" enctype="multipart/form-data">
+				    
+				    <div class="listBlock">
+				        <div class="search-block">
+				            <div class="field">
+							<select class="form-control" id="journalId" name="journalId">
+						    <option value="0">Select Journal</option>
+						    <option th:each="journal : ${journals}" th:value="${journal.journalId}" th:text="${journal.journalText}"></option>
+						    </select>
+							</div>
+				            <button id="searchButton" name="searchButton" onclick="retrieveArticles()" type="button">Retrieve Articles</button>
+				        </div>
+				
+				        <!-- Results block -->
+				        <div id="resultsBlock">
+				
+				        </div>
+				    </div>
+				    <div class="field">
+							<label class="label is-small">Editorial Page:</label>
+							<div class="control">
+								<input type="file" name="editorial" value="file" id="editorial">
+							</div>
+						</div>
+								    
+		             <div class="field is-grouped">
+							<div class="control">
+								<button class="button is-success is-small">Prepare Journal</button>
+							</div>
+							<div class="control">
+								<a th:href="@{/editor/viewjournals}" class="button is-danger is-small">Cancel</a>
+							</div>
+						</div>
+				</form>
+			</div>
+			</div>
+			<!-- end of main body -->
+		</main>
+</div>
+
+<script>
+function retrieveArticles() {
+		var url = '/editor/approved-articles';
+
+    	if ($('#journalId').val() != '') {
+        url = url + '/' + $('#journalId').val();
+    }
+
+    $("#resultsBlock").load(url);	
+}
+</script>
+
+</body>
+</html>

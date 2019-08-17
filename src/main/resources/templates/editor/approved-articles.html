@@ -1,0 +1,38 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+
+<body>
+ <div th:fragment = "resultsList" th:unless="${#lists.isEmpty(articles)}" id="results-block">
+ 	<table>
+            <thead>
+                <tr>
+                    		<th>Title</th>
+							<th>Author Name</th>
+							<th>Address</th>
+							<th>City</th>
+							<th>E-mail</th>
+							<th>status</th>
+							<th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="article : ${articles}">
+                    		<td th:text="${article.topic}"></td>
+							<td th:text="${article.authorName}"></td>
+							<td th:text="${article.address}"></td>
+							<td th:text="${article.city}"></td>
+							<td th:text="${article.email}"></td>
+							<td th:text="${article.status}"></td>							
+							<td>
+								
+								<a th:href="@{'/download/file/'+${article.fileName}}"  class="button is-primary is-small">Download</a>
+								
+							</td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+</body>
+</html> 

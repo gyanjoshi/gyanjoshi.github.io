@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.projectx.form.AddDownloadForm;
+<<<<<<< HEAD
 import com.example.projectx.form.AddNoticeForm;
 import com.example.projectx.model.Article;
+=======
+>>>>>>> branch 'master' of https://github.com/Nabins/Journal.git
 import com.example.projectx.model.Download;
 import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
@@ -16,11 +19,21 @@ import com.example.projectx.repository.NoticeRepository;
 public class DownloadService {
 	
 	@Value("${upload.path.download}")
-    private String path;
+    private String downloadspath;
 	
-	@Autowired
-	private FileStorageService fileService;
+	@Value("${upload.path.article}")
+    private String articlespath;
 	
+	@Value("${upload.path.journal}")
+    private String journalspath;
+	
+	@Value("${upload.path.coverimage}")
+    private String coverpagepath;
+	
+	@Value("${upload.path}")
+    private String basepath;
+	
+		
 	@Autowired
 	private DownloadRepository downloadRepo;
 	
@@ -33,7 +46,7 @@ public class DownloadService {
 		String title = download.getTitle();
 		MultipartFile file = download.getFile();
 		
-		fileService.uploadFile(path, file);
+		FileStorageService.uploadFile(downloadspath, file);
 		
 		// add in database
 		
@@ -47,6 +60,18 @@ public class DownloadService {
         
         
         downloadRepo.save(d);
+	}
+	
+	public String getDownloadPath(String type)
+	{
+		if(type.equalsIgnoreCase("article"))
+			return articlespath;
+		else if (type.equalsIgnoreCase("journal"))
+			return journalspath;
+		else if	(type.equalsIgnoreCase("cover"))
+			return coverpagepath;
+		else
+			return basepath;
 	}
 
 

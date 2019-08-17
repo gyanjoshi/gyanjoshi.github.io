@@ -13,6 +13,7 @@ import com.example.projectx.form.AddNoticeForm;
 import com.example.projectx.model.Article;
 
 import com.example.projectx.model.Download;
+import com.example.projectx.model.Notice;
 import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
 
@@ -77,10 +78,7 @@ public class DownloadService {
 	}
 
 
-	public void addNotice(AddNoticeForm notice) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	public void editDownload(int id, AddDownloadForm download)
 	{
 		String title = download.getDownloadTopic();
@@ -98,4 +96,46 @@ public class DownloadService {
         downloadRepo.editDownload(id, title, fileName, date);
 	}
 
+	
+	public void addNotice(AddNoticeForm notice) {
+		System.out.println("reached to addnotice of download service:");
+		String noticenumber  = notice.getNoticeNumber();
+		String noticetitle = notice.getNoticeTitle();
+		String noticetext = notice.getNoticeText();
+		
+		String noticefilename = notice.getNoticeFileName().getOriginalFilename();
+		MultipartFile file = notice.getNoticeFileName();
+		
+		FileStorageService.uploadFile(downloadspath, file);
+		
+		// add in database
+		// Download Object
+		Notice n = new Notice();
+		
+		n.setNoticeNumber(noticenumber);
+		n.setNoticeText(noticetext);
+		n.setNoticeTitle(noticetitle);
+		n.setNoticeFileName(noticefilename);
+        n.setUploadedDate(new java.sql.Date(System.currentTimeMillis()));
+        
+        
+        
+        noticeRepo.save(n);
+		
+	}
+
+	public void editnotice(int id, AddNoticeForm notice) {
+		String noticenumber  = notice.getNoticeNumber();
+		String noticetitle = notice.getNoticeTitle();
+		String noticetext = notice.getNoticeText();
+		
+		String noticefilename = notice.getNoticeFileName().getOriginalFilename();
+		MultipartFile file = notice.getNoticeFileName();
+		
+		FileStorageService.uploadFile(downloadspath, file);
+		Date date = new java.sql.Date(System.currentTimeMillis());
+		
+		noticeRepo.updatenotice(id,noticenumber,noticetitle);
+		
+	}
 }

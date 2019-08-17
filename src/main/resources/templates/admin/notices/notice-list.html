@@ -60,8 +60,8 @@
 							<td th:text="${notice.noticeText}"></td>
 							<td th:text="${notice.UploadedDate}"></td>
 							<td>
-								<a   class="button is-primary is-small">Edit</a>
-								<a  class="button is-danger is-small">Delete</a>
+								<a th:href="@{/admin/notices/edit-notice(id=${notice.Id})}"  class="button is-primary is-small">Edit</a>
+								<a   th:href="@{/admin/notices/delete-notice(id=${notice.Id})}" class="button is-danger is-small">Delete</a>
 							</td>
 
 						</tr>

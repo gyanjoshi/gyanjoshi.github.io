@@ -12,7 +12,7 @@ import com.example.projectx.form.AddDownloadForm;
 import com.example.projectx.form.AddNoticeForm;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Download;
-
+import com.example.projectx.model.Notice;
 import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.service.DownloadService;
@@ -91,9 +91,39 @@ public class AdminController {
 	    @RequestMapping(value = "/admin/notices/add-notice", method = RequestMethod.POST)
 	    public String postNotice(@ModelAttribute AddNoticeForm notice ,Model model) {
 	    	//download service provides downloads and notice related services,hence downloadservice is used here
+	    	System.out.println("reached add notice post method");
 	    	downloadService.addNotice(notice);
 	    	model.addAttribute("notices", noticerepo.findAll());
-	        return "admin/downloads/notice-list";
+	        return "admin/notices/notice-list";
 	    }
+	    
+	    
+	    @RequestMapping(value = "/admin/notices/delete-notice", method = RequestMethod.GET)
+	    public String deleteNotice(@RequestParam("id") int id ,Model model) {
+
+	    	noticerepo.deleteById(id);  
+	    model.addAttribute("notices",noticerepo.findAll());
+	        return "admin/notices/notice-list";
+	    }
+	    
+	    
+	    //edit-downloads added on 8/17/2019 12:!3 pm
+	    @RequestMapping(value = "/admin/notices/edit-notice", method = RequestMethod.GET)
+	    public String editNotice(@RequestParam Integer id, Model model) {
+	    	Notice notice = noticerepo.findById(id).get();
+			model.addAttribute("notice", notice);
+			return "admin/notices/add-notice";   
+	    }
+	    
+	    @RequestMapping(value = "/admin/notices/edit-notice", method = RequestMethod.POST)
+	    public String editNotice(@RequestParam("id") int id, @ModelAttribute AddNoticeForm notice ,Model model) {
+	    downloadService.editnotice(id, notice);
+	    System.out.println("edit- download successfully reached");
+	    model.addAttribute("notices",noticerepo.findAll());
+	        return "admin/notices/notice-list";
+	    }
+	    
+	    
+	    
 	    
 }

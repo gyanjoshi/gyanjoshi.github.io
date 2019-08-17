@@ -1,5 +1,7 @@
 package com.example.projectx.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,13 +44,12 @@ public class DownloadService {
 	
 	public void addDownload(AddDownloadForm download)
 	{
-		String title = download.getTitle();
-		MultipartFile file = download.getFile();
+		String title = download.getDownloadTopic();
+		MultipartFile file = download.getDownloadFilePath();
 		
 		FileStorageService.uploadFile(downloadspath, file);
 		
 		// add in database
-		
 		// Download Object
 		Download d = new Download();
 		d.setDownloadTopic(title);
@@ -69,6 +70,8 @@ public class DownloadService {
 			return journalspath;
 		else if	(type.equalsIgnoreCase("cover"))
 			return coverpagepath;
+		else if	(type.equalsIgnoreCase("download"))
+			return downloadspath;
 		else
 			return basepath;
 	}
@@ -77,6 +80,22 @@ public class DownloadService {
 	public void addNotice(AddNoticeForm notice) {
 		// TODO Auto-generated method stub
 		
+	}
+	public void editDownload(int id, AddDownloadForm download)
+	{
+		String title = download.getDownloadTopic();
+		
+		String fileName = download.getDownloadFilePath().getOriginalFilename();
+		System.out.println("file name is :"+fileName);
+		System.out.println("file name is :"+title);
+		
+		//download.setdownloadTopic(title);		
+        
+		FileStorageService.uploadFile(downloadspath, download.getDownloadFilePath());
+        
+        Date date = new java.sql.Date(System.currentTimeMillis());
+
+        downloadRepo.editDownload(id, title, fileName, date);
 	}
 
 }

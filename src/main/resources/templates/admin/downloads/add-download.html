@@ -32,18 +32,18 @@
 			
 		</div>
 	</section>
-      
+     <!--  action="/admin/downloads/add-download" -->
       <!-- start of main body -->
      <div class="container">
 		<div class="columns">
 			<div class="column is-full">
 				<div class="box">
-					<form th:object="${download}" action="/admin/downloads/add-download" method="post" enctype="multipart/form-data"> 
+					<form th:object="${download}"  method="post" enctype="multipart/form-data"> 
 						
 						<div class="field">
 							<label class="label is-small">Downloads Title</label>
 							<div class="control">
-								<input th:field="*{title}" class="input is-small" />
+								<input th:field="*{downloadTopic}" class="input is-small" />
 							</div>
 						</div>
 						
@@ -51,7 +51,7 @@
 						 <div class="field">
 							<label class="label is-small">Upload File</label>
 							<div class="control">
-     						<input th:field="*{file}" type="file">
+     						<input th:field="*{DownloadFilePath}" type="file">
    								 </div>
 						</div>
 						</div>

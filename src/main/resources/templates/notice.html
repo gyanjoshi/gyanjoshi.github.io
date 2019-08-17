@@ -85,6 +85,7 @@
 							<th>Notices number</th>
 							<th>Notice Title</th>
 							<th>Notice File Name</th>
+							<th>Notice Uploaded Date</th>
 							<th>Action</th>
 
 						</tr>
@@ -95,6 +96,7 @@
 							<td th:text="${notice.Notice_Number}"></td>
 							<td th:text="${notice.NoticeTitle}"></td>
 							<td th:text="${notice.NoticeFileName}"></td>
+							<td th:text="${notice.uploadedDate}"></td>
 							
 							<td>
 								<a th:href="@{'/download/file/'+${notice.NoticeFileName}}"  class="button is-primary is-small">View</a>

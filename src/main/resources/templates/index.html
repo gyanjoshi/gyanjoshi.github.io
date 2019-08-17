@@ -151,7 +151,7 @@
             <h2 class="title">About Us</h2>
               <p><div>
               <!-- <div th:each="p : ${page}">  -->
-                <span th:utext="${#strings.abbreviate(page.html,600)} "></span>
+                <span th:utext="${#strings.abbreviate(page.html,600)}"></span>
                 <span ><a href="/aboutus" >Read more</a></span>
                
             </div> 
@@ -171,32 +171,33 @@
               <!-- Start news tab content -->
               <div class="tab-pane fade in active" id="notice">                
                 <ul class="news_tab">
-                  <li>
-                    <div class="media">
+                <li>
+                    <div class="media" th:each="notice : ${notices}">
                       <div class="media-left">
                         <a class="news_img" href="#">
                           <img class="media-object" src="img/news.jpg" alt="img">
                         </a>
                       </div>
                       <div class="media-body">
-                       <a href="#">Dummy text of the printing and typesetting industry</a>
-                       <span class="feed_date">28.02.15</span>
+                      <span th:utext="${notice.NoticeTitle}"></span>
+                       <span class="feed_date" th:utext="${notice.uploadedDate}"></span>
                       </div>
                     </div>
                   </li>
-                  <li>
-                    <div class="media">
-                      <div class="media-left">
-                        <a class="news_img" href="#">
-                          <img class="media-object" src="img/news.jpg" alt="img">
-                        </a>
-                      </div>
-                      <div class="media-body">
-                       <a href="#">Dummy text of the printing and typesetting industry</a>
-                       <span class="feed_date">28.02.15</span>
-                      </div>
-                    </div>
-                  </li>
+                    <li>
+                      <div class="media">
+                        <div class="media-left">
+                          <a class="news_img" href="#">
+                            <img class="media-object" src="img/news.jpg" alt="img">
+                          </a>
+                        </div>
+                        <div class="media-body">
+                         <a href="#">Dummy text of the printing and typesetting industry</a>
+                         <span class="feed_date">27.02.15</span>
+                        </div>
+                      </div>                   
+                    </li>
+                 
                 </ul>                
                 <a class="see_all" href="notices">See All</a>
               </div>
@@ -217,6 +218,7 @@
                         </div>
                       </div>                   
                     </li>
+                    
                     <li>
                       <div class="media">
                         <div class="media-left">
@@ -286,7 +288,7 @@
                         </a>
                       </div>
                       <div class="media-body">
-                       <a th:href="@{'/download/file/'+${downloadlist.DownloadFilePath}}"><span th:utext="${downloadlist.downloadTopic}"></span></a>
+                       <a th:href="@{/download(type='download',file=${downloadlist.DownloadFilePath})}"><span th:utext="${downloadlist.downloadTopic}"></span></a>
                        <span class="feed_date">27.02.15</span>
                       </div>
                     </div>

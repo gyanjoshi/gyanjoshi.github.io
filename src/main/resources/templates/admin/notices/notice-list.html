@@ -28,7 +28,7 @@
       <hr>
        <div class = "row">
       <div class="container">
-			<h1 class="title">Downloads List</h1>
+			<h1 class="title">Notice List</h1>
 		</div>
       
       </div> 
@@ -39,29 +39,30 @@
 			<div class="column is-full">
 				<div class="field is-grouped">
 					<div class="control">
-						<a th:href="@{/admin/downloads/add-download}" class="button is-success is-small">Add Downloads</a>
+						<a th:href="@{/admin/notices/add-notice}" class="button is-success is-small">Add Notice</a>
 					</div>
 				</div>
 				<table class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
 						<tr>
-							<th>Downloads Topic</th>
-							<th>Uploaded Date</th>
+							<th>Notice Number</th>
+							<th>Notice Title</th>
+							<th>Notice Text</th>
+							<th>Notice Title</th>
 							<th>Action</th>
-
 						</tr>
 					</thead>
 					
 					 <tbody>
-						<tr th:each="download : ${downloads}">
-							<td th:text="${download.downloadTopic}"></td>
-							<td th:text="${download.DownloadFilePath}"></td>
-							<td th:text="${download.UploadedDate}"></td>
+						<tr th:each="notice : ${notices}">
+							<td th:text="${notice.NoticeNumber}"></td>
+							<td th:text="${notice.NoticeTitle}"></td>
+							<td th:text="${notice.noticeText}"></td>
+							<td th:text="${notice.UploadedDate}"></td>
 							<td>
-								<a th:href="@{/edit-user(uname=${download.Id})}"  class="button is-primary is-small">Edit</a>
-								<a th:href=@{/delete-user(uname=${download.Id})} class="button is-danger is-small">Delete</a>
+								<a   class="button is-primary is-small">Edit</a>
+								<a  class="button is-danger is-small">Delete</a>
 							</td>
-								 
 
 						</tr>
 					</tbody> 

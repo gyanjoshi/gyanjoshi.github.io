@@ -48,6 +48,8 @@ public class IndexController {
         model.addAttribute("title", "Welcome");
         model.addAttribute("page", pagerepo.getOne(1));
         model.addAttribute("downloads",downloadrepo.findAll() );
+        
+        model.addAttribute("notices",noticerepo.findAll() );
         model.addAttribute("message", "This is welcome page!");
         return "index";
     }
@@ -130,7 +132,7 @@ public class IndexController {
     
     @RequestMapping(value = "/notices", method = RequestMethod.GET)
     public String getNotices(Model model) {
-    	model.addAttribute("notices",noticerepo.findAll() );
+    	model.addAttribute("notices",noticerepo.findAll());
     	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
 	    model.addAttribute("articleUploadForm", articleUploadForm);
         return "notice";
@@ -152,13 +154,11 @@ public class IndexController {
     }
     
     
-	
 	  @RequestMapping(value = "/user", method = RequestMethod.GET) 
 	  public String userPage(Model model) { 
 	  model.addAttribute("users", userrepo.findAll());
 	  return "/admin/user/user-list"; }
 	 
-    
     
     @RequestMapping(value = "edit-user", method = RequestMethod.GET)
     public String editUser(@RequestParam String uname, Model model) {
@@ -168,7 +168,7 @@ public class IndexController {
     }
     
     @RequestMapping(value = "edit-user", method = RequestMethod.POST)
-    public String addUserPage(@ModelAttribute AppUser user) {
+    public String editUserPage(@ModelAttribute AppUser user) {
     	System.out.println(user);
     	userrepo.save(user);
         return "redirect:/user";

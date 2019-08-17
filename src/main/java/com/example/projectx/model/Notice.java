@@ -18,15 +18,15 @@ public class Notice {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer Id;
-	private String  Notice_Number;
+	private String  NoticeNumber;
 	private String NoticeTitle;
 	private String NoticeFileName;
-	private Boolean hasAttachment;
-	private Boolean uploadedDate;
-	public Boolean getUploadedDate() {
+	private String noticeText;
+	private Date uploadedDate;
+	public Date getUploadedDate() {
 		return uploadedDate;
 	}
-	public void setUploadedDate(Boolean uploadedDate) {
+	public void setUploadedDate(Date uploadedDate) {
 		this.uploadedDate = uploadedDate;
 	}
 	public Integer getId() {
@@ -35,12 +35,7 @@ public class Notice {
 	public void setId(Integer id) {
 		Id = id;
 	}
-	public String getNotice_Number() {
-		return Notice_Number;
-	}
-	public void setNotice_Number(String notice_Number) {
-		Notice_Number = notice_Number;
-	}
+	
 	public String getNoticeTitle() {
 		return NoticeTitle;
 	}
@@ -53,11 +48,18 @@ public class Notice {
 	public void setNoticeFileName(String noticeFileName) {
 		NoticeFileName = noticeFileName;
 	}
-	public Boolean getHasAttachment() {
-		return hasAttachment;
+	public String getNoticeText() {
+		return noticeText;
 	}
-	public void setHasAttachment(Boolean hasAttachment) {
-		this.hasAttachment = hasAttachment;
+	public void setNoticeText(String noticeText) {
+		this.noticeText = noticeText;
 	}
+	public String getNoticeNumber() {
+		return NoticeNumber;
+	}
+	public void setNoticeNumber(String noticeNumber) {
+		NoticeNumber = noticeNumber;
+	}
+	
 	
 }

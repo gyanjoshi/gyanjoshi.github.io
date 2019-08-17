@@ -38,18 +38,25 @@
 		<div class="columns">
 			<div class="column is-full">
 				<div class="box">
-					<form th:object="${notice}" action="/admin/notices/add-notice" method="post" enctype="multipart/form-data"> 
+					<form th:object="${notice}"  method="post" enctype="multipart/form-data"> 
 						
 						<div class="field">
-							<label class="label is-small">Downloads Title</label>
+							<label class="label is-small">notice  number</label>
 							<div class="control">
-								<input th:field="*{Notice_Number}" class="input is-small" />
+								<input th:field="*{NoticeNumber}" class="input is-small" />
 							</div>
 						</div>
 						<div class="field">
 							<label class="label is-small">Notice Title</label>
 							<div class="control">
 								<input th:field="*{NoticeTitle}" class="input is-small" />
+							</div>
+						</div>
+						
+						<div class="field">
+							<label class="label is-small">Notice Text</label>
+							<div class="control">
+								<input th:field="*{noticeText}" class="input is-small" />
 							</div>
 						</div>
 						

@@ -6,11 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.projectx.form.AddDownloadForm;
-<<<<<<< HEAD
+
 import com.example.projectx.form.AddNoticeForm;
 import com.example.projectx.model.Article;
-=======
->>>>>>> branch 'master' of https://github.com/Nabins/Journal.git
+
 import com.example.projectx.model.Download;
 import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;

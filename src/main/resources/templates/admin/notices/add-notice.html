@@ -1,0 +1,84 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta>
+<title>User Form</title>
+
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    <title>GGMC</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <link href="/adminstatic/css/admin.css" rel="stylesheet">
+ <script src="/adminstatic/js/admin.js"></script>
+</head>
+
+<body>
+<div class="page-wrapper chiller-theme toggled">
+ <div th:replace = "admin/adminpage :: sidebar"></div>
+ <main class="page-content">
+    <div class="container-fluid">
+      <hr>
+      
+       	<section class="section">
+		<div class="container">
+			<h1 class="title">Notice Form</h1>
+			
+		</div>
+	</section>
+      
+      <!-- start of main body -->
+     <div class="container">
+		<div class="columns">
+			<div class="column is-full">
+				<div class="box">
+					<form th:object="${notice}" action="/admin/notices/add-notice" method="post" enctype="multipart/form-data"> 
+						
+						<div class="field">
+							<label class="label is-small">Downloads Title</label>
+							<div class="control">
+								<input th:field="*{Notice_Number}" class="input is-small" />
+							</div>
+						</div>
+						<div class="field">
+							<label class="label is-small">Notice Title</label>
+							<div class="control">
+								<input th:field="*{NoticeTitle}" class="input is-small" />
+							</div>
+						</div>
+						
+						<div>
+						 <div class="field">
+							<label class="label is-small">Upload File</label>
+							<div class="control">
+     						<input th:field="*{file}" type="file">
+   								 </div>
+						</div>
+						</div>
+						
+						<div class="field is-grouped">
+							<div class="control">
+								<button class="button is-success is-small">Submit</button>
+							</div>
+							<div class="control">
+								<a th:href="@{/admin/notice/notice-list}" class="button is-danger is-small">Cancel</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+      <!-- end of main body -->
+      
+
+  </main>
+</div>
+</body>
+</html> 

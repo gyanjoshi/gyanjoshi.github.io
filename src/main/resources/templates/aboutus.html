@@ -1,0 +1,74 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head>
+    <!--=============================================== 
+    Template Design By WpFreeware Team.
+    Author URI : http://www.wpfreeware.com/
+    ====================================================-->
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <title>LOTUS EYE</title>
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/icon" href="img/wpf-favicon.png"/>
+
+    <!-- CSS
+    ================================================== -->       
+    <!-- Bootstrap css file-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font awesome css file-->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Superslide css file-->
+    <link rel="stylesheet" href="css/superslides.css">
+    <!-- Slick slider css file -->
+    <link href="css/slick.css" rel="stylesheet"> 
+    <!-- Circle counter cdn css file -->
+    <link rel='stylesheet prefetch' href='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/css/jquery.circliful.css'>  
+    <!-- smooth animate css file -->
+    <link rel="stylesheet" href="css/animate.css"> 
+    <!-- preloader -->
+    <link rel="stylesheet" href="css/queryLoader.css" type="text/css" />
+    <!-- gallery slider css -->
+    <link type="text/css" media="all" rel="stylesheet" href="css/jquery.tosrus.all.css" />    
+    <!-- Default Theme css file -->
+    <link id="switcher" href="css/themes/default-theme.css" rel="stylesheet">
+    <!-- Main structure css file -->
+    <link href="style.css" rel="stylesheet">
+
+   
+    <!-- Google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>   
+    <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>    
+
+   
+
+  </head>
+  <body>    
+
+
+    <!--=========== BEGIN HEADER SECTION ================-->
+    
+    
+    <div th:replace = "fixedlayout :: header"></div> 
+    
+  
+
+<hr><hr><hr><hr><hr>
+ <div class="form-group"  >
+  <label for="exampleFormControlTextarea1">About Us</label>
+ 
+  
+  <p><div th:each="p : ${aboutus}">
+                <span th:utext="${p.html}"></span>
+</div>
+</div>
+
+
+  </body>

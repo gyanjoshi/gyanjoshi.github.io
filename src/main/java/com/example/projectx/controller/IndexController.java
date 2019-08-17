@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.projectx.form.ArticleUploadForm;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.repository.DownloadRepository;
+import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
 import com.example.projectx.utils.WebUtils;
@@ -30,6 +31,8 @@ public class IndexController {
 	private PageRepository pagerepo;
 	@Autowired
 	private DownloadRepository downloadrepo;
+	@Autowired
+	private NoticeRepository noticerepo;
 
 	
 	@RequestMapping(path = "register", method = RequestMethod.GET)
@@ -43,7 +46,7 @@ public class IndexController {
 	    model.addAttribute("articleUploadForm", articleUploadForm);
 	    
         model.addAttribute("title", "Welcome");
-        model.addAttribute("page", pagerepo.getOne(2));
+        model.addAttribute("page", pagerepo.getOne(1));
         model.addAttribute("downloads",downloadrepo.findAll() );
         model.addAttribute("message", "This is welcome page!");
         return "index";
@@ -108,6 +111,13 @@ public class IndexController {
 	    model.addAttribute("articleUploadForm", articleUploadForm);
         return "/author-guidelines";
     }
+    @RequestMapping(value = "/aboutus", method = RequestMethod.GET)
+    public String aboutUs(Model model) {
+    	model.addAttribute("aboutus", pagerepo.getOne(1));
+    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
+	    model.addAttribute("articleUploadForm", articleUploadForm);
+        return "/aboutus";
+    }
     
    
     @RequestMapping(value = "/downloads", method = RequestMethod.GET)
@@ -115,7 +125,15 @@ public class IndexController {
     	model.addAttribute("downloads",downloadrepo.findAll() );
     	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
 	    model.addAttribute("articleUploadForm", articleUploadForm);
-        return "downloads";
+        return "/downloads";
+    }
+    
+    @RequestMapping(value = "/notices", method = RequestMethod.GET)
+    public String getNotices(Model model) {
+    	model.addAttribute("notices",noticerepo.findAll() );
+    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
+	    model.addAttribute("articleUploadForm", articleUploadForm);
+        return "notice";
     }
     
    
@@ -135,7 +153,7 @@ public class IndexController {
     
     
 	
-	  @RequestMapping(value = "user", method = RequestMethod.GET) 
+	  @RequestMapping(value = "/user", method = RequestMethod.GET) 
 	  public String userPage(Model model) { 
 	  model.addAttribute("users", userrepo.findAll());
 	  return "/admin/user/user-list"; }

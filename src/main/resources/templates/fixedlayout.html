@@ -20,7 +20,7 @@
               </button>
               <!-- LOGO -->
               <!-- TEXT BASED LOGO -->
-              <a class="navbar-brand" href="index">GhodaGhodi Campus <span>Research cell</span></a>              
+              <a class="navbar-brand" href="/">GhodaGhodi Campus <span>Research cell</span></a>              
               <!-- IMG BASED LOGO  -->
                <!-- <a class="navbar-brand" href="index.html"><img src="img/logo.png" alt="logo"></a>  -->            
                      
@@ -31,8 +31,8 @@
                    <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">about us<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="/#">About Us</a></li>
-                    <li><a href="/#">Editorial Board</a></li>
+                    <li><a href="/aboutus">About Us</a></li>
+                    <li><a href="#oureditors" id = "oureditors">Editorial Board</a></li>
                     <li><a href="/contact">Contact</a></li>               
                   </ul>
                 </li> 
@@ -114,7 +114,11 @@
 
 
 </div>
-
+ <script>
+$('#oureditors').click(function(){
+	$(document).scrollTop(1750) // any value you need
+	});
+</script> 
 </body>
 
 

@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.projectx.form.AddDownloadForm;
+import com.example.projectx.form.AddNoticeForm;
 import com.example.projectx.model.Article;
 import com.example.projectx.model.Download;
 import com.example.projectx.repository.DownloadRepository;
+import com.example.projectx.repository.NoticeRepository;
 
 @Service
 public class DownloadService {
@@ -21,6 +23,9 @@ public class DownloadService {
 	
 	@Autowired
 	private DownloadRepository downloadRepo;
+	
+	@Autowired
+	private NoticeRepository noticeRepo;
 	
 	
 	public void addDownload(AddDownloadForm download)
@@ -42,6 +47,12 @@ public class DownloadService {
         
         
         downloadRepo.save(d);
+	}
+
+
+	public void addNotice(AddNoticeForm notice) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

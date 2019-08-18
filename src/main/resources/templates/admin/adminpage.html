@@ -29,15 +29,14 @@
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <a href="#">Sidebar</a>
+        <a href="#">Admin Menu</a>
         <div id="close-sidebar">
           <i class="fas fa-times"></i>
         </div>
       </div>
       <div class="sidebar-header">
         <div class="user-pic">
-          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-            alt="User picture">
+          <img th:if="*{currentProfile != null}"  th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(currentProfile)}}" width="50" height="50"/>
         </div>
         <div class="user-info">
           
@@ -69,7 +68,7 @@
             <span>General</span>
           </li>
           <li class="sidebar-dropdown">
-            <a href="/user">
+            <a href="/admin/user">
               <i class="fa fa-tachometer-alt"></i>
               <span>User</span>
              <!--  <span class="badge badge-pill badge-warning">New</span> -->
@@ -91,7 +90,7 @@
             </div> -->
           </li>
           <li class="sidebar-dropdown">
-            <a href="/pages">
+            <a href="/admin/pages">
               <i class="fa fa-shopping-cart"></i>
               <span>Pages</span>
               <span class="badge badge-pill badge-danger">3</span>

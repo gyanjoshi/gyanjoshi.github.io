@@ -51,7 +51,7 @@
 				    
 				    <div class="listBlock">
 				        <div class="search-block">
-				            <div class="field">
+				            <div class="form-group">
 							<select class="form-control" id="journalId" name="journalId">
 						    <option value="0">Select Journal</option>
 						    <option th:each="journal : ${journals}" th:value="${journal.journalId}" th:text="${journal.journalText}"></option>
@@ -65,18 +65,18 @@
 				
 				        </div>
 				    </div>
-				    <div class="field">
+				    <div class="form-group">
 							<label class="label is-small">Editorial Page:</label>
-							<div class="control">
+							<div class="col-sm-10">
 								<input type="file" name="editorial" value="file" id="editorial">
 							</div>
 						</div>
 								    
 		             <div class="field is-grouped">
-							<div class="control">
+							<div class="col-sm-10">
 								<button class="button is-success is-small">Prepare Journal</button>
 							</div>
-							<div class="control">
+							<div class="col-sm-10">
 								<a th:href="@{/editor/viewjournals}" class="button is-danger is-small">Cancel</a>
 							</div>
 						</div>

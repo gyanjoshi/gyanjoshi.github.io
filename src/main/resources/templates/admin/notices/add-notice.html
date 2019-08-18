@@ -40,33 +40,33 @@
 				<div class="box">
 					<form th:object="${notice}" action="/admin/notices/add-notice" method="post" enctype="multipart/form-data"> 
 						
-						<div class="field">
+						<div class="form-group">
 							<label class="label is-small">Downloads Title</label>
-							<div class="control">
+							<div class="col-sm-10">
 								<input th:field="*{Notice_Number}" class="input is-small" />
 							</div>
 						</div>
-						<div class="field">
+						<div class="form-group">
 							<label class="label is-small">Notice Title</label>
-							<div class="control">
+							<div class="col-sm-10">
 								<input th:field="*{NoticeTitle}" class="input is-small" />
 							</div>
 						</div>
 						
 						<div>
-						 <div class="field">
+						 <div class="form-group">
 							<label class="label is-small">Upload File</label>
-							<div class="control">
+							<div class="col-sm-10">
      						<input th:field="*{file}" type="file">
    								 </div>
 						</div>
 						</div>
 						
 						<div class="field is-grouped">
-							<div class="control">
+							<div class="col-sm-10">
 								<button class="button is-success is-small">Submit</button>
 							</div>
-							<div class="control">
+							<div class="col-sm-10">
 								<a th:href="@{/admin/notice/notice-list}" class="button is-danger is-small">Cancel</a>
 							</div>
 						</div>

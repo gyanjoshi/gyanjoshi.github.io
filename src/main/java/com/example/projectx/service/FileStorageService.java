@@ -19,10 +19,10 @@ public class FileStorageService {
 	
 	
 
-    public static void uploadFile(String path, MultipartFile file) 
+    public static void uploadFile(String path, String fileName, MultipartFile file) 
     {
     	
-    	String fileName=null;
+    	//String fileName=null;
     	String directoryPath = null;
 
         if (file.isEmpty()) {
@@ -46,9 +46,8 @@ public class FileStorageService {
         else
         	System.out.println("Directory already exists: "+directoryPath);
 
-        try {
-            fileName = file.getOriginalFilename();
-            InputStream is = file.getInputStream();
+        try {	           
+	            InputStream is = file.getInputStream();
 
             System.out.println("File :"+directoryPath + separator+fileName);
             Files.copy(is, Paths.get(directoryPath + separator+fileName),
@@ -66,6 +65,15 @@ public class FileStorageService {
 	    File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
 	    multipart.transferTo(convFile);
 	    return convFile;
+	}
+	public static void deleteFile(String path, String file) {
+		
+		File _file = new File(path+file);
+		
+		if(_file.exists())
+			_file.delete();
+		
+		
 	}
 
 }

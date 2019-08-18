@@ -75,7 +75,7 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
         }
 
         if (isAdmin(roles)) {
-            url = "/user";
+            url = "/admin/user";
         } else if (isEditor(roles)) {
             url = "/editor";
         } else {

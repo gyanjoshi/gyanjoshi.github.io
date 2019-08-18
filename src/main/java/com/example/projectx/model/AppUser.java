@@ -39,8 +39,31 @@ public class AppUser implements Serializable
 	private String email;
 	@Column(name="country")	
 	private String country;
+	@Column(name="phone")
+	private String phone;
+	
+	@Column(name="title")
+	private String title;
+	
+	@Column(name="profession")
+	private String profession;
+	
+	@Column(name="qualification")
+	private String qualification;
+	
+	@Column(name="profile_picture")
+	private String profilePicture;
+	
 	@Column(name="enabled")	
 	private short enabled;
+	
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -106,6 +129,30 @@ public class AppUser implements Serializable
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getProfession() {
+		return profession;
+	}
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+	public String getQualification() {
+		return qualification;
+	}
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
 	}
 	
 	

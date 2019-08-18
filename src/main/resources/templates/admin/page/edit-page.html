@@ -42,27 +42,27 @@
 				<div class="box">
 				<form th:object="${page}" method="POST">
 						<input type="hidden" th:field="*{Id}" />
-						<div class="field">
+						<div class="form-group">
 							<label class="label is-small">Title</label>
-							<div class="control">
+							<div class="col-sm-10">
 								<input th:field="*{title}" class="input is-small" />
 							</div>
 						</div>
-						<div class="field">
+						<div class="form-group">
 							<label class="label is-small">Url</label>
-							<div class="control">
+							<div class="col-sm-10">
 								<input th:field="*{url}" class="input is-small" />
 							</div>
 						</div>
 						
-						<!-- <div class="field">
+						<!-- <div class="form-group">
 							<label class="label is-small">Html</label>
-							<div class="control">
+							<div class="col-sm-10">
 								<input th:field="*{html}" class="input is-small" />
 							</div>
 						</div> -->
 						
-	<div class="field">
+	<div class="form-group">
       <textarea cols="10" rows="5" id="content" name="content" th:field="*{html}"> 
         
       </textarea>
@@ -72,10 +72,10 @@
     </div>
 						
 						<div class="field is-grouped">
-							<div class="control">
+							<div class="col-sm-10">
 								<button class="button is-success is-small">Submit</button>
 							</div>
-							<div class="control">
+							<div class="col-sm-10">
 								<a th:href="@{/pages}" class="button is-danger is-small">Cancel</a>
 							</div>
 						</div>

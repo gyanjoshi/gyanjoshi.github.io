@@ -3,12 +3,15 @@ package com.example.projectx.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,28 +52,36 @@ public class EditorController {
 	
 	
 	@RequestMapping(path = "/editor", method = RequestMethod.GET)
-	public String editor(Model model) {
+	public String editor(Model model, Principal principal) {
+		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
 		return "/editor/editorpage";
 	}
 	
 	@RequestMapping(path = "/editor/newjournal", method = RequestMethod.GET)
-	public String newJournal(Model model) {
+	public String newJournal(Model model, Principal principal) {
 		
 		NewJournalForm newJournal = new NewJournalForm();
 	    model.addAttribute("newJournal", newJournal);
 	    
+	    User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return "/editor/newjournal";
 	}
 	@RequestMapping(path = "/editor/add-cover", method = RequestMethod.GET)
-	public String add_cover(@RequestParam String jid, Model model) {
+	public String add_cover(@RequestParam String jid, Model model, Principal principal) {
 		
 		model.addAttribute("jid", jid);
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
 	    
 		return "/editor/add-cover";
 	}
 	
 	@RequestMapping(path = "/editor/add-cover", method = RequestMethod.POST)
-	public String addCoverPage(@RequestParam int jid, MultipartFile file, Model model) {
+	public String addCoverPage(@RequestParam int jid, MultipartFile file, Model model, Principal principal) {
 		
 		System.out.println("Updated JID="+jid);
 		journalService.updateCoverPage(jid, file);
@@ -78,10 +89,13 @@ public class EditorController {
 		model.addAttribute("journals", journalService.getAllJournals());
 	    model.addAttribute("coverimages", journalService.getAllCoverImage());
 	    
+	    User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return "/editor/viewjournals";
 	}
 	@RequestMapping(path = "/editor/viewjournals", method = RequestMethod.GET)
-	public String viewJournal(Model model) {
+	public String viewJournal(Model model, Principal principal) {
 		
 		List<Journal> list = journalService.getAllJournals();
 		
@@ -98,12 +112,14 @@ public class EditorController {
 			model.addAttribute("message", "No active journals found. Please create journal");
 		}		
 		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
 	    
 		return "/editor/viewjournals";
 	}
 	
 	@RequestMapping(value = "/editor/edit-journal", method = RequestMethod.GET)
-    public String editJournal(@RequestParam int jid, Model model) {
+    public String editJournal(@RequestParam int jid, Model model, Principal principal) {
 		Journal journal = journalRepo.findById(jid).get();    	
 		model.addAttribute("journal", journal);
 		return "/editor/edit-journal";
@@ -111,10 +127,14 @@ public class EditorController {
 	
 	@RequestMapping(value = "/editor/edit-journal", method = RequestMethod.POST)
     public String updateJournal(@RequestParam int Id, @RequestParam String JournalTopic, @RequestParam String IssueNum, @RequestParam String VolumeNum ,
-    		@RequestParam String year, @RequestParam String month, Model model) {
+    		@RequestParam String year, @RequestParam String month, Model model, Principal principal) {
     	
 		model.addAttribute("journals", journalService.getAllJournals());
 	    model.addAttribute("coverimages", journalService.getAllCoverImage());
+	    
+	    User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 	    
 		journalService.updateJournal(Id,JournalTopic,IssueNum,VolumeNum,year,month);
         return "/editor/viewjournals";
@@ -122,13 +142,16 @@ public class EditorController {
 	
 	
 	@RequestMapping(path = "/editor/pendingreview", method = RequestMethod.GET)
-	public String pendingReview(Model model) {
+	public String pendingReview(Model model, Principal principal) {
 		
 		model.addAttribute("pending", articleService.getPendingArticles());
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return "editor/pendingreview";
 	}
 	@RequestMapping(path = "/editor/preparejournal", method = RequestMethod.GET)
-	public String prepare(Model model) {
+	public String prepare(Model model, Principal principal) {
 		
 		List<JournalDropDownDto> list = journalService.getJournalsDropdown();
 		
@@ -149,14 +172,16 @@ public class EditorController {
 			model.addAttribute("message", "No active journals found. Please create journal");
 		}	
 		
-		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return "/editor/preparejournal";
 	}
 	
 	@RequestMapping(path = "/editor/preparejournal", method = RequestMethod.POST)
 	public String prepareJournal(@RequestParam int journalId,
 			@RequestParam MultipartFile editorial,
-			Model model) {
+			Model model, Principal principal) {
 		
 		String returnPage;
 		File f = null;
@@ -183,12 +208,14 @@ public class EditorController {
 			returnPage = "/editor/publishjournal";
 		}
 		
-		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return returnPage;
 	}
 	
 	@RequestMapping(path = "/editor/publishjournal", method = RequestMethod.GET)
-	public String publish(Model model) {
+	public String publish(Model model, Principal principal) {
 		
 		List<PreparedJournalDto> list = journalService.getPreparedJournals();
 		
@@ -211,12 +238,14 @@ public class EditorController {
 			
 		}	
 		
-		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return "/editor/publishjournal";
 	}
 	
 	@RequestMapping(path = "/editor/publish", method = RequestMethod.GET)
-	public String publishFinal(@RequestParam("jid") int journalId, Model model) {
+	public String publishFinal(@RequestParam("jid") int journalId, Model model, Principal principal) {
 		
 		journalService.publish(journalId);
 		
@@ -239,38 +268,51 @@ public class EditorController {
 			model.addAttribute("message", "No Prepared journals found. Please prepare journal for publishing.");
 		}
 		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return "/editor/publishjournal";
 	
 	}
 	
 	@RequestMapping(value = "/editor/approved-articles/{journalid}", method = RequestMethod.GET)
-	public String showApprovedArticles(Model model, @PathVariable("journalid") int journalid) {
+	public String showApprovedArticles(Model model, @PathVariable("journalid") int journalid, Principal principal) {
 	    
 		model.addAttribute("articles", articleService.getApprovedArticles(journalid));
 		System.out.println("Journal Id:"+journalid);
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 	    return "/editor/approved-articles :: resultsList";
 	}
 	
 	
 	@RequestMapping(path = "/editor/send-feedback", method = RequestMethod.GET)
-	public String sendFeedback(@RequestParam int article,@RequestParam String author, Model model) {
+	public String sendFeedback(@RequestParam int article,@RequestParam String author, Model model, Principal principal) {
 		
 		model.addAttribute("article", articleService.getArticleById(article));
 		model.addAttribute("author", userDetailsService.getUserByUsername(author));
+		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		
 		return "/editor/send-feedback";
 	}
 	
 	@RequestMapping(path = "/editor/send-feedback", method = RequestMethod.POST)
-	public String postFeedback(@RequestParam int Id,@RequestParam String userName, @RequestParam String message, Model model) {
+	public String postFeedback(@RequestParam int Id,@RequestParam String userName, @RequestParam String message, Model model, Principal principal) {
 		
 		articleService.sendFeedback(Id, userName, message);
 		model.addAttribute("pending", articleService.getPendingArticles());
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return "editor/pendingreview";
 	}
 	
 	@RequestMapping(path = "/editor/approve", method = RequestMethod.GET)
-	public String approveArticle(@RequestParam int article,@RequestParam String author, Model model) {
+	public String approveArticle(@RequestParam int article,@RequestParam String author, Model model, Principal principal) {
 		
 		List<JournalDropDownDto> list = journalService.getJournalsDropdown();
 		if(list==null || list.size()==0)
@@ -282,15 +324,21 @@ public class EditorController {
 		model.addAttribute("article", articleService.getArticleById(article));
 		model.addAttribute("author", userDetailsService.getUserByUsername(author));
 		
-		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return "/editor/approve";
 	}
 	
 	@RequestMapping(path = "/editor/approve", method = RequestMethod.POST)
-	public String approveArticlePost(@RequestParam int Id,@RequestParam String userName, @RequestParam String message, @RequestParam String journalId, Model model) {
+	public String approveArticlePost(@RequestParam int Id,@RequestParam String userName, @RequestParam String message, @RequestParam String journalId, Model model,
+			Principal principal) {
 		
 		articleService.approve(Id, userName, message, Integer.valueOf(journalId));
 		model.addAttribute("pending", articleService.getPendingArticles());
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		return "editor/pendingreview";
 	}
 	
@@ -298,7 +346,7 @@ public class EditorController {
 
 	
 	@RequestMapping(value = "/editor/newjournal", method = RequestMethod.POST)
-	public String createNewJournal(HttpServletRequest request,Model model,@ModelAttribute("newJournal") NewJournalForm newJournal )
+	public String createNewJournal(HttpServletRequest request,Model model,@ModelAttribute("newJournal") NewJournalForm newJournal, Principal principal )
 	{
 	
 		String topic = newJournal.getTitle();
@@ -307,6 +355,10 @@ public class EditorController {
 		String message = newJournal.getMessage();
 		
 		journalService.createJournal(topic, issue, volume, message);
+		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
 		
 		return "/editor/editorpage";
 	 

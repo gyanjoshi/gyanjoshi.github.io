@@ -65,16 +65,16 @@ public class FileController {
 	   public String uploadOneFileHandlerPOST(HttpServletRequest request, //
 	         Model model, //
 	         @ModelAttribute("articleUploadForm") ArticleUploadForm articleUploadForm,
-//	         final @RequestParam("file") MultipartFile file,
-//	         @RequestAttribute("articleUploadForm") ArticleUploadForm articleUploadForm,
-	         BindingResult errors
-	         //RedirectAttributes redirectAttributes
+
+	         BindingResult errors,
+	         RedirectAttributes redirectAttributes
 	         ) 
-	{
+		{
+			String message = doUpload(request, model, articleUploadForm);
+			redirectAttributes.addFlashAttribute("message", message);
 			
-	//	System.out.println("file uploaded: "+file.getOriginalFilename());
-	 
-	      return this.doUpload(request, model, articleUploadForm);
+			return "redirect:/";
+			
 	 
 	   }
 	
@@ -83,27 +83,25 @@ public class FileController {
 			String topic = articleUploadForm.getTopic();
 			String abs = articleUploadForm.getArticleAbstract();
 			MultipartFile file = articleUploadForm.getFileData();
-			
-			
-			
-			System.out.println("topic: " + topic);
-			System.out.println("abstract: " + abs);
-			
-			
+	
+			String message = null;
 	      
 		if (file.isEmpty()) 
 	        {
 
-				//redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-	            return "authorhtml/authorindex";
+				message =  "Please select a file to upload";
+				return message;
+	            
 	        } 
-//	        
+	        
 	        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 	        String username = loggedInUser.getName();
-	    	System.out.println("Author="+username);
-//	    	
+	    	System.out.println("Author="+username);    	
 	    	articleService.saveArticle(topic,abs, file, username);
-	        return "index";
+	    	
+	    	message = "Article uploaded successfully.";
+	       
+	        return message;
 	    }
 
 	

@@ -31,14 +31,14 @@
 			<h1 class="title">Users Form</h1>
 			
 		</div>
-	</section>
+		</section>
       
       <!-- start of main body -->
      <div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="box">					
-					<form th:object="${user}" method="POST" action="/admin/user/add-user"  class="form-horizontal" enctype="multipart/form-data" >					
+					<form th:object="${user}" method="POST" action="/admin/user/edit-user"  class="form-horizontal" enctype="multipart/form-data" >					
 						<fieldset>
 						    <legend>User Details</legend>
 						    <div class="form-group">
@@ -47,70 +47,58 @@
 						    <option value="0">Select Title</option>
 						    <option th:each="title1 : ${titles}" th:value="${title1.title}" th:text="${title1.title}" ></option>
 						    </select>
-						</div>
-						</div>
-						    <div class="form-group">
+						</div>						
+						<div class="form-group">
 								<label class="control-label col-sm-2" for="fullname">Full Name</label>
 								<div class="col-sm-10">
-									<input th:field="*{user.fullName}" id="fullname" class="form-control" placeholder="Please enter full name"/>
+									<input th:field="*{fullName}" id="fullname" class="form-control" placeholder="Please enter full name"/>
 								</div>
 							</div>
 							
 							<div class="form-group">
 							<label class="control-label col-sm-2" for="address1">Address1</label>
 							<div class="col-sm-10">
-								<input th:field="*{user.address1}" id="address1" class="form-control" placeholder="Please enter address1" />
+								<input th:field="*{address1}" id="address1" class="form-control" placeholder="Please enter address1" />
 							</div>
 							</div>
 							<div class="form-group">
 							<label class="control-label col-sm-2" for="address2">Address2</label>
 							<div class="col-sm-10">
-								<input th:field="*{user.address2}" id="address2" class="form-control" placeholder="Please enter address2" />
+								<input th:field="*{address2}" id="address2" class="form-control" placeholder="Please enter address2" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="email">Email</label>
 							<div class="col-sm-10">
-								<input type="email" th:field="*{user.email}" id="email" class="form-control" placeholder="Please enter email" />
+								<input type="email" th:field="*{email}" id="email" class="form-control" placeholder="Please enter email" />
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2" for="cemail">Confirm Email:</label>
-							<div class="col-sm-10">
-								<input type="email" th:field="*{user.confirmEmail}" id="cemail" class="form-control" placeholder="Please re-enter email" />
-							</div>
-						</div>
+						
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="phone">Phone:</label>
 							<div class="col-sm-10">
-								<input th:field="*{user.phone}" id="phone" class="form-control" placeholder="Please enter phone" />
+								<input th:field="*{phone}" id="phone" class="form-control" placeholder="Please enter phone" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="city">City</label>
 							<div class="col-sm-10">
-								<input th:field="*{user.city}" id="city" class="form-control" placeholder="Please enter city" />
+								<input th:field="*{city}" id="city" class="form-control" placeholder="Please enter city" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="state">State</label>
 							<div class="col-sm-10">
-								<input th:field="*{user.state}" id="state" class="form-control" placeholder="Please enter state" />
+								<input th:field="*{state}" id="state" class="form-control" placeholder="Please enter state" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="country">Country</label>
 							<div class="col-sm-10">
-								<input th:field="*{user.country}" id="country" class="form-control" placeholder="Please enter country" />
+								<input th:field="*{country}" id="country" class="form-control" placeholder="Please enter country" />
 							</div>
-						</div>
-						
-						<div class="form-group">
-								<label class="control-label col-sm-2" for="profile">Profile Picture</label>
-								<div class="col-sm-10">
-									<input th:field="*{user.profilePicture}" id="profile" class="form-control" type="file"/>
-								</div>
-							</div>						
+						</div>		
+												
 						    
 						</fieldset>
 						<fieldset>
@@ -119,7 +107,7 @@
 								<div class="form-group">
 								<label class="control-label col-sm-2" for="qualification">Qualification</label>
 								<div class="col-sm-10">
-									<select th:field="*{user.qualification}" class="form-control" id="qualification" name="qualification" required="required">
+									<select th:field="*{qualification}" class="form-control" id="qualification" name="qualification" required="required">
 								    <option value="0">Select Qualification</option>
 								    <option th:each="q : ${qualifications}" th:value="${q.qualification}" th:text="${q.qualification}" ></option>
 								    </select>
@@ -132,28 +120,17 @@
 							<div class="form-group">
 							<label class="control-label col-sm-2" for="uname">UserName:</label>
 							<div class="col-sm-10">
-								<input th:field="*{user.userName}" class="form-control" id="uname" placeholder="Enter UserName"/>
+								<input th:field="*{userName}" class="form-control" id="uname" readonly/>
 							</div>
 							</div>
-						<div class="form-group">
-						    <label class="control-label col-sm-2" for="pwd">Password:</label>
-						    <div class="col-sm-10"> 
-						      <input th:field="*{user.password}" type="password" class="form-control" id="pwd" placeholder="Enter password">
-						    </div>
-						  </div>
-						<div class="form-group">
-						    <label class="control-label col-sm-2" for="cpwd">Confirm Password:</label>
-						    <div class="col-sm-10"> 
-						      <input th:field="*{user.confirmpassword}" type="password" class="form-control" id="cpwd" placeholder="re-confirm password">
-						    </div>
-						  </div>
-											
+						
+																
 						
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="role">Role</label>
-							<select th:field="*{user.role}" class="form-control" id="role" name="role" required="required">
+							<select th:field="*{role}" class="form-control" id="role" name="role" required="required">
 						    <option value="0">Select Role</option>
-						    <option th:each="role : ${roles}" th:value="${role.role}" th:text="${role.role}" ></option>
+						    <option th:each="role1 : ${roles}" th:value="${role1.role}" th:text="${role1.role}" ></option>
 						    </select>
 						</div>
 						</fieldset>
@@ -165,7 +142,7 @@
 							<div class="col-sm-offset-2 col-sm-10">
 								<a th:href="@{/admin/user}" class="btn btn-default">Cancel</a>
 							</div>
-						</div>
+						</div>						
 					</form>
 				</div>
 			</div>

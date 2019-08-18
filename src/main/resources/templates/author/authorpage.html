@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Editor Dashboard</title>
+    <title>Author Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -30,7 +30,7 @@
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <a href="#">Editor Menu</a>
+        <a href="#">Author Menu</a>
         <div id="close-sidebar">
           <i class="fas fa-times"></i>
         </div>
@@ -42,7 +42,7 @@
         <div class="user-info">
           
           <span th:text ="${#authentication.getName()}"></span>
-          <span class="user-role">Editor</span>
+          <span class="user-role">Author</span>
           <span class="user-status">
             <i class="fa fa-circle"></i>
             <span>Online</span>
@@ -71,43 +71,23 @@
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-tachometer-alt"></i>
-              <span>Journal</span>             
+              <span>Articles</span>             
             </a>
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="/editor/newjournal">Create New Issue                    
+                  <a href="/author/newarticle">Upload New Article                    
                   </a>
                 </li>
                 <li>
-                  <a href="/editor/viewjournals">View Journals</a>
-                </li>                
-              </ul>
-            </div>
-           </li>
-          <li class="sidebar-dropdown">
-            <a href="/editor/pendingreview">
-              <i class="fa fa-shopping-cart"></i>
-              <span>Pending Review</span>
-            </a>
-           </li>
-          <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="far fa-gem"></i>
-              <span>Publish Journal</span>
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="/editor/preparejournal">Prepare                     
-                  </a>
+                  <a href="/author/pending">Pending Articles</a>
                 </li>
                 <li>
-                  <a href="/editor/publishjournal">Publish</a>
-                </li>                
+                  <a href="/author/updatearticle">Update Articles</a>
+                </li>                 
               </ul>
             </div>
-           </li>
+           </li>        
         
         </ul>
       </div>

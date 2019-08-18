@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.mail.MessagingException;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -50,9 +51,6 @@ public class ArticleService {
 	public void saveArticle(String topic, String articleAbstract, MultipartFile file,String uploadedBy)
 	{
 
-		String fileName = file.getOriginalFilename();
-		
-		FileStorageService.uploadFile(path, file);
 		
         // Article Object
         Article article = new Article();
@@ -61,11 +59,24 @@ public class ArticleService {
         article.setStatus("Submitted");
         article.setAuthorid(uploadedBy);
         article.setUploadedBy(uploadedBy);
-        article.setFileName(fileName);
+       // article.setFileName(fileName);
         article.setUploadDate(new java.sql.Date(System.currentTimeMillis()));
         
         
         Article a = articleRepo.save(article);
+        
+        int id = a.getId();
+        String articleFileName = "Article_"+id+"."+FilenameUtils.getExtension(file.getOriginalFilename());
+        
+        System.out.println("Article file="+articleFileName);
+        System.out.println("Original file="+file.getOriginalFilename());
+        
+        FileStorageService.uploadFile(path, articleFileName, file);
+        
+        article.setFileName(articleFileName);
+        
+        articleRepo.save(article);
+        
         
         List<AppUser> editors = userDetailsService.getAllEditors();
         
@@ -178,4 +189,55 @@ public class ArticleService {
 		return articleRepo.getApprovedArticles(journalId);
 	}
 
+	public void updateArticle(int id, String topic, String articleAbstract, MultipartFile file,String uploadedBy)
+	{
+
+		Article article = getArticleById(id);
+		 String articleFileName = "Article_"+id+FilenameUtils.getExtension(file.getOriginalFilename());
+        
+        article.setTopic(topic);
+        article.setArticleAbstract(articleAbstract);
+        article.setStatus("Re-submitted");
+        article.setAuthorid(uploadedBy);
+        article.setUploadedBy(uploadedBy);
+        article.setFileName(articleFileName);
+
+        article.setUploadDate(new java.sql.Date(System.currentTimeMillis()));
+        
+        FileStorageService.uploadFile(path, articleFileName, file);
+        
+        
+        
+        articleRepo.save(article);
+        
+        
+        List<AppUser> editors = userDetailsService.getAllEditors();
+        
+        AppUser author = userDetailsService.getUserByUsername(uploadedBy);
+        
+        for(AppUser user: editors)
+        {
+        	Mail mail = new Mail();
+
+            
+             mail.setTo(user.getEmail());
+             mail.setSubject("Article re-submited: "+topic);
+             mail.setContent("Hi "+user.getFullName()+","+
+            		 		 author.getFullName()+" has re-submitted new article titled "+topic+
+            		 		 ". Please review this article.");
+             
+             
+             
+             try {
+     			emailService.sendSimpleMessage(mail,FileStorageService.multipartToFile(file,file.getOriginalFilename()));
+     		} catch (MessagingException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+	}
+	
 }

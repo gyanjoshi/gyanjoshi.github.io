@@ -1,14 +1,12 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta>
-<title>User Form</title>
 
-  <meta charset="utf-8">
+<head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>GGMC</title>
+    <title>Admin Panel</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -17,55 +15,37 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <link href="/adminstatic/css/admin.css" rel="stylesheet">
  <script src="/adminstatic/js/admin.js"></script>
+
 </head>
 
 <body>
 <div class="page-wrapper chiller-theme toggled">
- <div th:replace = "admin/adminpage :: sidebar"></div>
- <main class="page-content">
+
+<div th:replace = "/admin/adminpage :: sidebar"></div>
+ 
+  <main class="page-content">
     <div class="container-fluid">
       <hr>
-      
-       	<section class="section">
-		<div class="container">
-			<h1 class="title">Downloads Form</h1>
-			
+       <div class = "row">
+      <div class="container">
+			<h1 class="title">Update Profile Picture</h1>
 		</div>
-	</section>
+      
+      </div> 
       
       <!-- start of main body -->
-     <div class="container">
+      <div class="container">
 		<div class="columns">
 			<div class="column is-full">
 				<div class="box">
-					<form th:object="${download}" action="/admin/downloads/add-download" method="post" enctype="multipart/form-data"> 
-						
-						<div class="form-group">
-							<label class="label is-small">Downloads Title</label>
-							<div class="col-sm-10">
-								<input th:field="*{title}" class="input is-small" />
-							</div>
-						</div>
-						
-						<div>
-						 <div class="form-group">
-							<label class="label is-small">Upload File</label>
-							<div class="col-sm-10">
-     						<input th:field="*{file}" type="file">
-   								 </div>
-						</div>
-						</div>
-						
-						<div class="field is-grouped">
-							<div class="col-sm-10">
-								<button class="button is-success is-small">Submit</button>
-							</div>
-							<div class="col-sm-10">
-								<a th:href="@{/admin/downloads/download-list}" class="button is-danger is-small">Cancel</a>
-							</div>
-						</div>
-					</form>
+			<form action="/admin/user/add-profile" method="post" enctype="multipart/form-data">
+				 	<input th:value="${uname}" name="uname" id="uname" type=hidden>
+		           <input type="file" name="file" value="file" id="file">
+		             <button class="au-btn au-btn-icon au-btn--blue">
+		              <i class="zmdi zmdi-plus"></i>Submit</button>
+		     </form>
 				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -73,6 +53,15 @@
       
 
   </main>
+  <!-- page-content" -->
 </div>
+<!-- page-wrapper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    
 </body>
-</html> 
+
+</html>

@@ -7,8 +7,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
- 
+
+import com.example.projectx.model.AppRole;
 import com.example.projectx.model.AppUser;
+import com.example.projectx.model.Qualification;
+import com.example.projectx.model.Title;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -96,6 +100,92 @@ public class AppUserDao {
 			return null;
 	}
     
+	public List<AppRole> getAllRoles()
+	{
+		List<AppRole> roles = new ArrayList<AppRole>();
 
+			String sql = "select r from "+AppRole.class.getName()+" r";
+			Query query = entityManager.createQuery(sql, AppRole.class);            
  
+            List<?> list =  query.getResultList();
+            if(!list.isEmpty()) 
+    		{
+    			for(Object r: list)
+    			{
+    				AppRole ar = (AppRole)r;
+    				roles.add(ar);
+    			}
+    			
+    			return roles;
+    		}
+        	
+    		else
+    			return null;
+	}
+	public List<Title> getAllTitles()
+	{
+		List<Title> titles = new ArrayList<Title>();
+
+			String sql = "select r from "+Title.class.getName()+" r";
+			Query query = entityManager.createQuery(sql, Title.class);            
+ 
+            List<?> list =  query.getResultList();
+            if(!list.isEmpty()) 
+    		{
+    			for(Object r: list)
+    			{
+    				Title ar = (Title)r;
+    				titles.add(ar);
+    			}
+    			
+    			return titles;
+    		}
+        	
+    		else
+    			return null;
+	}
+	public List<Qualification> getAllQualifications()
+	{
+		List<Qualification> qualifications = new ArrayList<Qualification>();
+
+			String sql = "select r from "+Qualification.class.getName()+" r";
+			Query query = entityManager.createQuery(sql, Qualification.class);            
+ 
+            List<?> list =  query.getResultList();
+            if(!list.isEmpty()) 
+    		{
+    			for(Object r: list)
+    			{
+    				Qualification ar = (Qualification)r;
+    				qualifications.add(ar);
+    			}
+    			
+    			return qualifications;
+    		}
+        	
+    		else
+    			return null;
+	}
+
+	public List<AppUser> getAllUsers() {
+		
+		List<AppUser> users = new ArrayList<AppUser>();
+    	
+		List<?> list = entityManager.createQuery("SELECT u FROM "+AppUser.class.getName()+" u ").getResultList();
+		
+		if(!list.isEmpty()) 
+		{
+			for(Object user: list)
+			{
+				AppUser au = (AppUser)user;
+				users.add(au);
+			}
+			return users;
+		}
+    	
+		else
+			return null;
+	}
+
+	
 }

@@ -1,5 +1,6 @@
 package com.example.projectx.service;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -45,20 +46,25 @@ public class DownloadService {
 		String title = download.getTitle();
 		MultipartFile file = download.getFile();
 		
-		FileStorageService.uploadFile(downloadspath, file);
-		
 		// add in database
 		
 		// Download Object
 		Download d = new Download();
 		d.setDownloadTopic(title);
-		d.setDownloadFilePath(file.getOriginalFilename());
+		d.setUploadedDate(new java.sql.Date(System.currentTimeMillis()));
+        
+        
+        
+        Download obj = downloadRepo.save(d);
 		
-        d.setUploadedDate(new java.sql.Date(System.currentTimeMillis()));
-        
-        
-        
-        downloadRepo.save(d);
+		String downloadFileName = "Download_"+obj.getId()+FilenameUtils.getExtension(file.getOriginalFilename());
+		
+		FileStorageService.uploadFile(downloadspath,downloadFileName, file );
+		d.setDownloadFilePath(downloadFileName);
+		
+		downloadRepo.save(d);
+		
+		
 	}
 	
 	public String getDownloadPath(String type)

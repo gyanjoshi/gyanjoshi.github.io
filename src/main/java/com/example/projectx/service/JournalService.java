@@ -12,6 +12,7 @@ import java.util.Set;
 
 import javax.mail.MessagingException;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -107,11 +108,12 @@ public class JournalService {
 	
 	public void updateCoverPage(int jid, MultipartFile file)
 	{
-		String fileName = file.getOriginalFilename();
+		Journal journal = journalRepo.getOne(jid);
 		
-		FileStorageService.uploadFile(coverpage, file);
+		String fileName = "Journal_Cover_"+journal.getId()+FilenameUtils.getExtension(file.getOriginalFilename());
 		
-		journalRepo.updateCoverPage(jid,fileName);
+		FileStorageService.uploadFile(coverpage,fileName, file);		
+		
 	}
 	public void createJournal(String topic, String issue, String volume, String message)
 	{
@@ -269,13 +271,17 @@ public class JournalService {
 	public File prepare(int journalId, MultipartFile editorial) throws IOException {
 		// TODO Auto-generated method stub
 		Journal journal = journalRepo.getOne(journalId);
-		journal.setEditorialFileName(editorial.getOriginalFilename());
 		
-		journal.setJournalFileName(journal.getJournalTopic()+"_Issue"+journal.getIssueNum()+"_Vol"+journal.getVolumeNum()+".pdf");
+		String editorialFileName = "Editorial_"+journal.getId()+FilenameUtils.getExtension(editorial.getOriginalFilename());
+		String journalFileName = "Journal_"+journal.getId()+FilenameUtils.getExtension(editorial.getOriginalFilename());
+		
+		journal.setEditorialFileName(editorialFileName);
+		
+		journal.setJournalFileName(editorialFileName);
 		//journal.set
 		journal.setStatus("Prepared");
 		
-		FileStorageService.uploadFile(path, editorial);
+		FileStorageService.uploadFile(path, editorialFileName,editorial);
 		
 		//FileStorageService.uploadFile(path, journalfile);
 		
@@ -289,7 +295,7 @@ public class JournalService {
 		files.add(coverPage);
 		
 		
-		File editorialPage = new File(path+editorial.getOriginalFilename());
+		File editorialPage = new File(path+editorialFileName);
 		
 		files.add(editorialPage);		
 		
@@ -307,7 +313,7 @@ public class JournalService {
 			
 		}
 		
-		File f = PdfMerger.mergePdfs(files, path+journal.getJournalTopic()+"_Issue"+journal.getIssueNum()+"_Vol"+journal.getVolumeNum()+".pdf");
+		File f = PdfMerger.mergePdfs(files, path+journalFileName);
 		
 		journalRepo.save(journal);
 		

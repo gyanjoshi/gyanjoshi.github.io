@@ -25,8 +25,7 @@ import org.springframework.security.core.Authentication;
 @Controller
 public class IndexController {
 	
-	@Autowired
-	private UserRepository userrepo;
+
 	@Autowired
 	private PageRepository pagerepo;
 	@Autowired
@@ -68,19 +67,7 @@ public class IndexController {
         return "welcome";
     }
 	
-	
- 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(Model model, Principal principal) {
-         
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
- 
-        String userInfo = WebUtils.toString(loginedUser);
-        model.addAttribute("userInfo", userInfo);
-        
-       // model.addAttribute("users", userrepo.findAll()); 
-        return "/admin/adminpage";
-    }
+
     
  
     @RequestMapping(value="403", method = RequestMethod.GET)
@@ -136,53 +123,7 @@ public class IndexController {
         return "notice";
     }
     
-   
-    //testing purpose only
-    
-    @RequestMapping(value = "add-user", method = RequestMethod.GET)
-    public String addUser(Model model) {
-    	model.addAttribute("user", new AppUser());
-        return "/admin/user/user-form";
-    }
-    @RequestMapping(value = "add-user", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute AppUser user,Model model) {
-    	userrepo.save(user);
-    	model.addAttribute("users", userrepo.findAll());
-        return "/admin/user/user-list";
-    }
-    
-    
-	
-	  @RequestMapping(value = "/user", method = RequestMethod.GET) 
-	  public String userPage(Model model) { 
-	  model.addAttribute("users", userrepo.findAll());
-	  return "/admin/user/user-list"; }
-	 
-    
-    
-    @RequestMapping(value = "edit-user", method = RequestMethod.GET)
-    public String editUser(@RequestParam String uname, Model model) {
-    	AppUser user = userrepo.findById(uname).get();
-		model.addAttribute("user", user);
-		return "/admin/user/user-form";
-    }
-    
-    @RequestMapping(value = "edit-user", method = RequestMethod.POST)
-    public String addUserPage(@ModelAttribute AppUser user) {
-    	System.out.println(user);
-    	userrepo.save(user);
-        return "redirect:/user";
-    }
-    
-    @RequestMapping(value = "delete-user", method = RequestMethod.GET)
-    public String delUserPage(@RequestParam String uname,Model model) {
-    	userrepo.deleteById(uname);
-    	model.addAttribute("users", userrepo.findAll());
-    	System.out.println(uname);
-        return "/admin/user/user-list";
-    }
-    
-    
+ 
     
    
     

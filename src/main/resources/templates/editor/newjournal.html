@@ -41,21 +41,21 @@
 				<div class="box">
 					<form th:object="${newJournal}" action="/editor/newjournal" method="POST" enctype="multipart/form-data">
 						
-						<div class="field">
+						<div class="form-group">
 							<label class="label is-small">Journal title</label>
-							<div class="control">
+							<div class="col-sm-10">
 								<input th:field="*{title}" class="form-control" id="topic" name="topic" />
 							</div>
 						</div>
-						<div class="field">
+						<div class="form-group">
 							<label class="label is-small">Volume#</label>
-							<div class="control">
+							<div class="col-sm-10">
 								<input th:field="*{volume}" class="form-control" id="topic" name="topic" />
 							</div>
 						</div>
-						<div class="field">
+						<div class="form-group">
 							<label class="label is-small">Issue#</label>
-							<div class="control">
+							<div class="col-sm-10">
 								<input th:field="*{issue}" class="form-control" id="topic" name="topic" />
 							</div>
 						</div>
@@ -69,10 +69,10 @@
 					    </div>
 						
 						<div class="field is-grouped">
-							<div class="control">
+							<div class="col-sm-10">
 								<button class="button is-success is-small">Submit</button>
 							</div>
-							<div class="control">
+							<div class="col-sm-10">
 								<a th:href="@{/editor}" class="button is-danger is-small">Cancel</a>
 							</div>
 						</div>

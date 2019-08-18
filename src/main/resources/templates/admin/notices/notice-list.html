@@ -49,7 +49,8 @@
 							<th>Notice Number</th>
 							<th>Notice Title</th>
 							<th>Notice Text</th>
-							<th>Notice Title</th>
+							<th>Uploaded Date</th>
+							<th>Notice Attachment</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -60,9 +61,11 @@
 							<td th:text="${notice.NoticeTitle}"></td>
 							<td th:text="${notice.noticeText}"></td>
 							<td th:text="${notice.UploadedDate}"></td>
+							<td th:text="${notice.NoticeFileName}"></td>
 							<td>
+								<a th:href="@{/admin/notices/attach-file(id=${notice.Id})}"  class="button is-primary is-small">Attach</a>
 								<a th:href="@{/admin/notices/edit-notice(id=${notice.Id})}"  class="button is-primary is-small">Edit</a>
-								<a   th:href="@{/admin/notices/delete-notice(id=${notice.Id})}" class="button is-danger is-small">Delete</a>
+								<a th:href="@{/admin/notices/delete-notice(id=${notice.Id})}" class="button is-danger is-small">Delete</a>
 							</td>
 
 						</tr>

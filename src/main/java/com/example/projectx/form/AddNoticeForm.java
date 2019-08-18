@@ -6,7 +6,7 @@ public class AddNoticeForm {
 	
 	private String NoticeNumber;
 	private String NoticeTitle;
-	private MultipartFile NoticeFileName;
+	//private MultipartFile NoticeFileName;
 	private String noticeText;  //filetext in case if file is not uploaded
 	
 	
@@ -22,12 +22,12 @@ public class AddNoticeForm {
 	public void setNoticeTitle(String noticeTitle) {
 		NoticeTitle = noticeTitle;
 	}
-	public MultipartFile getNoticeFileName() {
-		return NoticeFileName;
-	}
-	public void setNoticeFileName(MultipartFile noticeFileName) {
-		NoticeFileName = noticeFileName;
-	}
+//	public MultipartFile getNoticeFileName() {
+//		return NoticeFileName;
+//	}
+//	public void setNoticeFileName(MultipartFile noticeFileName) {
+//		NoticeFileName = noticeFileName;
+//	}
 	public String getNoticeText() {
 		return noticeText;
 	}

@@ -62,7 +62,7 @@ public class DownloadService {
         
         Download obj = downloadRepo.save(d);
 		
-		String downloadFileName = "Download_"+obj.getId()+FilenameUtils.getExtension(file.getOriginalFilename());
+		String downloadFileName = "Download_"+obj.getId()+"."+FilenameUtils.getExtension(file.getOriginalFilename());
 		
 		FileStorageService.uploadFile(downloadspath,downloadFileName, file );
 		d.setDownloadFilePath(downloadFileName);
@@ -106,7 +106,7 @@ public class DownloadService {
         
         Date date = new java.sql.Date(System.currentTimeMillis());
 
-        downloadRepo.editDownload(id, title, fileName, date);
+        downloadRepo.editDownload(id, title, downloadFileName, date);
 	}
 
 	
@@ -116,8 +116,8 @@ public class DownloadService {
 		String noticetitle = notice.getNoticeTitle();
 		String noticetext = notice.getNoticeText();
 		
-		String noticefilename = notice.getNoticeFileName().getOriginalFilename();
-		MultipartFile file = notice.getNoticeFileName();
+//		String noticefilename = notice.getNoticeFileName().getOriginalFilename();
+//		MultipartFile file = notice.getNoticeFileName();
 		
 		
 		
@@ -128,19 +128,25 @@ public class DownloadService {
 		n.setNoticeNumber(noticenumber);
 		n.setNoticeText(noticetext);
 		n.setNoticeTitle(noticetitle);
-		n.setNoticeFileName(noticefilename);
+		//n.setNoticeFileName(noticefilename);
         n.setUploadedDate(new java.sql.Date(System.currentTimeMillis()));    
         
         
         Notice n2 = noticeRepo.save(n);
         
-        String noticeFileName = "Notice_"+n2.getId()+"."+FilenameUtils.getExtension(file.getOriginalFilename());
+//        if(file != null)
+//		{
+//        	String noticeFileName = "Notice_"+n2.getId()+"."+FilenameUtils.getExtension(file.getOriginalFilename());
+//    		
+//    		FileStorageService.uploadFile(downloadspath,noticeFileName, file);
+//    		
+//    		n2.setNoticeFileName(noticeFileName);
+//    		noticeRepo.save(n2);
+//		}
+        
+        
 		
-		FileStorageService.uploadFile(downloadspath,noticeFileName, file);
 		
-		n2.setNoticeFileName(noticeFileName);
-		
-		noticeRepo.save(n2);
 		
 	}
 
@@ -149,15 +155,31 @@ public class DownloadService {
 		String noticetitle = notice.getNoticeTitle();
 		String noticetext = notice.getNoticeText();
 		
-		String noticefilename = notice.getNoticeFileName().getOriginalFilename();
-		MultipartFile file = notice.getNoticeFileName();
-		
-		String noticeFileName = "Notice_"+id+"."+FilenameUtils.getExtension(file.getOriginalFilename());
-		
-		FileStorageService.uploadFile(downloadspath,noticeFileName, file);
+//		String noticefilename = notice.getNoticeFileName().getOriginalFilename();
+//		MultipartFile file = notice.getNoticeFileName();
+//		
+//		String noticeFileName = "Notice_"+id+"."+FilenameUtils.getExtension(file.getOriginalFilename());
+//		
+//		FileStorageService.uploadFile(downloadspath,noticeFileName, file);
 		
 		
 		noticeRepo.updatenotice(id,noticenumber,noticetitle);
+		
+	}
+
+	public void attachFile(int id, MultipartFile file) {
+		// TODO Auto-generated method stub
+		Notice notice = noticeRepo.getOne(id);
+		
+		String noticeFileName = "Notice_"+id+"."+FilenameUtils.getExtension(file.getOriginalFilename());
+		
+		notice.setNoticeFileName(noticeFileName);
+		
+		FileStorageService.uploadFile(downloadspath,noticeFileName, file);
+		
+		noticeRepo.save(notice);
+		
+		
 		
 	}
 }

@@ -23,8 +23,10 @@ import com.example.projectx.form.UserForm;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Download;
 import com.example.projectx.model.Notice;
+import com.example.projectx.model.Page;
 import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
+import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
 import com.example.projectx.service.DownloadService;
 import com.example.projectx.service.UserDetailsServiceImpl;
@@ -46,6 +48,9 @@ public class AdminController {
 	
 	@Autowired
 	private UserDetailsServiceImpl userService;
+
+	@Autowired
+	private PageRepository pagerepo;
 	
 	
 	 
@@ -304,6 +309,21 @@ public class AdminController {
 	        return "admin/notices/notice-list";
 	    }
 	    
+	    @RequestMapping(value = "/admin/notices/attach-file", method = RequestMethod.GET)
+	    public String attachFile(@RequestParam int id, Model model) {
+	    	
+	    	model.addAttribute("id", id);
+	        return "admin/notices/attach-file";
+	    }
+	    @RequestMapping(value = "/admin/notices/attach-file", method = RequestMethod.POST)
+	    public String attachFilePost(@RequestParam int id, @RequestParam MultipartFile file, Model model) {
+	    	//download service provides downloads and notice related services,hence downloadservice is used here
+	    	System.out.println("reached add notice post method");
+	    	downloadService.attachFile(id,file);
+	    	model.addAttribute("notices", noticerepo.findAll());
+	        return "admin/notices/notice-list";
+	    }
+	    
 	    
 	    @RequestMapping(value = "/admin/notices/delete-notice", method = RequestMethod.GET)
 	    public String deleteNotice(@RequestParam("id") int id ,Model model) {
@@ -330,6 +350,33 @@ public class AdminController {
 	        return "admin/notices/notice-list";
 	    }
 	    
+	    
+
+		
+		
+		  @RequestMapping(value = "/admin/pages", method = RequestMethod.GET) 
+		  public String userPage(Model model) { 
+		  model.addAttribute("pages", pagerepo.findAll());
+		  return "admin/page/page-list"; 
+		  }
+		 
+		  @RequestMapping(value = "/admin/edit-page", method = RequestMethod.GET) 
+		  public String editUser(@RequestParam Integer id,Model model) { 
+			  Page page = pagerepo.findById(id).get(); 
+			  model.addAttribute("page", page);
+			  System.out.println("id is :: "+ id);
+			  return "admin/page/edit-page"; 
+			  }
+		  
+		  @RequestMapping(value = "/admin/edit-page", method = RequestMethod.POST) 
+		  public String addUserPage(@ModelAttribute Page  page,Model model) {
+		  System.out.println(page);
+		  pagerepo.save(page);
+		//  model.addAttribute("page", page);
+		  return "redirect:/admin/pages"; 
+		  }
+		
+
 	    
 	    
 	    

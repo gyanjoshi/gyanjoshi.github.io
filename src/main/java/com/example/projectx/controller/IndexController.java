@@ -47,6 +47,8 @@ public class IndexController {
         model.addAttribute("title", "Welcome");
         model.addAttribute("page", pagerepo.getOne(1));
         model.addAttribute("downloads",downloadrepo.findAll() );
+        
+        model.addAttribute("notices",noticerepo.findAll() );
         model.addAttribute("message", "This is welcome page!");
         return "index";
     }
@@ -117,16 +119,12 @@ public class IndexController {
     
     @RequestMapping(value = "/notices", method = RequestMethod.GET)
     public String getNotices(Model model) {
-    	model.addAttribute("notices",noticerepo.findAll() );
+    	model.addAttribute("notices",noticerepo.findAll());
     	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
 	    model.addAttribute("articleUploadForm", articleUploadForm);
         return "notice";
     }
-    
- 
-    
    
-    
     
     
 }

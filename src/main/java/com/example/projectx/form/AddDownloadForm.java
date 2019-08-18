@@ -4,20 +4,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AddDownloadForm {
 	
-	private String title;
-	private MultipartFile file;
-	public String getTitle() {
-		return title;
+	private String downloadTopic;
+	private MultipartFile DownloadFilePath;
+	
+	
+	public String getDownloadTopic() {
+		return downloadTopic;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setDownloadTopic(String downloadTopic) {
+		this.downloadTopic = downloadTopic;
 	}
-	public MultipartFile getFile() {
-		return file;
+	public MultipartFile getDownloadFilePath() {
+		return DownloadFilePath;
 	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void setDownloadFilePath(MultipartFile downloadFilePath) {
+		DownloadFilePath = downloadFilePath;
 	}
+	
+	
 	
 	
 

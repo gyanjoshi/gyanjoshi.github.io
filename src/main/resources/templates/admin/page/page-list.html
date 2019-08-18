@@ -13,8 +13,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <link href="adminstatic/css/admin.css" rel="stylesheet">
- <script src="adminstatic/js/admin.js"></script>
+ <link href="/adminstatic/css/admin.css" rel="stylesheet">
+ <script src="/adminstatic/js/admin.js"></script>
 
 </head>
 
@@ -55,13 +55,14 @@
 						</tr>
 					</thead>
 					
+					<!-- "${page.html}" -->
 					  <tbody>
 						<tr th:each="page : ${pages}">
 							<td th:text="${page.Id}"></td>
 							<td th:text="${page.title}"></td>
 							<td th:text="${page.subtitle}"></td>
 							<td th:text="${page.url}"></td>
-							<td th:text="${page.html}"></td>
+							<td th:text="${#strings.abbreviate(page.html,40)}"></td>
 							
 							<td>
 								<a th:href="@{/edit-page(id=${page.Id})}" class="button is-primary is-small">Edit</a>

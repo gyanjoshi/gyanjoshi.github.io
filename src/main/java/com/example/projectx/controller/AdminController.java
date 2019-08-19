@@ -197,7 +197,7 @@ public class AdminController {
 		model.addAttribute("uname", uname);
 		User loginedUser = (User) ((Authentication) principal).getPrincipal();
 		model.addAttribute("currentProfile", userService.getAllProfilePictures().get(loginedUser.getUsername()));
-		//return "redirect:/admin/user/add-profile";
+
 		return "/admin/user/reset-password";
 	}
 	

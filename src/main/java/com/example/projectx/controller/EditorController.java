@@ -71,7 +71,7 @@ public class EditorController {
 		return "/editor/newjournal";
 	}
 	@RequestMapping(path = "/editor/add-cover", method = RequestMethod.GET)
-	public String add_cover(@RequestParam String jid, Model model, Principal principal) {
+	public String addCover(@RequestParam String jid, Model model, Principal principal) {
 		
 		model.addAttribute("jid", jid);
 		User loginedUser = (User) ((Authentication) principal).getPrincipal();

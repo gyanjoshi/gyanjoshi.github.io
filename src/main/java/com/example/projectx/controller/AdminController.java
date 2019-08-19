@@ -153,7 +153,7 @@ public class AdminController {
     @RequestMapping(value = "/admin/user/edit-user", method = RequestMethod.POST)
     public String editUserPage(@RequestParam("userName") String uname, @ModelAttribute AppUser user, Model model) {
 
-    	userService.editUser(uname, user);
+    	userService.editUser(uname, user, "ROLE_ADMIN");
     	model.addAttribute("profiles", userService.getAllProfilePictures());
         return "redirect:/admin/user";
     }
@@ -200,7 +200,7 @@ public class AdminController {
 		model.addAttribute("uname", uname);
 		User loginedUser = (User) ((Authentication) principal).getPrincipal();
 		model.addAttribute("currentProfile", userService.getAllProfilePictures().get(loginedUser.getUsername()));
-		//return "redirect:/admin/user/add-profile";
+
 		return "/admin/user/reset-password";
 	}
 	

@@ -58,8 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      // For Editor only.
         http.authorizeRequests().antMatchers("/editor/**").access("hasRole('ROLE_EDITOR')");
         
-     // For Editor only.
-        http.authorizeRequests().antMatchers("/upload").access("hasRole('ROLE_AUTHOR')");
+     // For Author only.
+        http.authorizeRequests().antMatchers("/author/**").access("hasRole('ROLE_AUTHOR')");
  
         // When the user has logged in as XX.
         // But access a page that requires role YY,

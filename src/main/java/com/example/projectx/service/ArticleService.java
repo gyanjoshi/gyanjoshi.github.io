@@ -193,7 +193,9 @@ public class ArticleService {
 	{
 
 		Article article = getArticleById(id);
-		 String articleFileName = "Article_"+id+FilenameUtils.getExtension(file.getOriginalFilename());
+		String afilename = article.getFileName();
+		
+		String articleFileName = "Article_"+id+"."+FilenameUtils.getExtension(file.getOriginalFilename());
         
         article.setTopic(topic);
         article.setArticleAbstract(articleAbstract);
@@ -203,6 +205,8 @@ public class ArticleService {
         article.setFileName(articleFileName);
 
         article.setUploadDate(new java.sql.Date(System.currentTimeMillis()));
+        
+        FileStorageService.deleteFile(path, afilename);
         
         FileStorageService.uploadFile(path, articleFileName, file);
         
@@ -238,6 +242,25 @@ public class ArticleService {
 				e.printStackTrace();
 			}
         }
+	}
+
+	public List<ArticleDto> getPendingArticles(String username) {
+		// TODO Auto-generated method stub
+		return articleRepo.getPendingArticles(username);
+	}
+
+	public void deleteArticle(int id) {
+		// TODO Auto-generated method stub
+		
+		Article article = getArticleById(id);
+		
+		String fileName = article.getFileName();
+		
+		FileStorageService.deleteFile(path, fileName);
+		
+		articleRepo.deleteById(id);
+		
+		
 	}
 	
 }

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.projectx.dao.AppUserDao;
+import com.example.projectx.dto.UserDto;
 import com.example.projectx.form.UserForm;
 import com.example.projectx.model.AppRole;
 import com.example.projectx.model.AppUser;
@@ -211,51 +212,47 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 	}
 
-	public void editUser(String uname, AppUser newUser) 
+	public void editUser(String uname, AppUser newUser, String role) 
 	{
 		
 		AppUser oldUser = userRepo.getOne(uname);
 		
-		copyUserFrom(newUser, oldUser);		
+		if(role.equalsIgnoreCase("ROLE_AUTHOR"))
+		{
+			oldUser.setTitle(newUser.getTitle());
+			oldUser.setFullName(newUser.getFullName());
+			oldUser.setAddress1(newUser.getAddress1());
+			oldUser.setAddress2(newUser.getAddress2());
+			oldUser.setPhone(newUser.getPhone());
+			oldUser.setCity(newUser.getCity());
+			oldUser.setState(newUser.getState());
+			oldUser.setQualification(newUser.getQualification());
+			oldUser.setProfession(newUser.getProfession());			
+			oldUser.setEmail(newUser.getEmail());
+		}
+		else
+		{
+			oldUser.setTitle(newUser.getTitle());
+			oldUser.setFullName(newUser.getFullName());
+			oldUser.setAddress1(newUser.getAddress1());
+			oldUser.setAddress2(newUser.getAddress2());
+			oldUser.setPhone(newUser.getPhone());
+			oldUser.setCity(newUser.getCity());
+			oldUser.setState(newUser.getState());
+			oldUser.setQualification(newUser.getQualification());
+			oldUser.setProfession(newUser.getProfession());			
+			oldUser.setEmail(newUser.getEmail());
+			oldUser.setRole(newUser.getRole());// for admin right users only
+		}
 		
-//		String oldFileName = oldUser.getProfilePicture();
-//		
-//		if(file !=null)
-//		{
-//			FileStorageService.deleteFile(profilePath,oldFileName);
-//			
-//			FileStorageService.uploadFile(profilePath, file);
-//			
-//			newUser.setProfilePicture(file.getOriginalFilename());
-//			
-//		}
+		
 		
 		userRepo.save(oldUser);
 		
 		
 		
 	}
-	private void copyUserFrom(AppUser newUser, AppUser olduser)
-	{
-		
-		
-		olduser.setTitle(newUser.getTitle());
-		olduser.setFullName(newUser.getFullName());
-		olduser.setAddress1(newUser.getAddress1());
-		olduser.setAddress2(newUser.getAddress2());
-		olduser.setPhone(newUser.getPhone());
-		olduser.setCity(newUser.getCity());
-		olduser.setState(newUser.getState());
-		olduser.setQualification(newUser.getQualification());
-		olduser.setProfession(newUser.getProfession());			
-		olduser.setEmail(newUser.getEmail());	
-		
-		olduser.setRole(newUser.getRole());	
-		
-		
-		
-		
-	}
+
 
 	public void changePassword(String userName, String password) {
 		
@@ -265,6 +262,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		user.setPassword(encryptedPassword);
 		
 		userRepo.save(user);
+		
+	}
+
+	public UserDto getUserByEmail(String email) {
+		
+		List<UserDto> users = userRepo.findByEmail(email);
+		
+		if(users == null || users.size() == 0 )
+		{
+			return null;
+		}
+		else
+		{
+			return users.get(0);
+		}		
 		
 	}
 	

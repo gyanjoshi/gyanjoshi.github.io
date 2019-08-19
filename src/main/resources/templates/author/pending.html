@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Admin Panel</title>
+    <title>Articles Pending for Review</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -21,14 +21,15 @@
 <body>
 <div class="page-wrapper chiller-theme toggled">
 
-<div th:replace = "/admin/adminpage :: sidebar"></div>
+<div th:replace = "/author/authorpage :: sidebar"></div>
  
   <main class="page-content">
     <div class="container-fluid">
       <hr>
        <div class = "row">
       <div class="container">
-			<h1 class="title">Password Change Form</h1>
+			<h5 class="subtitle">Pending Articles</h5>
+			
 		</div>
       
       </div> 
@@ -37,47 +38,63 @@
       <div class="container">
 		<div class="columns">
 			<div class="column is-full">
-				<div class="box">
-			<form action="/admin/user/reset-password" method="post">					
-						
-						<div class="form-group">
-							<label class="label is-small">User Name</label>
-							<div class="col-sm-10">
-								<input th:field="${uname}" readonly />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="label is-small">New Password</label>
-							<div class="col-sm-10">
-								<input type="password" id="password" name="password" class="input is-small" />
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="label is-small">Confirm New Password</label>
-							<div class="col-sm-10">
-								<input type="password" id="confirmPassword" name="confirmPassword" class="input is-small" />
-							</div>
-						</div>
-						
-						<div class="field is-grouped">
-							<div class="col-sm-10">
-								<button class="button is-success is-small">Submit</button>
-							</div>
-							<div class="col-sm-10">
-								<a th:href="@{/admin/user}" class="button is-danger is-small">Cancel</a>
-							</div>
-						</div>
-					</form>
-					<span th:if="${message!=null}" th:text="${message}"></span>
-				</div>
 				
+				<table th:if="*{pending != null}" class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>status</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="article : ${pending}">
+							
+							<td th:text="${article.topic}"></td>
+							
+							<td th:text="${article.status}"></td>					
+							
+							<td>
+								<a th:href="@{/author/update-article(article=${article.articleId})}"  class="button is-primary is-small">Update Article</a>
+			
+								<a th:href="@{/download(type='article',file=${article.fileName})}"  class="button is-primary is-small">Download</a>
+								
+								<button type="button" class="btn btn-danger"
+											data-toggle="modal" data-target="#myModal">Delete</button>
+										<div class="modal fade" id="myModal">
+											<!-- The Modal -->
+											<div class="modal-dialog">
+												<div class="modal-content">
+
+													<!-- Modal Header -->
+													<div class="modal-header">
+														<h4 class="modal-title">Are you sure?</h4>
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													</div>
+
+													<!-- Modal footer -->
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger"
+															data-dismiss="modal">Close</button>
+														<a th:href="@{/author/delete-article(article=${article.articleId})}">
+														<button type="button" class="btn btn-success">Yes</button>
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+							</td>
+								 
+
+						</tr>
+					</tbody> 
+				</table>
 			</div>
 		</div>
 	</div>
       <!-- end of main body -->
       
-</div>
+
   </main>
   <!-- page-content" -->
 </div>

@@ -29,6 +29,7 @@ import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
 import com.example.projectx.service.DownloadService;
+import com.example.projectx.service.FileStorageService;
 import com.example.projectx.service.UserDetailsServiceImpl;
 import com.example.projectx.utils.WebUtils;
 
@@ -51,6 +52,8 @@ public class AdminController {
 
 	@Autowired
 	private PageRepository pagerepo;
+	
+
 	
 	
 	 
@@ -281,8 +284,8 @@ public class AdminController {
 	    
 	    @RequestMapping(value = "/admin/downloads/delete-download", method = RequestMethod.GET)
 	    public String deleteDownload(@RequestParam("id") int id ,Model model) {
-
-	    	downloadrepo.deleteById(id);  
+	    	downloadService.deleteDownload(id);
+	    	  
 	    model.addAttribute("downloads",downloadrepo.findAll());
 	        return "admin/downloads/download-list";
 	    }
@@ -327,8 +330,8 @@ public class AdminController {
 	    
 	    @RequestMapping(value = "/admin/notices/delete-notice", method = RequestMethod.GET)
 	    public String deleteNotice(@RequestParam("id") int id ,Model model) {
-
-	    	noticerepo.deleteById(id);  
+	    	downloadService.deleteDownload(id);
+	    	//noticerepo.deleteById(id);  
 	    model.addAttribute("notices",noticerepo.findAll());
 	        return "admin/notices/notice-list";
 	    }

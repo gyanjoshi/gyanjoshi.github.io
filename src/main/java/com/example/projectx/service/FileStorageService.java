@@ -66,6 +66,7 @@ public class FileStorageService {
 	    multipart.transferTo(convFile);
 	    return convFile;
 	}
+    
 	public static void deleteFile(String path, String file) {
 		
 		File _file = new File(path+file);

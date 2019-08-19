@@ -23,6 +23,12 @@ import com.example.projectx.repository.NoticeRepository;
 
 @Service
 public class DownloadService {
+	@Autowired
+	DownloadRepository downloadrepo;
+	@Autowired
+	NoticeRepository noticerepo;
+	@Autowired
+	FileStorageService fileservice;
 	
 	@Value("${upload.path.download}")
     private String downloadspath;
@@ -105,6 +111,11 @@ public class DownloadService {
 		FileStorageService.uploadFile(downloadspath,downloadFileName,file);
         
         Date date = new java.sql.Date(System.currentTimeMillis());
+        
+//code added to delete previous file frim directory when edited
+		Download downloadobj = downloadrepo.getOne(id);
+		String filename = downloadobj.getDownloadFilePath();
+		FileStorageService.deleteFile(downloadspath, filename);
 
         downloadRepo.editDownload(id, title, downloadFileName, date);
 	}
@@ -155,13 +166,11 @@ public class DownloadService {
 		String noticetitle = notice.getNoticeTitle();
 		String noticetext = notice.getNoticeText();
 		
-//		String noticefilename = notice.getNoticeFileName().getOriginalFilename();
-//		MultipartFile file = notice.getNoticeFileName();
-//		
-//		String noticeFileName = "Notice_"+id+"."+FilenameUtils.getExtension(file.getOriginalFilename());
-//		
-//		FileStorageService.uploadFile(downloadspath,noticeFileName, file);
+		//code added to delete previous file frim directory when edited
 		
+		Notice noticeobj = noticerepo.getOne(id);
+		String filename = noticeobj.getNoticeFileName();
+		FileStorageService.deleteFile(downloadspath, filename);
 		
 		noticeRepo.updatenotice(id,noticenumber,noticetitle);
 		
@@ -180,6 +189,22 @@ public class DownloadService {
 		noticeRepo.save(notice);
 		
 		
+		
+	}
+
+	public void deleteDownload(int id) {
+		Download download = downloadrepo.getOne(id);
+		String filename = download.getDownloadFilePath();
+		FileStorageService.deleteFile(downloadspath, filename);
+		downloadrepo.deleteById(id);
+		
+	}
+	
+	public void deleteNotice(int id) {
+		Notice notice = noticerepo.getOne(id);
+		String filename = notice.getNoticeFileName();
+		FileStorageService.deleteFile(downloadspath, filename);
+		downloadrepo.deleteById(id);
 		
 	}
 }

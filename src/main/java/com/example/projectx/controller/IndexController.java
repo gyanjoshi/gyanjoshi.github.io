@@ -32,6 +32,8 @@ public class IndexController {
 	private DownloadRepository downloadrepo;
 	@Autowired
 	private NoticeRepository noticerepo;
+	@Autowired
+	private UserRepository userrepo;
 
 	
 	@RequestMapping(path = "register", method = RequestMethod.GET)
@@ -49,6 +51,7 @@ public class IndexController {
         model.addAttribute("downloads",downloadrepo.findAll() );
         
         model.addAttribute("notices",noticerepo.findAll() );
+        model.addAttribute("users",userrepo.findAll());
         model.addAttribute("message", "This is welcome page!");
         return "index";
     }
@@ -100,12 +103,13 @@ public class IndexController {
 	    model.addAttribute("articleUploadForm", articleUploadForm);
         return "/author-guidelines";
     }
+    
     @RequestMapping(value = "/aboutus", method = RequestMethod.GET)
     public String aboutUs(Model model) {
     	model.addAttribute("aboutus", pagerepo.getOne(1));
     	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
 	    model.addAttribute("articleUploadForm", articleUploadForm);
-        return "/aboutus";
+        return "aboutus";
     }
     
    

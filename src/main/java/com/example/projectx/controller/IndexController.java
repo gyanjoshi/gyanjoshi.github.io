@@ -2,6 +2,8 @@ package com.example.projectx.controller;
 
 import java.security.Principal;
 
+import javax.mail.MessagingException;
+
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.projectx.dto.UserDto;
 import com.example.projectx.form.ArticleUploadForm;
+import com.example.projectx.mail.EmailService;
+import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
+import com.example.projectx.service.UserDetailsServiceImpl;
 import com.example.projectx.utils.WebUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +38,66 @@ public class IndexController {
 	private DownloadRepository downloadrepo;
 	@Autowired
 	private NoticeRepository noticerepo;
+	
+	@Autowired
+	private UserDetailsServiceImpl userService;
+	
+	@Autowired
+    private EmailService emailService;
 
 	
 	@RequestMapping(path = "register", method = RequestMethod.GET)
 	public String register(Model model) {
 		return "registration";
+	}
+	
+	@RequestMapping(path = "/resetpassword", method = RequestMethod.GET)
+	public String resetPassword(Model model) {		
+
+		return "resetpassword";
+	}
+	
+	@RequestMapping(path = "/resetpassword", method = RequestMethod.POST)
+	public String resetPassowrdPost(@RequestParam String email,  Model model) {
+		
+		
+		String message = null;
+
+		if(email != null)
+		{
+			UserDto user = userService.getUserByEmail(email);
+			
+			if(user != null)
+			{
+				Mail m = new Mail();
+				
+				m.setSubject("Password Reset");
+				m.setTo(user.getEmail());
+				m.setContent("Your login credentials have been sent as per your request. UserName: "+user.getUserName()+"; Password: "+user.getPassword());
+				try {
+					emailService.sendSimpleMessage(m);
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				message = "Your email is not found. Please enter valid email address";
+				
+			}
+				
+		}
+		else
+		{
+			message = "Please enter valid email address";
+			
+		}
+		model.addAttribute("message", message);
+
+		return "/resetpassword";
+   
+		
 	}
 		
 	@RequestMapping(value = { "/"}, method = RequestMethod.GET)

@@ -68,7 +68,7 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
 
         List<String> roles = new ArrayList<String>();
         
-        String redirectUrl = null;
+      //  String redirectUrl = null;
         
         for (GrantedAuthority a : authorities) {
             roles.add(a.getAuthority());
@@ -78,7 +78,11 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
             url = "/admin/user";
         } else if (isEditor(roles)) {
             url = "/editor";
-        } else {
+        }
+        else if (isAuthor(roles)) {
+            url = "/author";
+        }
+        else {
             url = "/";
         }
 
@@ -92,12 +96,12 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
 		return false;
 	}
 
-//	private boolean isAuthor(List<String> roles) {
-//        if (roles.contains("ROLE_AUTHOR")) {
-//            return true;
-//        }
-//        return false;
-//    }
+	private boolean isAuthor(List<String> roles) {
+        if (roles.contains("ROLE_AUTHOR")) {
+            return true;
+        }
+        return false;
+    }
 
     private boolean isAdmin(List<String> roles) {
         if (roles.contains("ROLE_ADMIN")) {

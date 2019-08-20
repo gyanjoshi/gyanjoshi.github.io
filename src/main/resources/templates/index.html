@@ -183,9 +183,7 @@
                        <span class="feed_date" th:utext="${notice.uploadedDate}"></span>
                       </div>
                     </div>
-                  </li>
-                  
-                 
+                  </li> 
                 </ul>                
                 <a class="see_all" href="notices">See All</a>
               </div>
@@ -461,18 +459,21 @@
             <div class="ourTutors_content" >
               <!-- Start Tutors nav -->
               <ul class="tutors_nav">
-                <li th:each="user : ${users}">
+                <li th:each="user : ${editors}">
                   <div class="single_tutors">
                     <div class="tutors_thumb">
-                      <img src="img/author.jpg" /> 
-                      <span> hello</span>                     
+         <img th:if="*{profiles.get(user.userName) != null}"
+									th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(profiles.get(user.userName))}}"
+										width="20" height="20" /> 
+                                          
                     </div>
                     <div class="singTutors_content">
-                      <h3 class="tutors_name"></h3>
+                      <h3 class="tutors_name"><span th:text="${user.fullName}"></span></h3>
+                     
+                      <span th:text="${user.role}"></span>
                       
                       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                     </div> 
-                   
                   </div>
                 </li>
              </ul>

@@ -115,6 +115,9 @@ public class IndexController {
         
         model.addAttribute("notices",noticerepo.findAll() );
         model.addAttribute("users",userrepo.findAll());
+        //to fetch profilepic of editor
+        model.addAttribute("profiles", userService.getEditorsProfilePictures());
+        model.addAttribute("editors",userService.getAllEditors());
         model.addAttribute("message", "This is welcome page!");
         return "index";
     }
@@ -189,7 +192,7 @@ public class IndexController {
     	model.addAttribute("notices",noticerepo.findAll());
     	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
 	    model.addAttribute("articleUploadForm", articleUploadForm);
-        return "notice";
+        return "noticedetail";
     }
    
     

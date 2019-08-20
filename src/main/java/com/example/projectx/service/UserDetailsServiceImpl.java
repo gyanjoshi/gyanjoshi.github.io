@@ -279,6 +279,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}		
 		
 	}
+
+	//fetch editor's profile pictures
+	public Map<String,byte[]> getEditorsProfilePictures()
+	{
+		Map<String,byte[]> profileMap = new HashMap<String,byte[]>();
+		
+		List<AppUser> users = userDao.getAllEditors();
+		
+		if(users != null)
+		{
+			for(AppUser j: users)
+			{
+				byte[] bytes = getProfilePicture(j.getUserName());
+				profileMap.put(j.getUserName(), bytes);
+			}
+		}
+		
+		
+		return profileMap;
+	}
 	
 //	public void updateProfilePicture(String userid, MultipartFile file)
 //	{

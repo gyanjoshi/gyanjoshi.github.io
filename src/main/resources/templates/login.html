@@ -41,6 +41,9 @@
 	                <div th:if="${param.logout}" class="alert alert-success"> 
 	                    You have been logged out.
 	                </div>
+	                
+	                <div th:if="${message!=null}" th:text="${message}" class="alert alert-success"></div>
+	                
 
 					<div class="wrap-input100" data-validate = "Valid email is required: ex@abc.xyz">
 						<input class="input100" type="text" name="email" placeholder="Email">

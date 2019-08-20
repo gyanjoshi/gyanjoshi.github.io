@@ -1,6 +1,7 @@
 package com.example.projectx.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.mail.MessagingException;
 
@@ -46,12 +47,62 @@ public class IndexController {
 	@Autowired
 	private UserDetailsServiceImpl userService;
 	
-	@Autowired
-    private EmailService emailService;
+	
 
 	
 	@RequestMapping(path = "register", method = RequestMethod.GET)
 	public String register(Model model) {
+		return "registration";
+	}
+	
+	@RequestMapping(path = "register", method = RequestMethod.POST)
+	public String registerPost(@RequestParam("email") String email,
+			@RequestParam("name") String fullName,
+			@RequestParam("username") String username, 
+			@RequestParam("password") String password,
+			@RequestParam("cpassword") String cpassword,			
+			Model model) {
+		String message = null;
+		if(password != null && cpassword != null && email != null && username != null
+			&& password !="" &&cpassword !="" &&email !="" &&username !="")
+		{
+			if(password.equals(cpassword))
+			{
+				List<UserDto>  users = userrepo.findByEmail(email);
+				if(users.size() > 0)
+				{
+					message = "This Email is already registered.";
+					model.addAttribute("message", message);
+					return "registration";
+				}
+				else
+				{
+					userService.registerAuthor(email, username, password, fullName);
+					message = "Your are now registered ! Please log on";
+					model.addAttribute("message", message);
+					return "login";
+				}
+				
+			}
+			else
+			{
+				message = "Password did not match. Please re-enter";
+				
+			}
+		}
+		else
+		{
+			if(email==null || email=="")
+				message="Email must be entered. ";
+			if(username==null || username=="")
+				message=message+ "Username must be entered. ";
+			if(password==null || password=="")
+				message=message+"Password must be entered. ";
+			if(cpassword==null || cpassword=="")
+				message=message+"Confirm password must be entered. ";
+		}
+		model.addAttribute("message", message);
+		
 		return "registration";
 	}
 	
@@ -73,17 +124,12 @@ public class IndexController {
 			
 			if(user != null)
 			{
-				Mail m = new Mail();
+				userService.resetPassword(user);
 				
-				m.setSubject("Password Reset");
-				m.setTo(user.getEmail());
-				m.setContent("Your login credentials have been sent as per your request. UserName: "+user.getUserName()+"; Password: "+user.getPassword());
-				try {
-					emailService.sendSimpleMessage(m);
-				} catch (MessagingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				message = "Your password has been sent to your email. Please check email and login using new credentials.";
+				model.addAttribute("message", message);
+				return "/login";
+				
 			}
 			else
 			{

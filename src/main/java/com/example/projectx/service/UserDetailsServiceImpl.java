@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.projectx.dao.AppUserDao;
 import com.example.projectx.dto.UserDto;
 import com.example.projectx.form.UserForm;
+import com.example.projectx.mail.EmailService;
+import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppRole;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Journal;
@@ -32,6 +36,7 @@ import com.example.projectx.model.Qualification;
 import com.example.projectx.model.Title;
 import com.example.projectx.repository.UserRepository;
 import com.example.projectx.utils.EncryptedPasswordUtils;
+import com.example.projectx.utils.PasswordGenerator;
 
 
 @Service
@@ -45,6 +50,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+    private EmailService emailService;
+    
  
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -280,6 +289,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 	}
 
+
 	//fetch editor's profile pictures
 	public Map<String,byte[]> getEditorsProfilePictures()
 	{
@@ -298,6 +308,45 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		
 		return profileMap;
+	}
+	public void resetPassword(UserDto user) {
+		
+		
+		String randomPassword = PasswordGenerator.getAlphaNumericString(8);
+		
+		changePassword(user.getUserName(), randomPassword);
+		
+		
+		Mail m = new Mail();
+		
+		m.setSubject("Password Reset");
+		m.setTo(user.getEmail());
+		m.setContent("Your login credentials have been sent as per your request. UserName: "+user.getUserName()+"; Password: "+randomPassword+". Please logon using this password and change this password after you log on.");
+		try {
+			emailService.sendSimpleMessage(m);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void registerAuthor(String email, String username, String password, String fullName) {
+		// TODO Auto-generated method stub
+		AppUser user = new AppUser();
+		
+		String encryptedPassword = EncryptedPasswordUtils.encrytePassword(password);
+		
+		user.setEmail(email);
+		user.setUserName(username);
+		user.setPassword(encryptedPassword);
+		user.setFullName(fullName);
+		
+		user.setRole("ROLE_AUTHOR");
+		user.setEnabled((short) 1);
+		
+		userRepo.save(user);
+		
 	}
 	
 //	public void updateProfilePicture(String userid, MultipartFile file)

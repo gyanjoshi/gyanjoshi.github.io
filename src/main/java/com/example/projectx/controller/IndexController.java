@@ -19,6 +19,7 @@ import com.example.projectx.form.ArticleUploadForm;
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
+import com.example.projectx.model.Notice;
 import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.repository.PageRepository;
@@ -152,42 +153,31 @@ public class IndexController {
 		
 	@RequestMapping(value = { "/"}, method = RequestMethod.GET)
     public String indexPage(Model model) {
-		ArticleUploadForm articleUploadForm = new ArticleUploadForm();
-	    model.addAttribute("articleUploadForm", articleUploadForm);
-	    
-        model.addAttribute("title", "Welcome");
+		
+		model.addAttribute("title", "Welcome");
         model.addAttribute("page", pagerepo.getOne(1));
         model.addAttribute("downloads",downloadrepo.findAll() );
         
         model.addAttribute("notices",noticerepo.findAll() );
-        model.addAttribute("users",userrepo.findAll());
-        //to fetch profilepic of editor
+        
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
-        model.addAttribute("message", "This is welcome page!");
+  
         return "index";
     }
 	
 	@RequestMapping(value = { "/index"}, method = RequestMethod.GET)
-    public String indexPage1(Model model) {
-		ArticleUploadForm articleUploadForm = new ArticleUploadForm();
-	    model.addAttribute("articleUploadForm", articleUploadForm);
-        model.addAttribute("title", "Welcome");
-        model.addAttribute("message", "This is home page!");
+    public String indexPage1(Model model) {	
+		model.addAttribute("page", pagerepo.getOne(1));
+        model.addAttribute("downloads",downloadrepo.findAll() );
+        
+        model.addAttribute("notices",noticerepo.findAll() );
+        
+        model.addAttribute("profiles", userService.getEditorsProfilePictures());
+        model.addAttribute("editors",userService.getAllEditors());
         return "index";
     }
-	
-	@RequestMapping(value = { "/welcome" }, method = RequestMethod.GET)
-    public String welcomePage(Model model) {
-        model.addAttribute("title", "Welcome");
-        model.addAttribute("message", "This is welcome page!");
-        return "welcome";
-    }
-	
-
-    
- 
-    @RequestMapping(value="403", method = RequestMethod.GET)
+	@RequestMapping(value="403", method = RequestMethod.GET)
 	public ModelAndView error() {
 	    ModelAndView mav = new ModelAndView();
 	    String errorMessage= "You are not authorized for the requested data.";
@@ -199,10 +189,7 @@ public class IndexController {
     
     @RequestMapping(value = { "contact" }, method = RequestMethod.GET)
     public String contactPage(Model model) {
-    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
-	    model.addAttribute("articleUploadForm", articleUploadForm);
-	    
-    	System.out.println("hello"+ "world");
+    	
         return "contactpage/contact-page-index";
     }
     
@@ -211,16 +198,14 @@ public class IndexController {
     @RequestMapping(value = "/guidelines", method = RequestMethod.GET)
     public String authorGuideline(Model model) {
     	model.addAttribute("guidelines", pagerepo.getOne(2));
-    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
-	    model.addAttribute("articleUploadForm", articleUploadForm);
+    	
         return "/author-guidelines";
     }
     
     @RequestMapping(value = "/aboutus", method = RequestMethod.GET)
     public String aboutUs(Model model) {
     	model.addAttribute("aboutus", pagerepo.getOne(1));
-    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
-	    model.addAttribute("articleUploadForm", articleUploadForm);
+    	
         return "aboutus";
     }
     
@@ -228,16 +213,18 @@ public class IndexController {
     @RequestMapping(value = "/downloads", method = RequestMethod.GET)
     public String getDownloads(Model model) {
     	model.addAttribute("downloads",downloadrepo.findAll() );
-    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
-	    model.addAttribute("articleUploadForm", articleUploadForm);
+    	
         return "/downloads";
     }
     
-    @RequestMapping(value = "/notices", method = RequestMethod.GET)
-    public String getNotices(Model model) {
+    @RequestMapping(value = "/noticedetail", method = RequestMethod.GET)
+    public String getNotices(@RequestParam("id") int Id, Model model) {    	
+
+    	Notice notice = noticerepo.findById(Id).get();
+    	
     	model.addAttribute("notices",noticerepo.findAll());
-    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
-	    model.addAttribute("articleUploadForm", articleUploadForm);
+    	model.addAttribute("notice", notice);
+    	
         return "noticedetail";
     }
    

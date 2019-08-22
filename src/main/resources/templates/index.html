@@ -179,7 +179,7 @@
                         </a>
                       </div>
                       <div class="media-body">
-                      <a th:href="@{/download(type='download',file=${notice.NoticeFileName})}"><span th:utext="${notice.NoticeTitle}"></span></a>
+                      <a th:href="@{/notices(id=${notice.Id})}"><span th:utext="${notice.NoticeTitle}"></span></a>
                        <span class="feed_date" th:utext="${notice.uploadedDate}"></span>
                       </div>
                     </div>

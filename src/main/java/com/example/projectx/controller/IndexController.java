@@ -19,6 +19,7 @@ import com.example.projectx.form.ArticleUploadForm;
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
+import com.example.projectx.model.Notice;
 import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.repository.PageRepository;
@@ -234,12 +235,17 @@ public class IndexController {
     }
     
     @RequestMapping(value = "/notices", method = RequestMethod.GET)
-    public String getNotices(Model model) {
+    public String getNotices(@RequestParam("id") int id, Model model) {
+    	
+    	Notice n = noticerepo.findById(id).get();
     	model.addAttribute("notices",noticerepo.findAll());
-    	ArticleUploadForm articleUploadForm = new ArticleUploadForm();
-	    model.addAttribute("articleUploadForm", articleUploadForm);
+    	model.addAttribute("notice", n);
+    	
         return "noticedetail";
     }
+    
+    
+ 
    
     
     

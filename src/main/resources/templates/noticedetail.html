@@ -1,108 +1,85 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <!-- Bootstrap css file-->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font awesome css file-->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <!-- Superslide css file-->
-    <link rel="stylesheet" href="css/superslides.css">
-    <!-- Slick slider css file -->
-    <link href="css/slick.css" rel="stylesheet"> 
-    <!-- Circle counter cdn css file -->
-    <link rel='stylesheet prefetch' href='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/css/jquery.circliful.css'>  
-    <!-- smooth animate css file -->
-    <link rel="stylesheet" href="css/animate.css"> 
-    <!-- preloader -->
-    <link rel="stylesheet" href="css/queryLoader.css" type="text/css" />
-    <!-- gallery slider css -->
-    <link type="text/css" media="all" rel="stylesheet" href="css/jquery.tosrus.all.css" />    
-    <!-- Default Theme css file -->
-    <link id="switcher" href="css/themes/default-theme.css" rel="stylesheet">
-    <!-- Main structure css file -->
-    <link href="style.css" rel="stylesheet">
-  <style>
-.vertical-menu {
-  width: 400px;
-  height: 150px;
-  overflow-y: auto;
-}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+	content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+<title>Admin Dashboard</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
+	rel="stylesheet">
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="/adminstatic/css/admin.css" rel="stylesheet">
+<script src="/adminstatic/js/admin.js"></script>
 
-.vertical-menu a {
-  background-color: #eee;
-  color: black;
-  display: block;
-  padding: 12px;
-  text-decoration: none;
-}
-
-.vertical-menu a:hover {
-  background-color: #ccc;
-}
-
-.vertical-menu a.active {
-  background-color: #4CAF50;
-  color: white;
-}
-</style>
 </head>
+
 <body>
+	<div class="page-wrapper chiller-theme toggled">
 
-<div class="container">
-  <h1>Grid</h1>
-     
-  <div class="row">
-    <div class="col-sm-5 vertical-menu">
+		<div th:replace="noticesidebarlayout :: noticesidebar"></div>
 
-  <div class="tab-pane fade in active" id="notice">                
-                <ul class="news_tab " >
-                <li>
-                    <div class="media" th:each="notice : ${notices}">
-                      <div class="media-left">
-                        
-                      </div>
-                      <div class="media-body">
-                      <span th:utext="${notice.NoticeTitle}"></span>
-                       <span class="feed_date" th:utext="${notice.uploadedDate}"></span>
-                      </div>
-                    </div>
-                  </li> 
-                </ul>                
-              </div>
+		<main class="page-content">
+		<div class="container-fluid">
+			<hr>
+			
 
+			<!-- start of main body -->
+			<div class="container">
+				
+				<!-- will be included here..script of here is saved in notepad for now -->
+				<div class="row">
+		<div class="col-sm-9">
+		<div class="center">
+			
+			<h4>Notice Number:  <span th:text="${notice.NoticeNumber}" ></span></h4>	
+			
+			<h1><span th:text="${notice.NoticeTitle}"></span></h1>
+			<hr>
+			<span th:utext="${notice.noticeText}"></span>
+			<br>
+		
+			
+			<span th:if="${notice.NoticeFileName != null}">
+				<a th:href="@{/download(type='download',file=${notice.NoticeFileName})}">Please click here to download the attachment</a>
+			</span>
+				
+		</div>
+		</div>
+		</div>
+				<!--main part end  -->
+			</div>
+			<!-- end of main body -->
 
-	
+		</div>
+		</main>
+		<!-- page-content" -->
 	</div>
- <!--  <a class="see_all" href="notices">See All</a> -->
-	
-	  
-    </div>
-    
-<!-- 	 <div class="col-sm-1"></div>
-	 <div class="col-sm-6" style="background-color:pink;">
-      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque 
-	  laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.   
+	<!-- page-wrapper -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
 
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-The standard Lorem Ipsum passage, used since the 1500s
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
- dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
- commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
- Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."	  
-    </div>
-   
-  </div> -->
-
-    
 </body>
+
 </html>

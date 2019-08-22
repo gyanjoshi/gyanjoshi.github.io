@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 
 
 @Entity
@@ -21,6 +23,7 @@ public class Notice {
 	private String  NoticeNumber;
 	private String NoticeTitle;
 	private String NoticeFileName;
+	@Type(type="text")
 	private String noticeText;
 	private Date uploadedDate;
 	public Date getUploadedDate() {

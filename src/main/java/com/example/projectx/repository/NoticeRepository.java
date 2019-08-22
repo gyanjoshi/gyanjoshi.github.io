@@ -15,9 +15,9 @@ public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 	
 	@Modifying(clearAutomatically = true)
 	@Transactional
-    @Query("UPDATE Notice SET NoticeNumber =:noticenumber,NoticeTitle=:noticetitle  WHERE Id =:id")
+    @Query("UPDATE Notice SET NoticeNumber =:noticenumber,NoticeTitle=:noticetitle,noticeText= :noticetext  WHERE Id =:id")
 	
-	void updatenotice(@Param("id") int id, @Param("noticenumber") String noticenumber,@Param("noticetitle") String noticetitle);
+	void updatenotice(@Param("id") int id, @Param("noticenumber") String noticenumber,@Param("noticetitle") String noticetitle,@Param("noticetext") String noticetext);
 
 	
 	

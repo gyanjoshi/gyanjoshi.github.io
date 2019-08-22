@@ -145,19 +145,6 @@ public class DownloadService {
         
         Notice n2 = noticeRepo.save(n);
         
-//        if(file != null)
-//		{
-//        	String noticeFileName = "Notice_"+n2.getId()+"."+FilenameUtils.getExtension(file.getOriginalFilename());
-//    		
-//    		FileStorageService.uploadFile(downloadspath,noticeFileName, file);
-//    		
-//    		n2.setNoticeFileName(noticeFileName);
-//    		noticeRepo.save(n2);
-//		}
-        
-        
-		
-		
 		
 	}
 
@@ -170,9 +157,10 @@ public class DownloadService {
 		
 		Notice noticeobj = noticerepo.getOne(id);
 		String filename = noticeobj.getNoticeFileName();
+		
 		FileStorageService.deleteFile(downloadspath, filename);
 		
-		noticeRepo.updatenotice(id,noticenumber,noticetitle);
+		noticeRepo.updatenotice(id,noticenumber,noticetitle,noticetext);
 		
 	}
 

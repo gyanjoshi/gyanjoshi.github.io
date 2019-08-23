@@ -65,6 +65,11 @@ public class JournalService {
 		return journalDao.getAllJournals();
 	}
 	
+	public List<Journal> getAllPublishedJournals()
+	{
+		return journalDao.getAllPublishedJournals();
+	}
+	
 	public Map<Integer,byte[]> getAllCoverImage()
 	{
 		Map<Integer,byte[]> coverPageMap = new HashMap<Integer,byte[]>();
@@ -318,5 +323,13 @@ public class JournalService {
 		journalRepo.save(journal);
 		
 		return f;
+	}
+
+	public Journal getJournalById(int id) {
+		// TODO Auto-generated method stub
+		Journal journal = journalRepo.getOne(id);
+		
+		
+		return journal;
 	}
 }

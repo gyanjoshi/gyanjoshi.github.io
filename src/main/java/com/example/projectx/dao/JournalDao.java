@@ -64,5 +64,27 @@ public class JournalDao {
 			return null;
     	
     }
+	
+	public List<Journal> getAllPublishedJournals()
+    {
+    	
+    	List<Journal> journals = new ArrayList<Journal>();
+    	
+		List<?> list = entityManager.createQuery("SELECT u FROM "+Journal.class.getName()+" u where status ='Published'").getResultList();
+		
+		if(!list.isEmpty()) 
+		{
+			for(Object journal: list)
+			{
+				Journal j = (Journal)journal;
+				journals.add(j);
+			}
+			return journals;
+		}
+    	
+		else
+			return null;
+    	
+    }
 
 }

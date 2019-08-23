@@ -19,11 +19,13 @@ import com.example.projectx.form.ArticleUploadForm;
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
+import com.example.projectx.model.Journal;
 import com.example.projectx.model.Notice;
 import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
+import com.example.projectx.service.JournalService;
 import com.example.projectx.service.UserDetailsServiceImpl;
 import com.example.projectx.utils.WebUtils;
 
@@ -43,6 +45,9 @@ public class IndexController {
 
 	@Autowired
 	private UserRepository userrepo;
+	
+	@Autowired
+	private JournalService journalService;
 
 	
 	@Autowired
@@ -160,6 +165,8 @@ public class IndexController {
         
         model.addAttribute("notices",noticerepo.findAll() );
         
+        model.addAttribute("journals",journalService.getAllPublishedJournals());
+        
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
   
@@ -172,6 +179,8 @@ public class IndexController {
         model.addAttribute("downloads",downloadrepo.findAll() );
         
         model.addAttribute("notices",noticerepo.findAll() );
+        
+        model.addAttribute("journals",journalService.getAllPublishedJournals());
         
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
@@ -229,8 +238,19 @@ public class IndexController {
         return "noticedetail";
     }
     
-    
- 
+    @RequestMapping(value = "/viewjournal", method = RequestMethod.GET)
+    public String viewJournal(@RequestParam("id") int id, Model model)
+    {
+    	
+    	List<Journal> journals = journalService.getAllPublishedJournals();
+    	
+    	Journal selectedJournal = journalService.getJournalById(id);
+    	
+    	model.addAttribute("journals", journals);
+    	model.addAttribute("selectedJournal", selectedJournal);
+    	
+    	return "viewjournal";
+    }
    
     
     

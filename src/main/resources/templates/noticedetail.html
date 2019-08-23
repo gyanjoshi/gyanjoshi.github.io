@@ -9,29 +9,43 @@
 <meta name="description"
 	content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
 <title>Notices</title>
-<link rel="stylesheet"
+<link href="/adminstatic/css/admin.css" rel="stylesheet">
+<script src="/adminstatic/js/admin.js"></script> 
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
+	rel="stylesheet">
+	
+
+<!-- <link rel="stylesheet"
+>>>>>>> branch 'master' of https://github.com/Nabins/Journal
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
 	rel="stylesheet">
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
+
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="/adminstatic/css/admin.css" rel="stylesheet">
-<script src="/adminstatic/js/admin.js"></script>
+
+
+<!--resources for header layout  -->
+ <link href="css/bootstrap.min.css" rel="stylesheet">
+ <link href="style.css" rel="stylesheet">
+ <link id="switcher" href="css/themes/default-theme.css" rel="stylesheet">
+ <link rel="stylesheet" href="css/animate.css">
+  <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>   
+    <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'> 
+    <!-- Font awesome css file-->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
 
 </head>
 
 <body>
+
 	<div class="page-wrapper chiller-theme toggled">
-
-		<div th:replace="noticesidebarlayout :: noticesidebar"></div>
-
+ <div th:replace = "fixedlayout :: header"></div>
+		 <div th:replace="noticesidebarlayout :: noticesidebar"></div>
 		<main class="page-content">
 		<div class="container-fluid">
 			<hr>
@@ -68,6 +82,8 @@
 		</main>
 		<!-- page-content" -->
 	</div>
+	
+	
 	<!-- page-wrapper -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

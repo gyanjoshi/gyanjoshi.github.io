@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.projectx.dto.PreparedJournalDto;
 import com.example.projectx.model.Journal;
+import com.example.projectx.model.JournalIssue;
 
 @Repository
 @Transactional
@@ -21,18 +22,23 @@ public class JournalDao {
 	@PersistenceContext
     private EntityManager entityManager;
 	
-	public List<Journal> getAllJournals()
+	public List<JournalIssue> getAllJournalIssues(int jid)
     {
     	
-    	List<Journal> journals = new ArrayList<Journal>();
+    	List<JournalIssue> journals = new ArrayList<JournalIssue>();
     	
-		List<?> list = entityManager.createQuery("SELECT u FROM "+Journal.class.getName()+" u where status not in ('Published', 'Prepared')").getResultList();
+    	javax.persistence.Query query = entityManager.createQuery("SELECT u FROM "+JournalIssue.class.getName()+" u where u.journal.Id=:jid and status not in ('Published', 'Prepared')");
+    	
+    	query.setParameter("jid", jid);
+    	
+    	
+		List<?> list = query.getResultList();
 		
 		if(!list.isEmpty()) 
 		{
 			for(Object journal: list)
 			{
-				Journal j = (Journal)journal;
+				JournalIssue j = (JournalIssue)journal;
 				journals.add(j);
 			}
 			return journals;
@@ -43,18 +49,21 @@ public class JournalDao {
     	
     }
 	
-	public List<Journal> getAllPreparedJournals()
+	public List<JournalIssue> getAllPreparedJournalIssues(int jid)
     {
     	
-    	List<Journal> journals = new ArrayList<Journal>();
+    	List<JournalIssue> journals = new ArrayList<JournalIssue>();
     	
-		List<?> list = entityManager.createQuery("SELECT u FROM "+Journal.class.getName()+" u where status ='Prepared'").getResultList();
+    	javax.persistence.Query query = entityManager.createQuery("SELECT u FROM "+JournalIssue.class.getName()+" u where u.journal.Id=:jid and status ='Prepared'");
+    	query.setParameter("jid", jid);
+    	
+    	List<?> list = query.getResultList();
 		
 		if(!list.isEmpty()) 
 		{
 			for(Object journal: list)
 			{
-				Journal j = (Journal)journal;
+				JournalIssue j = (JournalIssue)journal;
 				journals.add(j);
 			}
 			return journals;
@@ -65,12 +74,40 @@ public class JournalDao {
     	
     }
 	
-	public List<Journal> getAllPublishedJournals()
+	public List<JournalIssue> getAllPublishedJournalIssues(int jid)
     {
     	
-    	List<Journal> journals = new ArrayList<Journal>();
+    	List<JournalIssue> journals = new ArrayList<JournalIssue>();
+    	javax.persistence.Query query  = entityManager.createQuery("SELECT u FROM "+JournalIssue.class.getName()+" u where u.journal.Id=:jid and status ='Published'");
+    	query.setParameter("jid", jid);
+		List<?> list = query.getResultList();
+		
+		
+		
+		if(!list.isEmpty()) 
+		{
+			for(Object journal: list)
+			{
+				JournalIssue j = (JournalIssue)journal;
+				journals.add(j);
+			}
+			return journals;
+		}
     	
-		List<?> list = entityManager.createQuery("SELECT u FROM "+Journal.class.getName()+" u where status ='Published'").getResultList();
+		else
+			return null;
+    	
+    }
+
+	public List<Journal> getAllJournals() {
+		
+		List<Journal> journals = new ArrayList<Journal>();
+    	
+    	javax.persistence.Query query = entityManager.createQuery("SELECT u FROM "+Journal.class.getName()+" u ");
+    	
+    	    	
+    	
+		List<?> list = query.getResultList();
 		
 		if(!list.isEmpty()) 
 		{
@@ -84,7 +121,6 @@ public class JournalDao {
     	
 		else
 			return null;
-    	
-    }
+	}
 
 }

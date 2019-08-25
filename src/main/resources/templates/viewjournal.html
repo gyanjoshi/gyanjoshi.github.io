@@ -1,140 +1,308 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-  <head>
-    <!--=============================================== 
-    Template Design By WpFreeware Team.
-    Author URI : http://www.wpfreeware.com/
-    ====================================================-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
-    <!-- Basic Page Needs
-    ================================================== -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <title>Ghodaghodi Campus - Research Department</title>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+	content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+<title>Journals</title>
+<link href="/adminstatic/css/admin.css" rel="stylesheet">
+<script src="/adminstatic/js/admin.js"></script> 
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
+	rel="stylesheet">
+	
 
-    <!-- Mobile Specific Metas
-    ================================================== -->
+<!-- <link rel="stylesheet"
+>>>>>>> branch 'master' of https://github.com/Nabins/Journal
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
+	rel="stylesheet">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/icon" href="img/wpf-favicon.png"/>
-
-    <!-- CSS
-    ================================================== -->       
-    <!-- Bootstrap css file-->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    
-    <link id="switcher" href="css/themes/default-theme.css" rel="stylesheet">
-    <!-- Main structure css file -->
-    <link href="style.css" rel="stylesheet">
-     <link href="css/font-awesome.min.css" rel="stylesheet">
-     <!-- Google fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>   
-    <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>    
-     
-<style type="text/css">
-body {
-  overflow-x: hidden;
-}
-
-#sidebar-wrapper {
-  min-height: 100vh;
-  margin-left: -15rem;
-  -webkit-transition: margin .25s ease-out;
-  -moz-transition: margin .25s ease-out;
-  -o-transition: margin .25s ease-out;
-  transition: margin .25s ease-out;
-}
-
-#sidebar-wrapper .sidebar-heading {
-  padding: 0.875rem 1.25rem;
-  font-size: 1.2rem;
-}
-
-#sidebar-wrapper .list-group {
-  width: 15rem;
-}
-
-#page-content-wrapper {
-  min-width: 100vw;
-}
-
-#wrapper.toggled #sidebar-wrapper {
-  margin-left: 0;
-}
-
-@media (min-width: 768px) {
-  #sidebar-wrapper {
-    margin-left: 0;
-  }
-
-  #page-content-wrapper {
-    min-width: 0;
-    width: 100%;
-  }
-
-  #wrapper.toggled #sidebar-wrapper {
-    margin-left: -15rem;
-  }
-}
-</style>
-  </style>
-  </head>
-  <body>    
-
-    <!-- SCROLL TOP BUTTON -->
-    <a class="scrollToTop" href="#"></a>
-    <!-- END SCROLL TOP BUTTON -->
-
-    <!--=========== BEGIN HEADER SECTION ================-->
-
-    <div th:replace = "fixedlayout :: header"></div>
-
-    
-  <!--   =========== END HEADER SECTION ================   -->
-  <div class="d-flex" id="wrapper">
-  <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Start Bootstrap </div>
-      <div class="list-group list-group-flush">
-        <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
-      </div>
-    </div>
-    <main class="page-content">
-    
-   <div id="page-content-wrapper">
-   <div class="container-fluid">
-   <div class="container">
-   
-   		<div class="row">
-   		<div class="col-sm-9">
-   			<div class="center">
-   				Hello this is test
-   				<h1 class="mt-4">Simple Sidebar</h1>
-        <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
-      
-   			</div>
-   		</div>
-   		</div>
-        </div> 
-      </div>
-   </div>
-   </main>
-</div>
-    <div th:replace = "fixedlayout :: footer"></div>
-
-    <!--=========== END FOOTER SECTION ================--> 
-
-    <script src="js/bootstrap.min.js"></script>
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-  </body>
-  
+<!--resources for header layout  -->
+ <link href="css/bootstrap.min.css" rel="stylesheet">
+ <link href="style.css" rel="stylesheet">
+ <link id="switcher" href="css/themes/default-theme.css" rel="stylesheet">
+ <link rel="stylesheet" href="css/animate.css">
+  <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>   
+    <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'> 
+    <!-- Font awesome css file-->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<div class="page-wrapper chiller-theme toggled">
+ 		<div th:replace = "/fragments/fixedlayout :: header"></div>
+		 <div th:replace="/fragments/noticesidebarlayout :: noticesidebar"></div>  
+		<main class="page-content">
+		<div class="container-fluid">
+			<hr>
+			
+
+			<!-- start of main body -->
+			<div class="container">
+				
+				<!-- will be included here..script of here is saved in notepad for now -->
+				<div class="row">
+				<div class="col-sm-9">
+				<div class="center">
+
+							<div class="obj_issue_toc">
+
+
+								<div class="heading">
+
+									<a class="cover"
+										href="https://www.nepjol.info/index.php/jbssr/issue/view/1739">
+										<img
+										src="https://www.nepjol.info/public/journals/154/cover_issue_1739_en_US.png">
+									</a>
+
+
+
+									<div class="published">
+										<span class="label"> Published: </span> <span class="value">
+											2019-07-16 </span>
+									</div>
+								</div>
+
+
+								<div class="sections">
+									<div class="section">
+										<h2>Articles</h2>
+										<ul class="cmp_article_list articles">
+											<li>
+
+
+												<div class="obj_article_summary">
+
+													<div class="title">
+														<a
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24834">
+															A Sectoral Analysis of Foreign Direct Investment on the
+															Economic Growth of Nepal </a>
+													</div>
+
+													<div class="meta">
+														<div class="authors">Ram Kumar Phuyal, Seema Sunuwar
+														</div>
+
+														<div class="pages">1-14</div>
+
+
+													</div>
+
+													<ul class="galleys_links">
+														<li><a class="obj_galley_link pdf"
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24834/20918">
+
+
+																pdf </a></li>
+													</ul>
+
+
+												</div>
+											</li>
+											<li>
+
+
+												<div class="obj_article_summary">
+
+													<div class="title">
+														<a
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24838">
+															An Analysis of Security Market Growth and Individuals'
+															Investment Decision </a>
+													</div>
+
+													<div class="meta">
+														<div class="authors">Dipika Joshi</div>
+
+														<div class="pages">15-32</div>
+
+
+													</div>
+
+													<ul class="galleys_links">
+														<li><a class="obj_galley_link pdf"
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24838/20921">
+
+
+																pdf </a></li>
+													</ul>
+
+
+												</div>
+											</li>
+											<li>
+
+
+												<div class="obj_article_summary">
+
+													<div class="title">
+														<a
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24840">
+															Contribution of E-Marketing for the Income Generation in
+															Travel Agencies of Nepal </a>
+													</div>
+
+													<div class="meta">
+														<div class="authors">Parbat Humagain</div>
+
+														<div class="pages">33-46</div>
+
+
+													</div>
+
+													<ul class="galleys_links">
+														<li><a class="obj_galley_link pdf"
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24840/20922">
+
+
+																pdf </a></li>
+													</ul>
+
+
+												</div>
+											</li>
+											<li>
+
+
+												<div class="obj_article_summary">
+
+													<div class="title">
+														<a
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24841">
+															Factors Influencing Online Brand Trust: Evidence from
+															Online Buyers in Kathmandu Valley </a>
+													</div>
+
+													<div class="meta">
+														<div class="authors">Bina Kharel</div>
+
+														<div class="pages">47-64</div>
+
+
+													</div>
+
+													<ul class="galleys_links">
+														<li><a class="obj_galley_link pdf"
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24841/20924">
+
+
+																pdf </a></li>
+													</ul>
+
+
+												</div>
+											</li>
+											<li>
+
+
+												<div class="obj_article_summary">
+
+													<div class="title">
+														<a
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24843">
+															Household Fuel Choice in Urban Nepal: A Multinomial
+															Logistic Regression Analysis </a>
+													</div>
+
+													<div class="meta">
+														<div class="authors">Bharat Raj Bhatta, Kamal
+															Banskota, Dhiraj Giri</div>
+
+														<div class="pages">65-90</div>
+
+
+													</div>
+
+													<ul class="galleys_links">
+														<li><a class="obj_galley_link pdf"
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24843/20926">
+
+
+																pdf </a></li>
+													</ul>
+
+
+												</div>
+											</li>
+											<li>
+
+
+												<div class="obj_article_summary">
+
+													<div class="title">
+														<a
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24846">
+															Tax Reforms and Economic Growth with Reference to SAARC
+															Countries: A Study Note </a>
+													</div>
+
+													<div class="meta">
+														<div class="authors">Bishnu Pokharel</div>
+
+														<div class="pages">91-106</div>
+
+
+													</div>
+
+													<ul class="galleys_links">
+														<li><a class="obj_galley_link pdf"
+															href="https://www.nepjol.info/index.php/jbssr/article/view/24846/20928">
+
+
+																pdf </a></li>
+													</ul>
+
+
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<!-- .sections -->
+							</div>
+
+						</div>
+		</div>
+		</div>
+				<!--main part end  -->
+			</div>
+			<!-- end of main body -->
+
+		</div>
+		</main>
+		<!-- page-content" -->
+	</div>
+	
+	
+	<!-- page-wrapper -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
+</body>
+
 
 </html>

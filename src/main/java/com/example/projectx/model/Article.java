@@ -42,13 +42,13 @@ public class Article {
 	
 	@ManyToOne
     @JoinColumn
-    private Journal journal;
+    private JournalIssue journalissue;
 	
-	public Journal getJournal() {
-		return journal;
+	public JournalIssue getJournal() {
+		return journalissue;
 	}
-	public void setJournal(Journal journal) {
-		this.journal = journal;
+	public void setJournal(JournalIssue journal) {
+		this.journalissue = journal;
 	}
 	public String getTopic() {
 		return topic;

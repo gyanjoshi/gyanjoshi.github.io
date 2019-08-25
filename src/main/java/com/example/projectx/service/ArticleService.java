@@ -22,7 +22,9 @@ import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Article;
 import com.example.projectx.model.Journal;
+import com.example.projectx.model.JournalIssue;
 import com.example.projectx.repository.ArticleRepository;
+import com.example.projectx.repository.JournalIssueRepository;
 import com.example.projectx.repository.JournalRepository;
 
 
@@ -42,7 +44,7 @@ public class ArticleService {
     private ArticleRepository articleRepo;
 	
 	@Autowired
-	private JournalRepository journalRepository;
+	private JournalIssueRepository journalIssueRepository;
 	
 	@Autowired
 	private JournalService journalService;
@@ -149,11 +151,8 @@ public class ArticleService {
 		// TODO Auto-generated method stub
 		
 		Article a = articleRepo.findById(id).get();
-		AppUser user = userDetailsService.getUserByUsername(userName);
-		
-		Journal j = journalRepository.findById(journalId).get();
-		
-		
+		AppUser user = userDetailsService.getUserByUsername(userName);		
+		JournalIssue j = journalIssueRepository.findById(journalId).get();		
 		
 		Mail mail = new Mail();
 
@@ -178,7 +177,7 @@ public class ArticleService {
         journalService.addArticle(j, a);        
         
         articleRepo.save(a);
-        journalRepository.saveAndFlush(j);
+        journalIssueRepository.saveAndFlush(j);
 		
 	}
 

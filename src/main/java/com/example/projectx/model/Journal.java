@@ -26,34 +26,12 @@ public class Journal {
 	private Integer Id;
 	@Column(name="journal_title")
 	private String JournalTopic;
-	@Column(name="volume")
-	private String VolumeNum;
-	@Column(name="issue")
-	private String IssueNum;
-	@Column(name="year")
-	private String year;
-	@Column(name="month")
-	private String month;
+	
 	@Column(name="coverimagefile")
 	private String coverImageFileName;
 	
-	@Column(name="editorialfile")
-	private String editorialFileName;
-	
-	@Column(name="journalfile")
-	private String journalFileName;
-	
-	
-	@Column(name="publishdate")
-	private Date uploaded_date;
-	@Column(name="uploadedby")
-	private String uploaded_by;
-	
-	@Column(name="status")
-	private String status;
-	
 	@OneToMany(mappedBy = "journal", cascade = CascadeType.ALL)
-    private Set<Article> articles;
+    private Set<JournalIssue> issues;
 	
 	//private File coverPage;
 	
@@ -69,78 +47,11 @@ public class Journal {
 	public void setJournalTopic(String journalTopic) {
 		JournalTopic = journalTopic;
 	}
-	public String getVolumeNum() {
-		return VolumeNum;
-	}
-	public void setVolumeNum(String volumeNum) {
-		VolumeNum = volumeNum;
-	}
-	public String getIssueNum() {
-		return IssueNum;
-	}
-	public void setIssueNum(String issueNum) {
-		IssueNum = issueNum;
-	}
-	public String getYear() {
-		return year;
-	}
-	public void setYear(String year) {
-		this.year = year;
-	}
-	public String getMonth() {
-		return month;
-	}
-	public void setMonth(String month) {
-		this.month = month;
-	}
+	
 	public String getCoverImageFileName() {
 		return coverImageFileName;
 	}
 	public void setCoverImageFileName(String coverImageFileName) {
 		this.coverImageFileName = coverImageFileName;
-	}
-	public String getJournalFileName() {
-		return journalFileName;
-	}
-	public void setJournalFileName(String journalFileName) {
-		this.journalFileName = journalFileName;
-	}
-	public Date getUploaded_date() {
-		return uploaded_date;
-	}
-	public void setUploaded_date(Date uploaded_date) {
-		this.uploaded_date = uploaded_date;
-	}
-	public String getUploaded_by() {
-		return uploaded_by;
-	}
-	public void setUploaded_by(String uploaded_by) {
-		this.uploaded_by = uploaded_by;
-	}
-	public Set<Article> getArticles() {
-		return articles;
-	}
-	public void setArticles(Set<Article> articles) {
-		this.articles = articles;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	public void addArticle(Article a)
-	{
-		articles.add(a);
-	}
-	public String getEditorialFileName() {
-		return editorialFileName;
-	}
-	public void setEditorialFileName(String editorialFileName) {
-		this.editorialFileName = editorialFileName;
-	}
-	
-	
-	
+	}	
 }

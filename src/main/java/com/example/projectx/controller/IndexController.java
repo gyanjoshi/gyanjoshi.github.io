@@ -165,7 +165,7 @@ public class IndexController {
         
         model.addAttribute("notices",noticerepo.findAll() );
         
-        model.addAttribute("journals",journalService.getAllPublishedJournals());
+       // model.addAttribute("journals",journalService.getAllPublishedJournals());
         
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
@@ -180,7 +180,7 @@ public class IndexController {
         
         model.addAttribute("notices",noticerepo.findAll() );
         
-        model.addAttribute("journals",journalService.getAllPublishedJournals());
+      //  model.addAttribute("journals",journalService.getAllPublishedJournals());
         
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
@@ -238,19 +238,19 @@ public class IndexController {
         return "noticedetail";
     }
     
-    @RequestMapping(value = "/viewjournal", method = RequestMethod.GET)
-    public String viewJournal(@RequestParam("id") int id, Model model)
-    {
-    	
-    	List<Journal> journals = journalService.getAllPublishedJournals();
-    	
-    	Journal selectedJournal = journalService.getJournalById(id);
-    	
-    	model.addAttribute("journals", journals);
-    	model.addAttribute("selectedJournal", selectedJournal);
-    	
-    	return "viewjournal";
-    }
+//    @RequestMapping(value = "/viewjournalissue", method = RequestMethod.GET)
+//    public String viewJournal(@RequestParam("id") int id, Model model)
+//    {
+//    	
+//    	List<Journal> journals = journalService.getAllPublishedJournalIssues();
+//    	
+//    	Journal selectedJournal = journalService.getJournalById(id);
+//    	
+//    	model.addAttribute("journals", journals);
+//    	model.addAttribute("selectedJournal", selectedJournal);
+//    	
+//    	return "viewjournal";
+//    }
    
     
     

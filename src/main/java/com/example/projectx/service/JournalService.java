@@ -29,7 +29,9 @@ import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Article;
 import com.example.projectx.model.Journal;
+import com.example.projectx.model.JournalIssue;
 import com.example.projectx.repository.ArticleRepository;
+import com.example.projectx.repository.JournalIssueRepository;
 import com.example.projectx.repository.JournalRepository;
 import com.example.projectx.utils.PdfMerger;
 
@@ -49,6 +51,9 @@ public class JournalService {
     private EmailService emailService;
 	
 	@Autowired
+	private JournalIssueRepository journalIssueRepository;
+	
+	@Autowired
 	private JournalRepository journalRepo;
 	
 	@Autowired
@@ -60,14 +65,14 @@ public class JournalService {
 	@Autowired
 	JournalDao journalDao;
 	
-	public List<Journal> getAllJournals()
+	public List<JournalIssue> getAllJournalIssues(int jid)
 	{
-		return journalDao.getAllJournals();
+		return journalDao.getAllJournalIssues(jid);
 	}
 	
-	public List<Journal> getAllPublishedJournals()
+	public List<JournalIssue> getAllPublishedJournalIssues(int jid)
 	{
-		return journalDao.getAllPublishedJournals();
+		return journalDao.getAllPublishedJournalIssues(jid);
 	}
 	
 	public Map<Integer,byte[]> getAllCoverImage()
@@ -120,17 +125,22 @@ public class JournalService {
 		FileStorageService.uploadFile(coverpage,fileName, file);		
 		
 	}
-	public void createJournal(String topic, String issue, String volume, String message)
+	public void createJournalIssue(int jid, String issue, String volume, String message)
 	{
 
-		// Journal Object
-		Journal journal = new Journal();
-		journal.setJournalTopic(topic);
-		journal.setIssueNum(issue);
-		journal.setVolumeNum(volume);
-		journal.setStatus("created");
+		// JournalIssue Object
+		JournalIssue journalIssue = new JournalIssue();
+		
+		Journal journal = journalRepo.findById(jid).get();	
+		
+		
+		journalIssue.setIssueNum(issue);
+		journalIssue.setVolumeNum(volume);
+		journalIssue.setStatus("created");
+		
+		journalIssue.setJournal(journal);
         
-        Journal j = journalRepo.save(journal);
+		JournalIssue j = journalIssueRepository.save(journalIssue);
         
         List<AppUser> authors = userDetailsService.getAllAuthors();        
         
@@ -141,7 +151,7 @@ public class JournalService {
 
             
              mail.setTo(user.getEmail());
-             mail.setSubject("Call for Articles for journal "+j.getJournalTopic());
+             mail.setSubject("Call for Articles for journal "+journal.getJournalTopic());
              mail.setContent(message);
              
              try {
@@ -156,35 +166,34 @@ public class JournalService {
         }
 	}
 
-	public void updateJournal(int jid, String topic, String issue, String volume, String year, String month)
+	public void updateJournalIssue(int jid, String topic, String issue, String volume, String year, String month)
 	{
-		Journal journal = journalRepo.getOne(jid);
+		JournalIssue journal = journalIssueRepository.getOne(jid);		
 		
-		journal.setJournalTopic(topic);
 		journal.setIssueNum(issue);
 		journal.setVolumeNum(volume);
 		journal.setYear(year);
 		journal.setMonth(month);
 		
-		journalRepo.save(journal);
+		journalIssueRepository.save(journal);
 		
 		
 		
 	}
 	
-	public List<JournalDropDownDto> getJournalsDropdown()
+	public List<JournalDropDownDto> getJournalIssueDropdown(int jid)
 	{
-		List<Journal> journals = journalDao.getAllJournals();
+		List<JournalIssue> journals = journalDao.getAllJournalIssues(jid);
 		
 		List<JournalDropDownDto> list = new ArrayList<JournalDropDownDto>();
 		
 		if(journals != null)
 		{
-			for(Journal j: journals)
+			for(JournalIssue j: journals)
 			{
 				JournalDropDownDto jdto = new JournalDropDownDto();
 				jdto.setJournalId(j.getId());
-				jdto.setJournalText("Journal-(year-"+j.getYear()+", month-"+j.getMonth()+") (Volume# "+j.getVolumeNum()+", Issue# "+j.getIssueNum()+")");
+				jdto.setJournalText(j.getMonth()+"-"+j.getYear()+"(Volume# "+j.getVolumeNum()+", Issue# "+j.getIssueNum()+")");
 				list.add(jdto);
 			}
 		}
@@ -194,20 +203,20 @@ public class JournalService {
 		
 	}
 	
-	public List<PreparedJournalDto> getPreparedJournals()
+	public List<PreparedJournalDto> getPreparedJournalIssues(int jid)
 	{
-		List<Journal> journals = journalDao.getAllPreparedJournals();
+		List<JournalIssue> journals = journalDao.getAllPreparedJournalIssues(jid);
 		
 		List<PreparedJournalDto> list = new ArrayList<PreparedJournalDto>();
 		
 		if(journals != null)
 		{
-			for(Journal j: journals)
+			for(JournalIssue j: journals)
 			{
 				PreparedJournalDto jdto = new PreparedJournalDto();
 				
 				jdto.setJournalId(j.getId());
-				jdto.setTitle(j.getJournalTopic());
+				jdto.setTitle(j.getJournal().getJournalTopic());
 				jdto.setIssue(j.getIssueNum());
 				jdto.setVolume(j.getVolumeNum());
 				jdto.setYear(j.getYear());
@@ -221,14 +230,14 @@ public class JournalService {
 		return list;
 		
 	}
-	public void addArticle(Journal j, Article a)
+	public void addArticle(JournalIssue j, Article a)
 	{
 		j.addArticle(a);
 	}
 
 	public void publish(int journalId) {
 		// TODO Auto-generated method stub
-		Journal journal = journalRepo.getOne(journalId);
+		JournalIssue journal = journalIssueRepository.getOne(journalId);
 		
 		journal.setStatus("Published");
 		journal.setUploaded_date(new java.sql.Date(System.currentTimeMillis()));
@@ -267,7 +276,7 @@ public class JournalService {
 			
 		}
 		
-		journalRepo.save(journal);
+		journalIssueRepository.save(journal);
 		
 		
 	}
@@ -275,14 +284,16 @@ public class JournalService {
 
 	public File prepare(int journalId, MultipartFile editorial) throws IOException {
 		// TODO Auto-generated method stub
-		Journal journal = journalRepo.getOne(journalId);
+		JournalIssue journal = journalIssueRepository.getOne(journalId);
+		
+		Journal j = journal.getJournal();
 		
 		String editorialFileName = "Editorial_"+journal.getId()+FilenameUtils.getExtension(editorial.getOriginalFilename());
 		String journalFileName = "Journal_"+journal.getId()+FilenameUtils.getExtension(editorial.getOriginalFilename());
 		
 		journal.setEditorialFileName(editorialFileName);
 		
-		journal.setJournalFileName(editorialFileName);
+		journal.setJournalFileName(journalFileName);
 		//journal.set
 		journal.setStatus("Prepared");
 		
@@ -293,7 +304,7 @@ public class JournalService {
 		// prepare for merging pdf files
 		List<File> files = new ArrayList<File>();
 		
-		String coverFile=journalRepo.getCoverPageFileName(journalId);
+		String coverFile=journalRepo.getCoverPageFileName(j.getId());
 		
 		File coverPage = new File(coverpage+coverFile);
 		
@@ -320,7 +331,7 @@ public class JournalService {
 		
 		File f = PdfMerger.mergePdfs(files, path+journalFileName);
 		
-		journalRepo.save(journal);
+		journalIssueRepository.save(journal);
 		
 		return f;
 	}
@@ -328,6 +339,14 @@ public class JournalService {
 	public Journal getJournalById(int id) {
 		// TODO Auto-generated method stub
 		Journal journal = journalRepo.getOne(id);
+		
+		
+		return journal;
+	}
+	
+	public JournalIssue getJournalIssueById(int id) {
+		// TODO Auto-generated method stub
+		JournalIssue journal = journalIssueRepository.getOne(id);
 		
 		
 		return journal;

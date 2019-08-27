@@ -18,10 +18,6 @@
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
- 
-
- 
-
 </head>
 
 <body>
@@ -80,12 +76,30 @@
             </a>
             <div class="sidebar-submenu">
               <ul>
-                <li>
-                  <a href="/editor/newjournal">Create New Issue                    
+              	<li>
+                  <a href="/editor/createjournal">Create New Journal                    
                   </a>
                 </li>
                 <li>
                   <a href="/editor/viewjournals">View Journals</a>
+                </li>                
+              </ul>
+            </div>
+           </li>
+           <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Journal Issues</span>             
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+              	
+                <li>
+                  <a href="/editor/newissue">Create New Issue                    
+                  </a>
+                </li>
+                <li>
+                  <a href="/editor/viewjournalissues">View Issues</a>
                 </li>                
               </ul>
             </div>
@@ -96,6 +110,12 @@
               <span>Pending Review</span>
             </a>
            </li>
+    <!--        <li class="sidebar-dropdown">
+            <a href="/editor/approvedlist">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Approved Articles</span>
+            </a>
+           </li> -->
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="far fa-gem"></i>

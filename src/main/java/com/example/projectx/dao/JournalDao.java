@@ -1,5 +1,6 @@
 package com.example.projectx.dao;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.projectx.dto.PreparedJournalDto;
+import com.example.projectx.dto.PublishedJournalDto;
 import com.example.projectx.model.Journal;
 import com.example.projectx.model.JournalIssue;
 
@@ -122,5 +124,5 @@ public class JournalDao {
 		else
 			return null;
 	}
-
+	
 }

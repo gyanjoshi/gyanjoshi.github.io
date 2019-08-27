@@ -1,18 +1,14 @@
 package com.example.projectx.form;
 
-public class NewJournalForm {
+public class NewJournalIssueForm {	
 	
-	private String title;
+	private Integer journalId;
+	
 	private String issue;
 	private String volume;
-	//private MultipartFile coverImage;
+
 	private String message;
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	
 	public String getIssue() {
 		return issue;
 	}
@@ -31,6 +27,12 @@ public class NewJournalForm {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public Integer getJournalId() {
+		return journalId;
+	}
+	public void setJournalId(Integer journalId) {
+		this.journalId = journalId;
 	}
 	
 	

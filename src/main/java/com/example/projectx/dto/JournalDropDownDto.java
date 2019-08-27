@@ -16,7 +16,4 @@ public class JournalDropDownDto {
 	public void setJournalText(String journalText) {
 		this.journalText = journalText;
 	}
-	
-	
-
 }

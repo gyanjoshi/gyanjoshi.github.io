@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta>
-<title>Issue New Journal</title>
+<title>Create New Journal</title>
 
   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,8 +29,7 @@
       
        	<section class="section">
 		<div class="container">
-			<h1 class="title">Create New Issue for the Journal</h1>
-			<h2 class="subtitle">All registered authors will be notified asking for articles.</h2>
+			<h1 class="title">Create New Journal</h1>			
 		</div>
 	</section>
       
@@ -39,34 +38,20 @@
 		<div class="columns">
 			<div class="column is-full">
 				<div class="box">
-					<form th:object="${newJournal}" action="/editor/newjournal" method="POST" enctype="multipart/form-data">
+					<form action="/editor/createjournal" method="POST" enctype="multipart/form-data">
 						
 						<div class="form-group">
 							<label class="label is-small">Journal title</label>
 							<div class="col-sm-10">
-								<input th:field="*{title}" class="form-control" id="topic" name="topic" />
+								<input class="form-control" id="title" name="title" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="label is-small">Volume#</label>
+							<label class="label is-small">Journal Cover Page (Upload PDF)</label>
 							<div class="col-sm-10">
-								<input th:field="*{volume}" class="form-control" id="topic" name="topic" />
+								<input type="file" class="form-control" id="coverPage" name="coverPage" />
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="label is-small">Issue#</label>
-							<div class="col-sm-10">
-								<input th:field="*{issue}" class="form-control" id="topic" name="topic" />
-							</div>
-						</div>
-						<div class="form-group">
-					     <label for="usr">Message (to be sent to authors):</label>
-					      <textarea th:field="*{message}" cols="20" rows="10"  name="message" id="message"> 
-					      </textarea>
-					      <script type="text/javascript">
-					        CKEDITOR.replace('message' );
-					      </script>
-					    </div>
+						</div>						
 						
 						<div class="field is-grouped">
 							<div class="col-sm-10">

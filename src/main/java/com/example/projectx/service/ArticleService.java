@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.projectx.dao.AppUserDao;
+import com.example.projectx.dto.ApprovedArticleDto;
 import com.example.projectx.dto.ArticleDto;
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
@@ -147,12 +148,12 @@ public class ArticleService {
         articleRepo.save(a);
 	}
 
-	public void approve(int id, String userName, String message, int journalId) {
+	public void approve(int id, String userName, String message, int journalId, int jissueid) {
 		// TODO Auto-generated method stub
 		
 		Article a = articleRepo.findById(id).get();
 		AppUser user = userDetailsService.getUserByUsername(userName);		
-		JournalIssue j = journalIssueRepository.findById(journalId).get();		
+		JournalIssue j = journalIssueRepository.findById(jissueid).get();		
 		
 		Mail mail = new Mail();
 
@@ -260,6 +261,11 @@ public class ArticleService {
 		articleRepo.deleteById(id);
 		
 		
+	}
+
+	public List<ApprovedArticleDto> getApprovedArticles() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

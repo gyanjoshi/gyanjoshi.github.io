@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.projectx.dao.JournalDao;
 import com.example.projectx.dto.JournalDropDownDto;
 import com.example.projectx.dto.PreparedJournalDto;
+import com.example.projectx.dto.PublishedJournalDto;
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
@@ -120,9 +121,16 @@ public class JournalService {
 	{
 		Journal journal = journalRepo.getOne(jid);
 		
-		String fileName = "Journal_Cover_"+journal.getId()+FilenameUtils.getExtension(file.getOriginalFilename());
+		String coverPage = journal.getCoverImageFileName();
 		
-		FileStorageService.uploadFile(coverpage,fileName, file);		
+		String fileName = "Journal_Cover_"+journal.getId()+"."+FilenameUtils.getExtension(file.getOriginalFilename());
+		
+		FileStorageService.deleteFile(coverPage, coverPage);
+		FileStorageService.uploadFile(coverpage,fileName, file);
+		
+		journal.setCoverImageFileName(fileName);
+		
+		journalRepo.save(journal);
 		
 	}
 	public void createJournalIssue(int jid, String issue, String volume, String message)
@@ -144,29 +152,32 @@ public class JournalService {
         
         List<AppUser> authors = userDetailsService.getAllAuthors();        
         
-        
-        for(AppUser user: authors)
+        if(authors != null)
         {
-        	Mail mail = new Mail();
+        	for(AppUser user: authors)
+            {
+            	Mail mail = new Mail();
 
-            
-             mail.setTo(user.getEmail());
-             mail.setSubject("Call for Articles for journal "+journal.getJournalTopic());
-             mail.setContent(message);
-             
-             try {
-      			emailService.sendSimpleMessage(mail);
-      		} catch (MessagingException e) {
-      			// TODO Auto-generated catch block
-      			e.printStackTrace();
-      		} catch (Exception e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			}
+                
+                 mail.setTo(user.getEmail());
+                 mail.setSubject("Call for Articles for journal "+journal.getJournalTopic());
+                 mail.setContent(message);
+                 
+                 try {
+          			emailService.sendSimpleMessage(mail);
+          		} catch (MessagingException e) {
+          			// TODO Auto-generated catch block
+          			e.printStackTrace();
+          		} catch (Exception e) {
+     				// TODO Auto-generated catch block
+     				e.printStackTrace();
+     			}
+            }
         }
+        
 	}
 
-	public void updateJournalIssue(int jid, String topic, String issue, String volume, String year, String month)
+	public void updateJournalIssue(int jid, String issue, String volume, String year, String month)
 	{
 		JournalIssue journal = journalIssueRepository.getOne(jid);		
 		
@@ -175,9 +186,7 @@ public class JournalService {
 		journal.setYear(year);
 		journal.setMonth(month);
 		
-		journalIssueRepository.save(journal);
-		
-		
+		journalIssueRepository.save(journal);		
 		
 	}
 	
@@ -288,8 +297,8 @@ public class JournalService {
 		
 		Journal j = journal.getJournal();
 		
-		String editorialFileName = "Editorial_"+journal.getId()+FilenameUtils.getExtension(editorial.getOriginalFilename());
-		String journalFileName = "Journal_"+journal.getId()+FilenameUtils.getExtension(editorial.getOriginalFilename());
+		String editorialFileName = "Editorial_"+journal.getId()+"."+FilenameUtils.getExtension(editorial.getOriginalFilename());
+		String journalFileName = "Journal_"+journal.getId()+"."+FilenameUtils.getExtension(editorial.getOriginalFilename());
 		
 		journal.setEditorialFileName(editorialFileName);
 		
@@ -299,7 +308,7 @@ public class JournalService {
 		
 		FileStorageService.uploadFile(path, editorialFileName,editorial);
 		
-		//FileStorageService.uploadFile(path, journalfile);
+
 		
 		// prepare for merging pdf files
 		List<File> files = new ArrayList<File>();
@@ -350,5 +359,54 @@ public class JournalService {
 		
 		
 		return journal;
+	}
+
+	public List<Journal> getAllJournals() {
+		return journalDao.getAllJournals();
+	}
+
+	public void createJournal(String title, MultipartFile coverPage) 
+	{
+		Journal journal = new Journal();
+		
+		journal.setJournalTopic(title);
+		
+		Journal j = journalRepo.save(journal);
+		String fileName = "Journal_Cover_"+journal.getId()+"."+FilenameUtils.getExtension(coverPage.getOriginalFilename());
+		
+		FileStorageService.uploadFile(coverpage,fileName, coverPage);
+		
+		j.setCoverImageFileName(fileName);
+		
+		journalRepo.save(j);
+	}
+
+	public void updateJournal(int id, String journalTopic) {
+		// TODO Auto-generated method stub
+		Journal journal = journalRepo.getOne(id);		
+		journal.setJournalTopic(journalTopic);
+				
+		journalRepo.save(journal);
+	}
+
+	public byte[] getCoverImage(int id) {
+		byte[] bytes = getCoverPage(id);
+		return bytes;
+	}
+
+	public List<PublishedJournalDto> getAllPublishedJournals() {
+		
+		List<PublishedJournalDto> list = journalRepo.getPublishedJournals();
+
+		if(list == null)
+		{
+			System.out.println("no published journals");
+		}
+		else
+		{
+			System.out.println("Total Published journals "+list.size());
+		}
+		
+		return list;
 	}
 }

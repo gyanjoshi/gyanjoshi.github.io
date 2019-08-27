@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Publish Journal</title>
+    <title>View Journal Issues</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -28,7 +28,7 @@
       <hr>
        <div class = "row">
       <div class="container">
-			<h4 class="title">Journal List</h4>
+			<h1 class="title">Journal Issue List</h1>
 		</div>
       
       </div> 
@@ -37,19 +37,24 @@
       <div class="container">
 		<div class="columns">
 			<div class="column is-full">
-			
-				<span th:if="*{journals == null}" th:text="${message}"></span>
 				
-				<div class="form-group">
-							<select class="form-control" id="journalId" name="journalId" required="required" onchange="retrievePreparedIssues()">
+					<div class="listBlock">
+				        <div class="search-block">
+				            <div class="form-group">
+							<select class="form-control" id="journalId" name="journalId">
 						    <option value="0">Select Journal</option>
 						    <option th:each="journal : ${journals}" th:value="${journal.Id}" th:text="${journal.JournalTopic}"></option>
 						    </select>
-				</div>
+							</div>
+				            <button id="searchButton" name="searchButton" onclick="retrieveJournalIssues()" type="button">Retrieve Journal Issues</button>
+				        </div>
 				
-				<div id="resultsBlock">
-				
-				</div>
+				        <!-- Results block -->
+				        <div id="resultsBlock">
+							
+				        </div>
+				    </div>
+				    
 				
 				
 			</div>
@@ -62,8 +67,8 @@
   <!-- page-content" -->
 </div>
 <script>
-function retrievePreparedIssues() {
-		var url = '/editor/getPreparedIssuesList';
+function retrieveJournalIssues() {
+		var url = '/editor/journalissues';
 
     	if ($('#journalId').val() != '') {
         url = url + '/' + $('#journalId').val();
@@ -72,7 +77,6 @@ function retrievePreparedIssues() {
     $("#resultsBlock").load(url);	
 }
 </script>
-
 <!-- page-wrapper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"

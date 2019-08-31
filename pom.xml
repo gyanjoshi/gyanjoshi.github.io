@@ -14,10 +14,11 @@
 	 
 	
 	<groupId>com.example</groupId>
-	<artifactId>smsprojectdemo</artifactId>
+	<artifactId>JournalApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>smsprojectdemo</name>
-	<description>Demo project for Spring Boot</description>
+	<packaging>war</packaging>
+	<name>JournalApp</name>
+	<description>Application for Journal publish</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -33,6 +34,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,26 +56,25 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		 <dependency>
+	 	 <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency> 
         <dependency>
 		  <groupId>org.springframework.boot</groupId>
 		  <artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
-		<dependency>
+	<!-- 	<dependency>
 		  <groupId>org.postgresql</groupId>
 		  <artifactId>postgresql</artifactId>
-		</dependency>
+		</dependency> -->
 		
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 	<dependency>
 	    <groupId>org.apache.commons</groupId>
 	    <artifactId>commons-dbcp2</artifactId>
-	    <version>2.7.0</version>
-	</dependency>
+	    </dependency>
 			
  	<dependency>
             <groupId>org.springframework.boot</groupId>
@@ -79,14 +85,12 @@
 <dependency>
     <groupId>org.thymeleaf.extras</groupId>
     <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-    <version>3.0.4.RELEASE</version>
-</dependency>
+    </dependency>
 
 <!--security-->
       <dependency>
          <groupId>org.springframework.security</groupId>
          <artifactId>spring-security-config</artifactId>
-         <version>${spring-security.version}</version>
          <exclusions>
             <exclusion>
                <artifactId>spring-asm</artifactId>
@@ -97,20 +101,17 @@
       <dependency>
          <groupId>org.springframework.security</groupId>
          <artifactId>spring-security-web</artifactId>
-         <version>${spring-security.version}</version>
-      </dependency>
+         </dependency>
       <dependency>
          <groupId>org.springframework.security</groupId>
          <artifactId>spring-security-taglibs</artifactId>
-         <version>${spring-security.version}</version>
-      </dependency>
+         </dependency>
       
       <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
 <dependency>
     <groupId>javax.xml.bind</groupId>
     <artifactId>jaxb-api</artifactId>
-    <version>2.3.0-b170201.1204</version>
-</dependency>
+    </dependency>
 
 <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
 <dependency>
@@ -123,15 +124,13 @@
 <dependency>
     <groupId>org.glassfish.jaxb</groupId>
     <artifactId>jaxb-runtime</artifactId>
-    <version>2.3.0-b170127.1453</version>
-</dependency>
+    </dependency>
 
 <!-- To Send Email -->
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
-			<version>1.5.4</version>
-		</dependency>
+			</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
@@ -155,6 +154,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>JournalApp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

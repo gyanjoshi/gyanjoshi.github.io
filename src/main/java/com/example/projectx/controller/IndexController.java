@@ -1,24 +1,17 @@
 package com.example.projectx.controller;
 
-import java.security.Principal;
 import java.util.List;
 
-import javax.mail.MessagingException;
-
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.projectx.dto.UserDto;
-import com.example.projectx.form.ArticleUploadForm;
-import com.example.projectx.mail.EmailService;
-import com.example.projectx.mail.Mail;
-import com.example.projectx.model.AppUser;
+
 import com.example.projectx.model.Journal;
 import com.example.projectx.model.JournalIssue;
 import com.example.projectx.model.Notice;
@@ -28,10 +21,8 @@ import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
 import com.example.projectx.service.JournalService;
 import com.example.projectx.service.UserDetailsServiceImpl;
-import com.example.projectx.utils.WebUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 
 @Controller
 public class IndexController {
@@ -167,6 +158,7 @@ public class IndexController {
         model.addAttribute("notices",noticerepo.findAll());
         
         model.addAttribute("journals",journalService.getAllPublishedJournals());
+        model.addAttribute("coverimages", journalService.getAllCoverImage());
         
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
@@ -260,8 +252,13 @@ public class IndexController {
     	
     	Journal selectedJournal = journalService.getJournalById(id);
     	
+    	journalService.getAllJournalIssues(id);
+    	
     	model.addAttribute("journals", journals);
     	model.addAttribute("selectedJournal", selectedJournal);
+    	
+    	model.addAttribute("journals",journalService.getAllPublishedJournals());
+        model.addAttribute("coverimages", journalService.getAllCoverImage());
     	
     	return "viewjournal";
     }

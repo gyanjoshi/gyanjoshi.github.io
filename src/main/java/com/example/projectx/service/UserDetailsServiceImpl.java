@@ -31,7 +31,7 @@ import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppRole;
 import com.example.projectx.model.AppUser;
-import com.example.projectx.model.Journal;
+
 import com.example.projectx.model.Qualification;
 import com.example.projectx.model.Title;
 import com.example.projectx.repository.UserRepository;

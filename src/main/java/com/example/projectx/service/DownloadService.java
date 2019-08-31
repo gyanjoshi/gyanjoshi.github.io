@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.projectx.form.AddDownloadForm;
 
 import com.example.projectx.form.AddNoticeForm;
-import com.example.projectx.model.Article;
 
 import com.example.projectx.model.Download;
 import com.example.projectx.model.Notice;
@@ -143,7 +142,7 @@ public class DownloadService {
         n.setUploadedDate(new java.sql.Date(System.currentTimeMillis()));    
         
         
-        Notice n2 = noticeRepo.save(n);
+        noticeRepo.save(n);
         
 		
 	}

@@ -2,8 +2,6 @@ package com.example.projectx.controller;
 
 import java.security.Principal;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -29,7 +27,6 @@ import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
 import com.example.projectx.service.DownloadService;
-import com.example.projectx.service.FileStorageService;
 import com.example.projectx.service.UserDetailsServiceImpl;
 import com.example.projectx.utils.WebUtils;
 

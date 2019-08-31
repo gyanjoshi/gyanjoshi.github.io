@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.projectx.model.Notice;
 
+
+
 public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
 	
@@ -18,19 +20,11 @@ public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 	void updatenotice(@Param("id") int id, @Param("noticenumber") String noticenumber,@Param("noticetitle") String noticetitle,@Param("noticetext") String noticetext);
 
 	
-	
-
 	/*
-	 * @Modifying(clearAutomatically = true)
-	 * 
-	 * @Transactional
-	 * 
-	 * @Query("UPDATE Download SET downloadTopic =:title, DownloadFilePath=:fileName, UploadedDate=:updatedate WHERE Id = :id"
-	 * ) void editDownload(@Param("id") int id,@Param("title") String
-	 * title, @Param("fileName") String fileName, @Param("updatedate") Date
-	 * updatedate);
-	 * 
-	 * }
+	 * @Query(value = "select NoticeNumber from Notice", nativeQuery = true)
+	 * List<Notice> findTopNotices();
 	 */
+	
+	
 
 }

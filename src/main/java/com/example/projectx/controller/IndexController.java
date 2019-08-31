@@ -155,7 +155,7 @@ public class IndexController {
         model.addAttribute("page", pagerepo.getOne(1));
         model.addAttribute("downloads",downloadrepo.findAll() );
         
-        model.addAttribute("notices",noticerepo.findAll() );
+        model.addAttribute("notices",noticerepo.findAll());
         
         model.addAttribute("journals",journalService.getAllPublishedJournals());
         model.addAttribute("coverimages", journalService.getAllCoverImage());
@@ -189,10 +189,10 @@ public class IndexController {
         }
     
     
-    @RequestMapping(value = { "contact" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/contact" }, method = RequestMethod.GET)
     public String contactPage(Model model) {
     	
-        return "contactpage/contact-page-index";
+        return "contactpage";
     }
     
     
@@ -231,6 +231,18 @@ public class IndexController {
         return "noticedetail";
     }
     
+    @RequestMapping(value = "/listnotices", method = RequestMethod.GET)
+    public String getNoticeList(Model model) {
+    	
+    	//Notice n = noticerepo.findById(id).get();
+
+    	model.addAttribute("notices",noticerepo.findAll());
+
+    	//model.addAttribute("notice", n);
+ 	
+        return "notice";
+    }
+
     @RequestMapping(value = "/viewjournal", method = RequestMethod.GET)
     public String viewJournal(@RequestParam("id") int id, Model model)
     {
@@ -249,7 +261,7 @@ public class IndexController {
     	
     	return "viewjournal";
     }
-   
+
     
     
 }

@@ -232,7 +232,8 @@ public class IndexController {
     	
     	Notice n = noticerepo.findById(id).get();
 
-    	model.addAttribute("notices",noticerepo.findAll());
+    	//model.addAttribute("notices",noticerepo.findAll());
+    	//model.findFirst4ByUploadeddate();
 
     	model.addAttribute("notice", n);
  	

@@ -1,7 +1,5 @@
 package com.example.projectx.form;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class AddNoticeForm {
 	
 	private String NoticeNumber;

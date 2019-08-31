@@ -13,7 +13,6 @@ import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Qualification;
 import com.example.projectx.model.Title;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
  

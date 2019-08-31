@@ -22,7 +22,6 @@ import com.example.projectx.form.ArticleUploadForm;
 
 import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Article;
-import com.example.projectx.repository.UserRepository;
 import com.example.projectx.service.ArticleService;
 import com.example.projectx.service.UserDetailsServiceImpl;
 import com.example.projectx.utils.WebUtils;
@@ -35,10 +34,6 @@ public class AuthorController {
 	
 	@Autowired
     private ArticleService articleService;
-	
-	@Autowired
-	private UserRepository userrepo;
-	
 	
 	@RequestMapping(path = "/author", method = RequestMethod.GET)
 	public String author(Model model, Principal principal) {

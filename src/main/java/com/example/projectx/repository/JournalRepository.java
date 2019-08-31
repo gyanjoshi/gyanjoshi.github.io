@@ -8,10 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.projectx.dto.ArticleDto;
+
 import com.example.projectx.dto.PublishedJournalDto;
 import com.example.projectx.model.Journal;
-import com.example.projectx.model.JournalIssue;
 
 public interface JournalRepository extends JpaRepository<Journal , Integer> {
 	

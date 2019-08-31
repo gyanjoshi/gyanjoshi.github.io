@@ -1,7 +1,5 @@
 package com.example.projectx.model;
 
-import java.io.File;
-import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;

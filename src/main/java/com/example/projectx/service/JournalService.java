@@ -1,7 +1,7 @@
 package com.example.projectx.service;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -13,9 +13,7 @@ import java.util.Set;
 import javax.mail.MessagingException;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.pdfbox.io.MemoryUsageSetting;
-import org.apache.pdfbox.multipdf.PDFMergerUtility;
-import org.apache.pdfbox.pdmodel.PDDocument;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -101,6 +99,11 @@ public class JournalService {
 		String absoultePath = coverpage + fileName;
 		
 		File f = new File(absoultePath);
+		
+		if(f.exists())
+		{
+			
+		}
 		byte[] bytes=null;
 		try {
 			bytes =  Files.readAllBytes(f.toPath());
@@ -148,7 +151,7 @@ public class JournalService {
 		
 		journalIssue.setJournal(journal);
         
-		JournalIssue j = journalIssueRepository.save(journalIssue);
+		journalIssueRepository.save(journalIssue);
         
         List<AppUser> authors = userDetailsService.getAllAuthors();        
         

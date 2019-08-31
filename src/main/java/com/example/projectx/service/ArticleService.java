@@ -1,10 +1,8 @@
 package com.example.projectx.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Set;
+
 
 import javax.mail.MessagingException;
 
@@ -12,22 +10,19 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.projectx.dao.AppUserDao;
 import com.example.projectx.dto.ApprovedArticleDto;
 import com.example.projectx.dto.ArticleDto;
 import com.example.projectx.mail.EmailService;
 import com.example.projectx.mail.Mail;
 import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Article;
-import com.example.projectx.model.Journal;
+
 import com.example.projectx.model.JournalIssue;
 import com.example.projectx.repository.ArticleRepository;
 import com.example.projectx.repository.JournalIssueRepository;
-import com.example.projectx.repository.JournalRepository;
-
 
 @Service
 public class ArticleService {

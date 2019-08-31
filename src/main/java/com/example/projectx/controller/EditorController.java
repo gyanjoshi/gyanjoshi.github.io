@@ -2,9 +2,9 @@ package com.example.projectx.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+
 import java.security.Principal;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,26 +14,26 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.projectx.dto.JournalDropDownDto;
+
 import com.example.projectx.dto.PreparedJournalDto;
-import com.example.projectx.form.ArticleUploadForm;
+
 import com.example.projectx.form.NewJournalIssueForm;
-import com.example.projectx.model.AppUser;
+
 import com.example.projectx.model.Journal;
 import com.example.projectx.model.JournalIssue;
 import com.example.projectx.repository.JournalIssueRepository;
 import com.example.projectx.repository.JournalRepository;
 import com.example.projectx.service.ArticleService;
-import com.example.projectx.service.DownloadService;
+
 import com.example.projectx.service.JournalService;
 import com.example.projectx.service.UserDetailsServiceImpl;
 

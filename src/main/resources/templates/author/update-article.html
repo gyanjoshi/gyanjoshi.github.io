@@ -23,8 +23,8 @@
 	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="/adminstatic/css/admin.css" rel="stylesheet">
-<script src="/adminstatic/js/admin.js"></script>
+<link href="../adminstatic/css/admin.css" rel="stylesheet">
+<script src="../adminstatic/js/admin.js"></script>
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 </head>
 
@@ -52,7 +52,7 @@
 						<div>
 							<div class="modal-content">
 								<div class="modal-body">
-									<form th:object="${articleUploadForm}" action="/author/update-article"
+									<form th:object="${articleUploadForm}" th:action="@{/author/update-article}"
 										method="post" enctype="multipart/form-data">
 										<input type="hidden" th:field="*{Id}">
 										<div class="form-group">

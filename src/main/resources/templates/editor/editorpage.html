@@ -13,8 +13,9 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <link href="../adminstatic/css/admin.css" rel="stylesheet">
- <script src="../adminstatic/js/admin.js"></script>
+
+ <link th:href="@{/adminstatic/css/admin.css}" rel="stylesheet">
+ <script th:src="@{/adminstatic/js/admin.js}"></script>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -77,11 +78,11 @@
             <div class="sidebar-submenu">
               <ul>
               	<li>
-                  <a href="/editor/createjournal">Create New Journal                    
+                  <a th:href="@{/editor/createjournal}">Create New Journal                    
                   </a>
                 </li>
                 <li>
-                  <a href="/editor/viewjournals">View Journals</a>
+                  <a th:href="@{/editor/viewjournals}">View Journals</a>
                 </li>                
               </ul>
             </div>
@@ -95,17 +96,17 @@
               <ul>
               	
                 <li>
-                  <a href="/editor/newissue">Create New Issue                    
+                  <a th:href="@{/editor/newissue}">Create New Issue                    
                   </a>
                 </li>
                 <li>
-                  <a href="/editor/viewjournalissues">View Issues</a>
+                  <a th:href="@{/editor/viewjournalissues}">View Issues</a>
                 </li>                
               </ul>
             </div>
            </li>
           <li class="sidebar-dropdown">
-            <a href="/editor/pendingreview">
+            <a th:href="@{/editor/pendingreview}">
               <i class="fa fa-shopping-cart"></i>
               <span>Pending Review</span>
             </a>
@@ -124,38 +125,27 @@
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="/editor/preparejournal">Prepare                     
+                  <a th:href="@{/editor/preparejournal}">Prepare                     
                   </a>
                 </li>
                 <li>
-                  <a href="/editor/publishjournal">Publish</a>
+                  <a th:href="@{/editor/publishjournal}">Publish</a>
                 </li>                
               </ul>
             </div>
            </li>
+           <li>
+           <a th:href="@{/logout}">
+        	<i class="fa fa-power-off"></i>Logout
+      		</a>
+      	</li>
         
         </ul>
       </div>
       <!-- sidebar-menu  -->
     </div>
     <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-cog"></i>
-        <span class="badge-sonar"></span>
-      </a>
-      <a href="\logout">
-        <i class="fa fa-power-off"></i>
-      </a>
-    </div>
+    
   </nav>
   <!-- sidebar-wrapper  -->
   </div>

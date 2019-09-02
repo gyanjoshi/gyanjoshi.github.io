@@ -152,7 +152,7 @@
               <p><div>
               <!-- <div th:each="p : ${page}">  -->
                 <span th:utext="${#strings.abbreviate(page.html,600)}"></span>
-                <span ><a href="/aboutus" >Read more</a></span>
+                <span ><a th:href="@{/aboutus}" >Read more</a></span>
                
             </div> 
        

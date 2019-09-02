@@ -15,8 +15,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <link href="/adminstatic/css/admin.css" rel="stylesheet">
- <script src="/adminstatic/js/admin.js"></script>
+ <link href="../adminstatic/css/admin.css" rel="stylesheet">
+ <script src="../adminstatic/js/admin.js"></script>
 </head>
 
 <body>
@@ -38,7 +38,7 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="box">					
-					<form th:object="${user}" method="POST" action="/admin/user/edit-user"  class="form-horizontal" enctype="multipart/form-data" >					
+					<form th:object="${user}" method="POST" th:action="@{/admin/user/edit-user}"  class="form-horizontal" enctype="multipart/form-data" >					
 						<fieldset>
 						    <legend>User Details</legend>
 						    <div class="form-group">

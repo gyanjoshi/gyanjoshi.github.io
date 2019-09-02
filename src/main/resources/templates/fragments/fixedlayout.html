@@ -21,41 +21,41 @@
               </button>
               <!-- LOGO -->
               <!-- TEXT BASED LOGO -->
-              <a class="navbar-brand" href="/">GhodaGhodi Campus <span>Research cell</span></a>              
+              <a class="navbar-brand" th:href="@{/}">GhodaGhodi Campus <span>Research cell</span></a>              
               <!-- IMG BASED LOGO  -->
                <!-- <a class="navbar-brand" href="index.html"><img src="img/logo.png" alt="logo"></a>  -->            
                      
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
-                 <li class="active"><a href="/">Home</a></li> 
+                 <li class="active"><a th:href="@{/}">Home</a></li> 
                  
                   <li class="dropdown hover">
                   <a class="dropdown-toggle"  role="button" >about us<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="#">About Us</a></li>
                     <li><a href="#oureditors" id = "oureditors">Editorial Board</a></li>
-                    <li><a href="contact">Contact</a></li>               
+                    <li><a th:href="@{contact}">Contact</a></li>               
                   </ul>
                 </li> 
-                <li><a href="/archive">Archives</a></li>  
-                 <li><a href="/guidelines">Author Guidelines</a></li>              
+                <li><a th:href="@{/archive}">Archives</a></li>  
+                 <li><a th:href="@{/guidelines}">Author Guidelines</a></li>              
                
                <!--  <li><a href="register">Register</a></li> -->
                <li sec:authorize="hasRole('ROLE_ADMIN')">              	
-				  <a href="/admin">Admin Panel</a>			 
+				  <a th:href="@{/admin}">Admin Panel</a>			 
                </li>
                <li sec:authorize="hasRole('ROLE_EDITOR')">
-              	<a href="/editor">Editor Panel</a>					 
+              	<a th:href="@{/editor}">Editor Panel</a>					 
                </li>
                <li sec:authorize="hasRole('ROLE_AUTHOR')">              	
-				  <a href="/author">Author Dashboard</a>				 
+				  <a th:href="@{/author}">Author Dashboard</a>				 
                </li>
                <li th:if="${#authorization.expression('isAuthenticated()')}">
-				 <a href="logout" class="btn btn-lg btn-primary" data-toggle="modal">Logout</a>
+				 <a th:href="@{logout}" class="btn btn-lg btn-primary" data-toggle="modal">Logout</a>
                </li>
                <li th:if="${#authorization.expression('not isAuthenticated()')}">
-				 <a href="login" class="btn btn-lg btn-primary" data-toggle="modal">Login</a>
+				 <a th:href="@{/login}" class="btn btn-lg btn-primary" data-toggle="modal">Login</a>
                </li>
               
               </ul>           

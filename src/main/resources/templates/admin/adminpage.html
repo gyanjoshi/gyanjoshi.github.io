@@ -13,8 +13,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <link href="/adminstatic/css/admin.css" rel="stylesheet">
- <script src="/adminstatic/js/admin.js"></script>
+ <link href="../adminstatic/css/admin.css" rel="stylesheet">
+ <script src="../adminstatic/js/admin.js"></script>
 
  
 
@@ -68,7 +68,7 @@
             <span>General</span>
           </li>
           <li class="sidebar-dropdown">
-            <a href="/admin/user">
+            <a th:href="@{/admin/user}">
               <i class="fa fa-tachometer-alt"></i>
               <span>User</span>
              <!--  <span class="badge badge-pill badge-warning">New</span> -->
@@ -90,7 +90,7 @@
             </div> -->
           </li>
           <li class="sidebar-dropdown">
-            <a href="/admin/pages">
+            <a th:href="@{/admin/pages}">
               <i class="fa fa-shopping-cart"></i>
               <span>Pages</span>
               <span class="badge badge-pill badge-danger">3</span>
@@ -131,7 +131,7 @@
             </div>
           </li>
           <li class="sidebar-dropdown">
-            <a href="/admin/notices">
+            <a th:href="@{/admin/notices}">
               <i class="fa fa-chart-line"></i>
               <span>Notices</span>
             </a>
@@ -151,7 +151,7 @@
           </li>
           
           <li class="sidebar-dropdown">
-            <a href="/admin/downloads">
+            <a th:href="@{/admin/downloads}">
               <i class="far fa-gem"></i>
               <span>Downloads</span>
             </a>
@@ -200,7 +200,7 @@
         <i class="fa fa-cog"></i>
         <span class="badge-sonar"></span>
       </a>
-      <a href="\logout">
+      <a th:href="@{\logout}">
         <i class="fa fa-power-off"></i>
       </a>
     </div>

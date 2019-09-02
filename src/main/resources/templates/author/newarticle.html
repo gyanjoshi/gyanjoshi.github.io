@@ -30,7 +30,7 @@
 
 <body>
 	<div class="page-wrapper chiller-theme toggled">
-		<div th:replace="/editor/editorpage :: sidebar"></div>
+		<div th:replace="/author/authorpage :: sidebar"></div>
 		<main class="page-content">
 		<div class="container-fluid">
 			<hr>
@@ -52,7 +52,7 @@
 						<div>
 							<div class="modal-content">
 								<div class="modal-body">
-									<form th:object="${articleUploadForm}" action="/author/newarticle"
+									<form th:object="${articleUploadForm}" th:action="@{/author/newarticle}"
 										method="post" enctype="multipart/form-data">
 										<div class="form-group">
 											<label for="usr">Topic:</label> <input th:field="*{topic}"

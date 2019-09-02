@@ -13,8 +13,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <link href="/adminstatic/css/admin.css" rel="stylesheet">
- <script src="/adminstatic/js/admin.js"></script>
+ <link href="../adminstatic/css/admin.css" rel="stylesheet">
+ <script src="../adminstatic/js/admin.js"></script>
 
 </head>
 
@@ -38,7 +38,7 @@
 		<div class="columns">
 			<div class="column is-full">
 				<div class="box">
-			<form action="/editor/add-cover" method="post" enctype="multipart/form-data">
+			<form th:action="@{/editor/add-cover}" method="post" enctype="multipart/form-data">
 				 	<input th:value="${jid}" name="jid" id="jid" type=hidden>
 		           <input type="file" name="file" value="file" id="file">
 		             <button class="au-btn au-btn-icon au-btn--blue">

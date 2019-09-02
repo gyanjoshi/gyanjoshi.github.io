@@ -199,7 +199,7 @@ public class IndexController {
     
     @RequestMapping(value = "/guidelines", method = RequestMethod.GET)
     public String authorGuideline(Model model) {
-    	model.addAttribute("guidelines", pagerepo.getOne(2));
+    	model.addAttribute("guidelines", pagerepo.getOne(3));
     	
         return "/author-guidelines";
     }

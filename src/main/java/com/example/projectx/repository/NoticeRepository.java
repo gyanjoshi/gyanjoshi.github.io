@@ -13,6 +13,9 @@ import com.example.projectx.model.Notice;
 public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
 	
+	
+
+
 	@Modifying(clearAutomatically = true)
 	@Transactional
     @Query("UPDATE Notice SET NoticeNumber =:noticenumber,NoticeTitle=:noticetitle,noticeText= :noticetext  WHERE Id =:id")
@@ -20,11 +23,6 @@ public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 	void updatenotice(@Param("id") int id, @Param("noticenumber") String noticenumber,@Param("noticetitle") String noticetitle,@Param("noticetext") String noticetext);
 
 	
-	/*
-	 * @Query(value = "select NoticeNumber from Notice", nativeQuery = true)
-	 * List<Notice> findTopNotices();
-	 */
-	
-	
+
 
 }

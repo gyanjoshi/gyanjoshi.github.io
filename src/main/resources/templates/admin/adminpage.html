@@ -13,8 +13,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <link href="../adminstatic/css/admin.css" rel="stylesheet">
- <script src="../adminstatic/js/admin.js"></script>
+ <link th:href="@{/adminstatic/css/admin.css}" rel="stylesheet">
+ <script th:src="@{/adminstatic/js/admin.js}"></script>
 
  
 
@@ -67,50 +67,19 @@
           <li class="header-menu">
             <span>General</span>
           </li>
-          <li class="sidebar-dropdown">
+          <li>
             <a th:href="@{/admin/user}">
               <i class="fa fa-tachometer-alt"></i>
               <span>User</span>
-             <!--  <span class="badge badge-pill badge-warning">New</span> -->
             </a>
-            <div class="sidebar-submenu">
-             <!--  <ul>
-                <li>
-                  <a href="add-user">Add User
-                    <span class="badge badge-pill badge-success">Pro</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="edit-user">Edit User</a>
-                </li>
-                <li>
-                  <a href="#">Delete User</a>
-                </li>
-              </ul>
-            </div> -->
           </li>
-          <li class="sidebar-dropdown">
+          <li>
             <a th:href="@{/admin/pages}">
               <i class="fa fa-shopping-cart"></i>
               <span>Pages</span>
               <span class="badge badge-pill badge-danger">3</span>
             </a>
-         <!--    <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#">Add pages
-
-                  </a>
-                </li>
-                <li>
-                  <a href="#">Edit Pages</a>
-                </li>
-                <li>
-                  <a href="#">Delete Pages</a>
-                </li>
-              </ul>
-            </div>
-          --> </li>
+ 		 </li>
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="far fa-gem"></i>
@@ -130,41 +99,22 @@
               </ul>
             </div>
           </li>
-          <li class="sidebar-dropdown">
+          <li>
             <a th:href="@{/admin/notices}">
               <i class="fa fa-chart-line"></i>
               <span>Notices</span>
-            </a>
-           <!--  <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#">Add Notices</a>
-                </li>
-                <li>
-                  <a href="#">Edit Notices</a>
-                </li>
-                <li>
-                  <a href="#">Delete Notices</a>
-                </li>
-              </ul>
-            </div> -->
+            </a>          
           </li>
           
-          <li class="sidebar-dropdown">
+          <li>
             <a th:href="@{/admin/downloads}">
               <i class="far fa-gem"></i>
               <span>Downloads</span>
             </a>
-          <!--   <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#"> Add Downloads</a>
-                </li>
-                <li>
-                  <a href="#"> Delete downloads</a>
-                </li>
-              </ul>
-            </div> -->
+          </li>
+          <li>
+          	<a th:href="@{/logout}"> <i class="fa fa-power-off"></i>
+              <span>Logout</span> </a>
           </li>
           <li class="header-menu">
             <span>Extra</span>
@@ -176,34 +126,13 @@
               <span>Calendar</span>
             </a>
           </li>
-          <!-- <li>
-            <a href="#">
-              <i class="fa fa-folder"></i>
-              <span>Examples</span>
-            </a>
-          </li> -->
+          
         </ul>
       </div>
       <!-- sidebar-menu  -->
     </div>
     <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-cog"></i>
-        <span class="badge-sonar"></span>
-      </a>
-      <a th:href="@{\logout}">
-        <i class="fa fa-power-off"></i>
-      </a>
-    </div>
+    
   </nav>
   <!-- sidebar-wrapper  -->
   </div>

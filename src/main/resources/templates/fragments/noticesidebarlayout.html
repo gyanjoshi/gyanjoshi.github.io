@@ -35,9 +35,7 @@
          <li  th:each="notice : ${notices}"> 
           
             <a th:href="@{/notices(id=${notice.Id})}">
-             <!--  <i class="glyphicon glyphicon-list-alt"></i> -->
-              
-              <span th:text="${notice.NoticeTitle}"></span></a>
+             <span th:text="${notice.NoticeTitle}"></span></a>
            <h6><span class="feed_date" th:text="${notice.uploadedDate}" style = "float: right;"></span></h6>
            <hr>
 				

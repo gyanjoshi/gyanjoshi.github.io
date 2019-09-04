@@ -78,21 +78,34 @@ public class AuthorController {
         {
 
 			message =  "Please select a file to upload";
+			model.addAttribute("message",message);
 			
+			return "/author/newarticle";
             
         }
-		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = loggedInUser.getName();
-    	System.out.println("Author="+username);  
-    	
-    	articleService.saveArticle(topic,abs, file, username);
-    	
-    	message = "Article uploaded successfully.";
-    	
-    	model.addAttribute("currentProfile", userService.getAllProfilePictures().get(username));
-    	model.addAttribute("message",message);
-    	
-    	model.addAttribute("pending", articleService.getPendingArticles(username));
+		else if(!file.getOriginalFilename().endsWith(".doc") && !file.getOriginalFilename().endsWith(".docx"))
+		{
+			message =  "Please select a Microsoft word (.doc or .docx) file to upload";
+			model.addAttribute("message",message);
+			System.out.println(message);
+			return "/author/newarticle";
+		}
+		else
+		{
+			Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+	        String username = loggedInUser.getName();
+	    	System.out.println("Author="+username);  
+	    	
+	    	articleService.saveArticle(topic,abs, file, username);
+	    	
+	    	message = "Article uploaded successfully.";
+	    	
+	    	model.addAttribute("currentProfile", userService.getAllProfilePictures().get(username));
+	    	model.addAttribute("message",message);
+	    	
+	    	model.addAttribute("pending", articleService.getPendingArticles(username));
+		}
+		
        
         return "/author/pending";
 	 

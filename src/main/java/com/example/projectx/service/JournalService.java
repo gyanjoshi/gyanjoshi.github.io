@@ -32,7 +32,7 @@ import com.example.projectx.model.JournalIssue;
 import com.example.projectx.repository.ArticleRepository;
 import com.example.projectx.repository.JournalIssueRepository;
 import com.example.projectx.repository.JournalRepository;
-import com.example.projectx.utils.PdfMerger;
+import com.example.projectx.utils.PdfUtils;
 
 @Service
 public class JournalService {
@@ -341,7 +341,7 @@ public class JournalService {
 			
 		}
 		
-		File f = PdfMerger.mergePdfs(files, path+journalFileName);
+		File f = PdfUtils.mergePdfs(files, path+journalFileName);
 		
 		journalIssueRepository.save(journal);
 		

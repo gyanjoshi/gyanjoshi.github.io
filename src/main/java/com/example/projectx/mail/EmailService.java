@@ -49,5 +49,41 @@ public class EmailService {
         emailSender.send(message);
 
     }
+    
+    public void sendHtmlMessage(Mail mail, File file) throws MessagingException {
+
+    	
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setSubject(mail.getSubject());
+        
+        helper.setText(mail.getContent(),true);
+        helper.setTo(mail.getTo());
+        helper.setFrom(mail.getTo());
+        
+        helper.addAttachment(file.getName(), file);      
+
+        emailSender.send(message);
+
+    }
+    public void sendHtmlMessage(Mail mail) throws MessagingException {
+
+    	
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setSubject(mail.getSubject());
+        
+        helper.setText(mail.getContent(),true);
+        helper.setTo(mail.getTo());
+        helper.setFrom(mail.getTo());        
+            
+
+        emailSender.send(message);
+
+    }
+    
+    
 
 }

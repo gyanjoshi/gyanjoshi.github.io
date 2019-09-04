@@ -245,24 +245,50 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/viewjournal", method = RequestMethod.GET)
-    public String viewJournal(@RequestParam("id") int id, Model model)
+	public String viewJournal(/* @RequestParam("id") int id , */ Model model)
     {
     	
-    	List<JournalIssue> journals = journalService.getAllPublishedJournalIssues(id);
+    	//List<JournalIssue> journals = journalService.getAllPublishedJournalIssues(id);
     	
-    	Journal selectedJournal = journalService.getJournalById(id);
+    	//Journal selectedJournal = journalService.getJournalById(id);
     	
-    	journalService.getAllJournalIssues(id);
+    	//journalService.getAllJournalIssues(id);
     	
-    	model.addAttribute("journals", journals);
-    	model.addAttribute("selectedJournal", selectedJournal);
+    	//model.addAttribute("journals", journals);
+    	//model.addAttribute("selectedJournal", selectedJournal);
     	
     	model.addAttribute("journals",journalService.getAllPublishedJournals());
         model.addAttribute("coverimages", journalService.getAllCoverImage());
     	
     	return "viewjournal";
     }
-
+    
+//test journal view
+    @RequestMapping(value = "/testjournal", method = RequestMethod.GET)
+    public String testJournal( Model model)
+    {
+    	model.addAttribute("journals",journalService.getAllPublishedJournals());
+        model.addAttribute("coverimages", journalService.getAllCoverImage());
+    	return "testjournal";
+    }
+    
+  //test journal archives
+    @RequestMapping(value = "/journalarchives", method = RequestMethod.GET)
+    public String testJournalArchives( Model model)
+    {
+    	
+    	return "journalarchive";
+    }
+    
+  //test editorboard
+    @RequestMapping(value = "/editorboard", method = RequestMethod.GET)
+    public String testEditorTeam( Model model)
+    {
+    	
+    	return "editorial-board";
+    }
+    
+    
     
     
 }

@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Ghodaghodi multiple campus Sukkhad, Kailai - Research Journal">
-<title>Admin Dashboard</title>
+<title>Editors - Ghodaghodi multiple campus Sukkhad, Kailai - Research Journal </title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -29,14 +29,14 @@
 <body>
 	<div class="page-wrapper chiller-theme toggled">
 
-		<div th:replace="admin/adminpage :: sidebar"></div>
+		<div th:replace="editor/editorpage :: sidebar"></div>
 
 		<main class="page-content">
 		<div class="container-fluid">
 			<hr>
 			<div class="row">
 				<div class="container">
-					<h1 class="title">Users List</h1>
+					<h1 class="title">Editors List</h1>
 				</div>
 
 			</div>
@@ -48,8 +48,8 @@
 					<div class="column is-full">
 						<div class="field is-grouped">
 							<div class="col-sm-10">
-								<a th:href="@{/admin/user/add-user}"
-									class="button is-success is-small">Add Users</a>
+								<a th:href="@{/editor/add-editor}"
+									class="button is-success is-small">Add Editor</a>
 							</div>
 						</div>
 						<table
@@ -57,9 +57,7 @@
 							<thead>
 								<tr>
 									<th>Name</th>
-									<th>Address</th>
-									<th>Username</th>
-									<th>Role</th>
+									<th>Address</th>									
 									<th>E-mail</th>
 									<th>Phone No.</th>
 									<th>Profile Picture</th>
@@ -67,27 +65,19 @@
 
 								</tr>
 							</thead>
-							<tfoot>
-								<tr>
-									<td colspan="8"><strong>Total Records :</strong> <span
-										th:text="${users.size()}"></span></td>
-								</tr>
-							</tfoot>
+							
 							<tbody>
-								<tr th:each="user : ${users}">
+								<tr th:each="editor : ${editors}">
 
-									<td th:text="${user.fullName}"></td>
-									<td th:text="${user.address1}"></td>
-									<td th:text="${user.userName}"></td>
-
-									<td th:text="${user.role}"></td>
-									<td th:text="${user.email}"></td>
-									<td th:text="${user.phone}"></td>
-									<td><img th:if="*{profiles.get(user.userName) != null}"
-										th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(profiles.get(user.userName))}}"
+									<td th:text="${editor.fullName}"></td>
+									<td th:text="${editor.address1}"></td>									
+									<td th:text="${editor.email}"></td>
+									<td th:text="${editor.phone}"></td>
+									<td><img th:if="*{profiles.get(editor.id) != null}"
+										th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(profiles.get(editor.id))}}"
 										width="50" height="50" /></td>
 									<td><a
-										th:href="@{/admin/user/edit-user(uname=${user.userName})}"
+										th:href="@{/editor/edit-editor(id=${editor.id})}"
 										class="button is-primary is-small">Edit</a>
 										<button type="button" class="btn btn-danger"
 											data-toggle="modal" data-target="#myModal">Delete</button>
@@ -106,19 +96,16 @@
 													<div class="modal-footer">
 														<button type="button" class="btn btn-danger"
 															data-dismiss="modal">Close</button>
-														<a th:href="@{/admin/user/delete-user(uname=${user.userName})}">
+														<a th:href="@{/editor/delete-editor(id=${editor.id})}">
 														<button type="button" class="btn btn-success">Yes</button>
 														</a>
 													</div>
 												</div>
 											</div>
 										</div>
-										<a th:href="@{/admin/user/add-profile(uname=${user.userName})}">
+										<a th:href="@{/editor/add-profile(id=${editor.id})}">
 											<button type="button" class="btn btn-link">Add Profile</button>
-										</a>
-										<a th:href="@{/admin/user/reset-password(uname=${user.userName})}">
-											<button type="button" class="btn btn-link">Password Reset</button>
-										</a>										
+										</a>																				
 								</tr>
 							</tbody>
 						</table>

@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,15 +25,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import com.example.projectx.dto.PreparedJournalDto;
-
+import com.example.projectx.form.EditorForm;
 import com.example.projectx.form.NewJournalIssueForm;
-
+import com.example.projectx.model.AppUser;
+import com.example.projectx.model.Editor;
 import com.example.projectx.model.Journal;
 import com.example.projectx.model.JournalIssue;
+import com.example.projectx.repository.EditorRepository;
 import com.example.projectx.repository.JournalIssueRepository;
 import com.example.projectx.repository.JournalRepository;
 import com.example.projectx.service.ArticleService;
-
+import com.example.projectx.service.EditorService;
 import com.example.projectx.service.JournalService;
 import com.example.projectx.service.UserDetailsServiceImpl;
 
@@ -55,6 +57,12 @@ public class EditorController {
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 	
+	@Autowired
+	private EditorService editorService;
+	
+	@Autowired
+	private EditorRepository editorRepo;
+	
 	
 	@RequestMapping(path = "/editor", method = RequestMethod.GET)
 	public String editor(Model model, Principal principal) {
@@ -62,6 +70,121 @@ public class EditorController {
 		User loginedUser = (User) ((Authentication) principal).getPrincipal();
 		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
 		return "/editor/editorpage";
+	}
+	
+	@RequestMapping(path = "/editor/editors", method = RequestMethod.GET)
+	public String editors(Model model, Principal principal) {
+		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));		
+		List<Editor> editors = editorService.getAllEditors();		
+		model.addAttribute("editors", editors);
+		model.addAttribute("profiles", editorService.getAllProfilePictures());
+		return "/editor/editors";
+	}
+	
+	@RequestMapping(path = "/editor/add-editor", method = RequestMethod.GET)
+	public String addEditor(Model model, Principal principal) {
+		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));		
+		model.addAttribute("editor", new EditorForm());
+		model.addAttribute("titles", userDetailsService.getAllTitles());
+    	model.addAttribute("qualifications", userDetailsService.getAllQualifications());
+    	
+		return "/editor/add-editor";
+	}
+	
+	@RequestMapping(value = "/editor/add-editor", method = RequestMethod.POST)
+    public String addEditorPost(@ModelAttribute EditorForm editor,BindingResult result, Model model) {
+    	
+    	String returnPage;
+    	
+    	List<Editor> existing = editorRepo.findEditorByEmail(editor.getEmail());
+    	if (existing != null && existing.size() > 0){
+    		
+    		System.out.println("Email already found occured "+existing.get(0).getEmail());
+            result.rejectValue("email", null, "This email is already registered.");
+        }
+    	if (result.hasErrors()){
+    		model.addAttribute("editor", new EditorForm());
+    		model.addAttribute("titles", userDetailsService.getAllTitles());
+        	model.addAttribute("qualifications", userDetailsService.getAllQualifications());
+        	
+            return "/editor/add-editor";
+        }
+    	
+    	String message = editorService.addEditor(editor);
+    	
+    	if(message.startsWith("ERROR"))
+    	{
+    		model.addAttribute("editor", new EditorForm());
+        	
+        	model.addAttribute("titles", userDetailsService.getAllTitles());
+        	model.addAttribute("qualifications", userDetailsService.getAllQualifications());
+    		
+    		returnPage = "/editor/add-editor";
+    	}
+    	else
+    		returnPage = "/editor/editors";
+    	
+    	model.addAttribute("message", message);
+    			
+    	model.addAttribute("editors", editorService.getAllEditors());
+    	model.addAttribute("profiles", editorService.getAllProfilePictures());
+    	
+        return returnPage;
+    }
+	
+	@RequestMapping(value = "/editor/edit-editor", method = RequestMethod.GET)
+    public String editEditor(@RequestParam Integer id, Model model) {
+    	
+		Editor editor = editorRepo.findById(id).get();
+    	
+		model.addAttribute("editor", editor);
+		model.addAttribute("profiles", editorService.getAllProfilePictures());
+		model.addAttribute("roles", userDetailsService.getAllRoles());
+    	model.addAttribute("titles", userDetailsService.getAllTitles());
+    	model.addAttribute("qualifications", userDetailsService.getAllQualifications());
+    	
+		return "/editor/edit-editor";
+    }
+    
+    @RequestMapping(value = "/editor/edit-editor", method = RequestMethod.POST)
+    public String editEditorPost(@RequestParam Integer id, @ModelAttribute EditorForm editor, Model model) {
+
+    	editorService.editEditor(id, editor);
+    	model.addAttribute("editors", editorService.getAllEditors());
+    	model.addAttribute("profiles", editorService.getAllProfilePictures());
+        return "redirect:/editor/editors";
+    }
+    
+    @RequestMapping(value = "editor/delete-editor", method = RequestMethod.GET)
+    public String deleteEditor(@RequestParam Integer id,Model model) {
+    	editorRepo.deleteById(id);
+    	model.addAttribute("editors", editorService.getAllEditors());
+    	model.addAttribute("profiles", editorService.getAllProfilePictures());
+        return "/editor/editors";
+    }
+    
+    @RequestMapping(path = "/editor/add-profile", method = RequestMethod.GET)
+	public String addProfile(@RequestParam String id, Model model, Principal principal) {		
+		model.addAttribute("id", id);		
+		return "/editor/add-profile";
+	}
+	
+	@RequestMapping(path = "/editor/add-profile", method = RequestMethod.POST)
+	public String addProfilePost(@RequestParam("id") Integer id, MultipartFile file, Model model, Principal principal) {
+		
+		editorService.updateProfilePicture(id, file);
+		
+
+	    User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+		model.addAttribute("editors", editorService.getAllEditors());
+    	model.addAttribute("profiles", editorService.getAllProfilePictures());
+	    
+		return "/editor/editors";
 	}
 	
 	@RequestMapping(path = "/editor/createjournal", method = RequestMethod.GET)
@@ -176,7 +299,7 @@ public class EditorController {
 	}
 	
 	@RequestMapping(path = "/editor/add-cover", method = RequestMethod.POST)
-	public String addCoverPage(@RequestParam int jid, MultipartFile file, Model model, Principal principal) {
+	public String addCoverPage(@RequestParam int jid, @RequestParam MultipartFile file, Model model, Principal principal) {
 		
 		System.out.println("Updated JID="+jid);
 		journalService.updateCoverPage(jid, file);
@@ -322,10 +445,11 @@ public class EditorController {
 	public String approveArticlePost(@RequestParam int Id,@RequestParam String userName, @RequestParam String message, 
 									 @RequestParam int journalId,
 									 @RequestParam int jissueid,
+									 @RequestParam MultipartFile file,
 									 Model model,
 			Principal principal) {
 		
-		articleService.approve(Id, userName, message,journalId,jissueid );
+		articleService.approve(Id, userName, message,journalId,jissueid,file );
 		model.addAttribute("pending", articleService.getPendingArticles());
 		User loginedUser = (User) ((Authentication) principal).getPrincipal();
 		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
@@ -468,9 +592,35 @@ public class EditorController {
 		return "editor/pendingreview";
 	}
 	
+	// send to reviewer
+	@RequestMapping(path = "/editor/to-reviewer", method = RequestMethod.GET)
+	public String toReviewer(@RequestParam int article,@RequestParam String author, Model model, Principal principal) {
+		
+		model.addAttribute("article", articleService.getArticleById(article));
+		model.addAttribute("author", userDetailsService.getUserByUsername(author));		
+		model.addAttribute("editors", editorService.getAllEditors());
+		
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
+		
+		return "/editor/to-reviewer";
+	}
 	
-
-	
+	@RequestMapping(path = "/editor/to-reviewer", method = RequestMethod.POST)
+	public String toReviewerPost(@RequestParam int Id,@RequestParam String userName, @RequestParam String message,
+								 @RequestParam String selectedReviewers, Model model, Principal principal) {
+		
+		System.out.println("Reviewers:"+selectedReviewers);
+		editorService.toReviewer(Id, userName, message, selectedReviewers);
+		
+		model.addAttribute("pending", articleService.getPendingArticles());
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+	    
+		return "editor/pendingreview";
+	}
+		
 	@RequestMapping(value = "/editor/newjournal", method = RequestMethod.POST)
 	public String createNewJournalIssue(HttpServletRequest request,Model model,@ModelAttribute("newJournal") NewJournalIssueForm newJournal, Principal principal )
 	{

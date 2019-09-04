@@ -94,7 +94,7 @@ public class ArticleService {
              
              
              try {
-     			emailService.sendSimpleMessage(mail,FileStorageService.multipartToFile(file,file.getOriginalFilename()));
+     			emailService.sendHtmlMessage(mail,FileStorageService.multipartToFile(file,file.getOriginalFilename()));
      		} catch (MessagingException e) {
      			// TODO Auto-generated catch block
      			e.printStackTrace();
@@ -129,7 +129,7 @@ public class ArticleService {
         mail.setContent(message);
         
         try {
- 			emailService.sendSimpleMessage(mail);
+ 			emailService.sendHtmlMessage(mail);
  		} catch (MessagingException e) {
  			// TODO Auto-generated catch block
  			e.printStackTrace();
@@ -143,7 +143,7 @@ public class ArticleService {
         articleRepo.save(a);
 	}
 
-	public void approve(int id, String userName, String message, int journalId, int jissueid) {
+	public void approve(int id, String userName, String message, int journalId, int jissueid, MultipartFile file) {
 		// TODO Auto-generated method stub
 		
 		Article a = articleRepo.findById(id).get();
@@ -158,7 +158,7 @@ public class ArticleService {
         mail.setContent(message);
         
         try {
- 			emailService.sendSimpleMessage(mail);
+ 			emailService.sendHtmlMessage(mail, FileStorageService.multipartToFile(file, file.getOriginalFilename()));
  		} catch (MessagingException e) {
  			// TODO Auto-generated catch block
  			e.printStackTrace();
@@ -176,8 +176,6 @@ public class ArticleService {
         journalIssueRepository.saveAndFlush(j);
 		
 	}
-
-
 	
 	public List<ArticleDto> getApprovedArticles(int journalId)
 	{

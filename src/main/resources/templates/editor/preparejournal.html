@@ -7,9 +7,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description"
-	content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-
+<meta name="description" content="Ghodaghodi multiple campus Sukkhad, Kailai - Research Journal">
+   	
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -23,8 +22,8 @@
 	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="../adminstatic/css/admin.css" rel="stylesheet">
-<script src="../adminstatic/js/admin.js"></script>
+<link th:href="@{/adminstatic/css/admin.css}" rel="stylesheet">
+<script th:src="@{/adminstatic/js/admin.js}"></script>
 
 
 
@@ -90,7 +89,7 @@
 
 <script>
 function retrieveArticles() {
-		var url = '/editor/approved-articles';
+		var url = 'approved-articles';
 
     	if ($('#journalId').val() != '') {
         url = url + '/' + $('#journalId').val();
@@ -100,7 +99,7 @@ function retrieveArticles() {
 }
 
 function retrieveJournalIssues() {
-		var url = '/editor/getIssuesList';
+		var url = 'getIssuesList';
 
     	if ($('#journalId').val() != '') {
         url = url + '/' + $('#journalId').val();

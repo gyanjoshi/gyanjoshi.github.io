@@ -6,25 +6,23 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description"
-	content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-<title>Journals</title>
+<meta name="description" content="Ghodaghodi Multiple Campus Research Department">
+<title>All Journals</title>
 <link th:href="@{/adminstatic/css/admin.css}" rel="stylesheet">
  <script th:src="@{/adminstatic/js/admin.js}"></script>
-<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
-	rel="stylesheet">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 	
 
 
 <!--resources for header layout  -->
- <link href="css/bootstrap.min.css" rel="stylesheet">
- <link href="style.css" rel="stylesheet">
- <link id="switcher" href="css/themes/default-theme.css" rel="stylesheet">
- <link rel="stylesheet" href="css/animate.css">
+ <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+ <link th:href="@{/style.css}" rel="stylesheet">
+ <link id="switcher" th:href="@{/css/themes/default-theme.css}" rel="stylesheet">
+ <link rel="stylesheet" th:href="@{/css/animate.css}">
   <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>   
     <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'> 
     <!-- Font awesome css file-->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
     
     <style>
     img {
@@ -56,11 +54,12 @@
 				<div class="obj_issue_toc">
 
 
-					<div class="heading">
-
-						<a class="cover" href="#">
-							<img src="img/course-1.jpg" alt = "not found">
-							</a>
+					<div class="heading">						
+				<a class="cover" href="#">
+					<img th:if="*{coverpage != null}"
+						 th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(coverpage)}}"
+					width="20" height="50" />
+				</a>
 						</div>
 						<div>
 						<br><br><br><br>
@@ -69,47 +68,22 @@
 							<div class="section">
 								<h2>Articles</h2>
 								<ul class="cmp_article_list articles">
-									<li>
+									<li th:each="article : ${articles}">
 										<div class="obj_article_summary">
 
 											<div class="title">
-												<a href="#">Sati Custom in Nepal: A Historical Perspective</a>
+												<a href="#" th:text="${article.topic}"></a>
 											</div>
-
 											<div class="meta">
-												<div class="authors">Basudevlal Das</div>
-
-												
+												<div class="authors" th:text="${article.authorid}"></div>												
 											</div>
-
 											<ul class="galleys_links">
 												<li>
-													<a href="#" class="btn btn-info" role="button">PDF</a>
+													<a th:href="@{/download(type='article',file=${article.fileName})}" class="btn btn-info" role="button">PDF</a>
 												</li>
 											</ul>
 										</div>
-									</li>
-										<li>
-										<div class="obj_article_summary">
-
-											<div class="title">
-												<a href="#">xyz Custom in Nepal: A psychological culture</a>
-											</div>
-
-											<div class="meta">
-												<div class="authors">jivan kumar,Aajivan kumar</div>
-											</div>
-
-											<ul class="galleys_links">
-												<li>
-													<a href="#" class="btn btn-info" role="button">PDF</a>
-												</li>
-											</ul>
-										</div>
-									</li>
-									
-									
-									
+									</li>										
 								</ul>
 							</div>
 						</div>
@@ -117,19 +91,16 @@
 					</div>
 				</div>
 
-</div>
+			</div>
 			</div>
 			</div>
 			
 	<div class="col-sm-6" style="margin-top: 52px;">
+		<h3 class="singCourse_title"><span th:text="${selectedJournal.month+' '+selectedJournal.year+', Vol-'+selectedJournal.VolumeNum+', Issue-'+selectedJournal.IssueNum}"></span></h3>
+        <p class="singCourse_price">Published Date: <span th:text="${selectedJournal.uploaded_date}"></span></p>
 
-
-<h3>vol. 7 </h3>
-	<div class="published">
-								<span class="value">Published:</span>
-								<span class="value">2018-10-17</span>
-							</div>
-		</div>	
+	
+	</div>	
 		
 </div>  <!-- row ko end -->
 		</div>

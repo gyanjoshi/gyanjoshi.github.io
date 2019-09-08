@@ -6,7 +6,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +30,7 @@ public class JournalDao {
     	
     	List<JournalIssue> journals = new ArrayList<JournalIssue>();
     	
-    	javax.persistence.Query query = entityManager.createQuery("SELECT u FROM "+JournalIssue.class.getName()+" u where u.journal.Id=:jid and status not in ('Published', 'Prepared')");
+    	javax.persistence.Query query = entityManager.createQuery("SELECT u FROM "+JournalIssue.class.getName()+" u where u.journal.Id=:jid");
     	
     	query.setParameter("jid", jid);
     	
@@ -122,5 +125,29 @@ public class JournalDao {
 		else
 			return null;
 	}
+
+	public List<JournalIssue> getDraftJournalIssues(int jid) {
+		List<JournalIssue> journals = new ArrayList<JournalIssue>();
+    	javax.persistence.Query query  = entityManager.createQuery("SELECT u FROM "+JournalIssue.class.getName()+" u where u.journal.Id=:jid and status not in ('Published')");
+    	query.setParameter("jid", jid);
+		List<?> list = query.getResultList();
+		
+		
+		
+		if(!list.isEmpty()) 
+		{
+			for(Object journal: list)
+			{
+				JournalIssue j = (JournalIssue)journal;
+				journals.add(j);
+			}
+			return journals;
+		}
+    	
+		else
+			return null;
+	}
+
+	
 	
 }

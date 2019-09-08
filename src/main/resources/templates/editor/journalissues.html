@@ -32,7 +32,7 @@
 							<td th:text="${journal.status}"></td>						
 							
 							<td>
-								<a th:href="@{/editor/editjournalissue(jid=${journal.Id})}"  class="button is-primary is-small">Edit</a>
+								<a th:if="${journal.status!='Published'}" th:href="@{/editor/editjournalissue(jid=${journal.Id})}"  class="button is-primary is-small">Edit</a>
 								
 							</td>
 								 

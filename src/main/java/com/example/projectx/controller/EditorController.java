@@ -1,8 +1,5 @@
 package com.example.projectx.controller;
 
-import java.io.File;
-import java.io.IOException;
-
 import java.security.Principal;
 
 import java.util.List;
@@ -23,11 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.example.projectx.dto.ArticleDto;
 import com.example.projectx.dto.PreparedJournalDto;
 import com.example.projectx.form.EditorForm;
 import com.example.projectx.form.NewJournalIssueForm;
-import com.example.projectx.model.AppUser;
+
+import com.example.projectx.model.Article;
 import com.example.projectx.model.Editor;
 import com.example.projectx.model.Journal;
 import com.example.projectx.model.JournalIssue;
@@ -420,13 +418,45 @@ public class EditorController {
 	@RequestMapping(value = "/editor/getIssuesList/{journalid}", method = RequestMethod.GET)
 	public String getIssuesList(Model model, @PathVariable("journalid") int journalid, Principal principal) {
 	    
-		List<JournalIssue> list = journalService.getAllJournalIssues(journalid);
+		List<JournalIssue> list = journalService.getDraftJournalIssues(journalid);
 		
 		model.addAttribute("journalissues", list);
 		
 		System.out.println("Journal Id:"+journalid);		
 	    
 	    return "/editor/getIssuesList :: resultsList";
+	}
+	@RequestMapping(path = "/editor/uploadPDF", method = RequestMethod.GET)
+	public String uploadPDF(@RequestParam("article") Integer article, Model model) 
+	{		
+		model.addAttribute("article", article);		
+		return "/editor/uploadPDF";
+	}
+	
+	@RequestMapping(path = "/editor/uploadPDF", method = RequestMethod.POST)
+	public String uploadPDFPost(@RequestParam("article") Integer article, MultipartFile file, Model model, Principal principal) {
+		
+		
+		Article a = articleService.getArticleById(article);
+		String message = null;		
+		if (file.isEmpty()) 
+        {
+
+			message =  "Please select a file to upload";
+			
+            
+        }
+		else
+		{
+			articleService.updateArticle(article, file);
+			message =  "Article updated successfully!";
+		}
+
+	    
+	    model.addAttribute("message", message);
+	    model.addAttribute("pending", articleService.getPendingArticles());
+	    
+	    return "editor/pendingreview";
 	}
 	@RequestMapping(path = "/editor/approve", method = RequestMethod.GET)
 	public String approveArticle(@RequestParam int article,@RequestParam String author, Model model, Principal principal) {
@@ -487,29 +517,37 @@ public class EditorController {
 	{
 		
 		String returnPage;
-		File f = null;
 		
-		try {
-			f = journalService.prepare(jissueid,editorial);
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		if(f==null || !f.exists())
+		List<ArticleDto> list = articleService.getApprovedArticles(jissueid);
+		String message = null;
+		if(list != null)
 		{
-			returnPage = "error";
+			if(list.size() == 0)
+			{
+				message = "There are no articles approved for this issue. Please approve and assign the articles for this issue.";
+				returnPage = "editor/preparejournal";
+				model.addAttribute("message", message);	
+				model.addAttribute("journals", journalService.getAllJournals());
+			}
+			else
+			{
+				journalService.prepare(jissueid,editorial);	
+				model.addAttribute("message", message);	
+				model.addAttribute("journals", journalService.getAllJournals());
+				returnPage = "/editor/publishjournal";
+				
+			}
+			  
 		}
 		else
 		{
-			model.addAttribute("journals", journalService.getPreparedJournalIssues(journalId));
-			returnPage = "/editor/publishjournal";
-		}
+			model.addAttribute("journals", journalService.getAllJournals());
+			model.addAttribute("message", "Journal Issue is prepared for publishing");	
+			message = "There are no articles approved for this issue. Please approve and assign the articles for this issue.";
+			returnPage = "editor/preparejournal";
+		}			
 		
-		User loginedUser = (User) ((Authentication) principal).getPrincipal();
-		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+			
 	    
 		return returnPage;
 	}
@@ -520,6 +558,12 @@ public class EditorController {
 		List<PreparedJournalDto> list = journalService.getPreparedJournalIssues(journalid);
 		
 		//List<JournalIssue> list = journalService.getA(journalid);
+		if(list == null)
+			model.addAttribute("message","There are no Journal Issues prepared for publishing.");
+		else if (list.size() == 0)
+			model.addAttribute("message","There are no Journal Issues prepared for publishing.");		
+		else
+			model.addAttribute("message",null);
 		
 		model.addAttribute("journalissues", list);
 		model.addAttribute("journal", journalRepo.findById(journalid).get());
@@ -536,8 +580,7 @@ public class EditorController {
 		
 		model.addAttribute("journals", journalService.getAllJournals());	
 		
-		User loginedUser = (User) ((Authentication) principal).getPrincipal();
-		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+		
 	    
 		return "/editor/publishjournal";
 	}
@@ -559,7 +602,18 @@ public class EditorController {
 	@RequestMapping(value = "/editor/approved-articles/{journalid}", method = RequestMethod.GET)
 	public String showApprovedArticles(Model model, @PathVariable("journalid") int journalid, Principal principal) {
 	    
-		model.addAttribute("articles", articleService.getApprovedArticles(journalid));
+		List<ArticleDto> list = articleService.getApprovedArticles(journalid);
+		String message = null;
+		if(list != null)
+		{
+			if(list.size() == 0)
+			  message = "There are no articles approved for this issue. Please approve and assign the articles for this issue.";	
+		}
+		else
+			message = "There are no articles approved for this issue. Please approve and assign the articles for this issue.";
+		
+		model.addAttribute("message", message);
+		model.addAttribute("articles", list);
 		System.out.println("Journal Id:"+journalid);
 		User loginedUser = (User) ((Authentication) principal).getPrincipal();
 		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));

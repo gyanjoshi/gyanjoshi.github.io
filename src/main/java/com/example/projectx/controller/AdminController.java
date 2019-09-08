@@ -97,6 +97,7 @@ public class AdminController {
         }
     	
     	String message = userService.addUser(user);
+    	
     	if(message.startsWith("ERROR"))
     	{
     		model.addAttribute("user", new UserForm());

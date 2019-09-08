@@ -4,8 +4,10 @@
 </head>
 
 <body>
-<div th:replace="fragments/headerlayout :: header"></div>
- <div th:fragment = "resultsList" th:unless="${#lists.isEmpty(journalissues)}" id="results-block">
+
+<div th:fragment = "resultsList">
+<p th:if="${message != null}" th:text="${message}" style="color:red">
+<div  th:unless="${#lists.isEmpty(journalissues)}" id="results-block">
  	<table th:if="*{journalissues != null}" class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
 						<tr>
@@ -31,8 +33,7 @@
 								<img th:if="*{coverimages.get(journal.Id) != null}"  th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(coverimages.get(journal.Id))}}" width="100" height="200"/>
 							</td>
 							
-							<td>
-								<a th:href="@{/download(type='journal',file=${jissue.fileName})}"  class="button is-primary is-small">Download</a>
+							<td>								
 								<a th:href=@{/editor/publish(jid=${jissue.journalId})} class="button is-danger is-small">Publish</a>
 							</td>
 								 
@@ -40,6 +41,7 @@
 						</tr>
 					</tbody> 
 				</table>
+</div>
 </div>
 </body>
 </html> 

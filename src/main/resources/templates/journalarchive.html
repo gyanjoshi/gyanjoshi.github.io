@@ -6,25 +6,25 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description"
-	content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-<title>Journals</title>
+<meta name="description" content="Ghodaghodi Multiple Campus Research Department">
+<title>All Journals</title>
 <link th:href="@{/adminstatic/css/admin.css}" rel="stylesheet">
  <script th:src="@{/adminstatic/js/admin.js}"></script>
+ 
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"
 	rel="stylesheet">
 	
 
 
 <!--resources for header layout  -->
- <link href="css/bootstrap.min.css" rel="stylesheet">
- <link href="style.css" rel="stylesheet">
- <link id="switcher" href="css/themes/default-theme.css" rel="stylesheet">
- <link rel="stylesheet" href="css/animate.css">
+ <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+ <link th:href="@{/style.css}" rel="stylesheet">
+ <link id="switcher" th:href="@{css/themes/default-theme.css}" rel="stylesheet">
+ <link rel="stylesheet" th:href="@{/css/animate.css}">
   <link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>   
     <link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'> 
     <!-- Font awesome css file-->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
     
     <style>
   img {
@@ -58,74 +58,32 @@
 
 					<div class="obj_issue_summary border">
 
-						<a class="cover" href="#">
-							<img src="https://www.nepjol.info/public/journals/71/cover_issue_1439_en_US.jpg">
+							<a th:if="${currentjournal!=null}" class="cover" th:href="@{/viewjournal(jid=${currentjournal.Id}, jiid=${selectedJournal.Id})}">
+								<img th:if="*{coverpage != null}"
+								 th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(coverpage)}}"
+								width="20" height="50" />
 							</a>
-
-							<a class="title" href="#">Vol 7(2017)</a>
-
-							<div class="description">
-
-							</div>
+							<h3 th:if="${selectedJournal != null}" class="singCourse_title"><span th:text="${selectedJournal.month+' '+selectedJournal.year+', Vol-'+selectedJournal.VolumeNum+', Issue-'+selectedJournal.IssueNum}"></span></h3>
+        					<p th:if="${selectedJournal != null}"  class="singCourse_price">Published Date: <span th:text="${selectedJournal.uploaded_date}"></span></p>			
 						</div>
 						<!-- .obj_issue_summary -->
 					</li>
-					<li>
-
-						<div class="obj_issue_summary">
-
-							<a class="cover" href="#">
-								<img src="https://www.nepjol.info/public/journals/71/cover_issue_1436_en_US.jpg">
-								</a>
-
-								<a class="title" href="#">Vol 6 (2016)</a>
-
-								<div class="description">
-
-								</div>
-							</div>
-							<!-- .obj_issue_summary -->
-						</li>
-						<li>
-
-							<div class="obj_issue_summary">
-
-								<a class="cover" href="#">
-									<img src="https://www.nepjol.info/public/journals/71/cover_issue_836_en_US.jpg">
-									</a>
-
-									<a class="title" href="#">Vol 5 (2015)</a>
-
-									<div class="description">
-
-									</div>
-								</div>
-								<!-- .obj_issue_summary -->
-							</li>
+					
 							
 								
 						</ul>
 						
 						<!--archive list containing only link but not image  -->
 						<ul>
-						<li>
+						<li th:each="journal : ${journals}" >
 								<div class="obj_issue_summary">
-									<a class="title" href="#">Vol 4 (2014)</a>
+									<a class="title" th:href="@{/viewjournal(jid=${currentjournal.Id}, jiid=${journal.Id})}"><span th:text="${journal.month+' '+journal.year+', Vol-'+journal.VolumeNum+', Issue-'+journal.IssueNum}"></span></a>
 									<div class="description">
 
 									</div>
 								</div>
 								<!-- .obj_issue_summary -->
-							</li>
-							<li>
-								<div class="obj_issue_summary">
-									<a class="title" href="#">Vol 3 (2013)</a>
-									<div class="description">
-
-									</div>
-								</div>
-								<!-- .obj_issue_summary -->
-							</li>
+							</li>							
 						</ul>
 						
 					</div>

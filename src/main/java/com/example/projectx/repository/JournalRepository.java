@@ -28,7 +28,8 @@ public interface JournalRepository extends JpaRepository<Journal , Integer> {
 			"FROM JournalIssue a \r\n" + 
 			"LEFT JOIN Journal b \r\n" + 
 			"ON a.journal.Id = b.Id \r\n" + 
-			"WHERE a.status ='Published'")
+			"WHERE a.status ='Published'"
+			+ "ORDER BY a.uploaded_date desc")
 	public List<PublishedJournalDto> getPublishedJournals();
 
 }

@@ -115,7 +115,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			if(user.getEmail().equals(user.getConfirmEmail()))
 				newUser.setEmail(user.getEmail());
 			else
-				message = "ERROR: E-mail does not match";
+				
+				return "ERROR: E-mail does not match";
 			newUser.setPhone(user.getPhone());
 			newUser.setCity(user.getCity());
 			newUser.setState(user.getState());
@@ -126,7 +127,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			if(user.getPassword().contentEquals(user.getConfirmpassword()))
 				newUser.setPassword(EncryptedPasswordUtils.encrytePassword(user.getPassword()));
 			else
-				message = "ERROR: Password does not match";
+				return "ERROR: Password does not match";
 			newUser.setRole(user.getRole());
 			
 			newUser.setEnabled((short) 1);
@@ -143,7 +144,34 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 			
 			userRepo.save(newUser);
+			
 			message = "User Registered successfully";
+			
+			// send email to user
+			
+			Mail mail = new Mail();
+
+            
+            mail.setTo(user.getEmail());
+            mail.setSubject("You are now registered !!");
+            mail.setContent("Dear "+user.getFullName()+",<br>"
+            		+ "Congratulations!!<br>"
+            		+ "You are registered in our Journal Publication system as a "+user.getRole().replaceAll("ROLE_", "")+"<br>"
+            		+ "UserName :"+user.getUserName()+"<br>"
+            		+ "Password :"+user.getPassword()+"<br>"
+            		+ " Regards,<br>"
+            		+ "Administrator<br>"
+            		);
+            
+            try {
+     			emailService.sendHtmlMessage(mail);
+     		} catch (MessagingException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
 			
@@ -346,6 +374,32 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		user.setEnabled((short) 1);
 		
 		userRepo.save(user);
+		
+		// send email to user
+		
+					Mail mail = new Mail();
+
+		            
+		            mail.setTo(user.getEmail());
+		            mail.setSubject("You are now registered !!");
+		            mail.setContent("Dear "+user.getFullName()+",<br>"
+		            		+ "Congratulations!!<br>"
+		            		+ "You are registered in our Journal Publication system as an author. <br>"
+		            		+ "UserName :"+user.getUserName()+"<br>"
+		            		+ "Password :"+user.getPassword()+"<br>"
+		            		+ " Regards,<br>"
+		            		+ "Administrator<br>"
+		            		);
+		            
+		            try {
+		     			emailService.sendHtmlMessage(mail);
+		     		} catch (MessagingException e) {
+		     			// TODO Auto-generated catch block
+		     			e.printStackTrace();
+		     		} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 		
 	}
 	

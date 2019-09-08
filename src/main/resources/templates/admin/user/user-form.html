@@ -21,13 +21,14 @@
 </head>
 
 <body>
+<div th:replace="fragments/headerlayout :: header"></div>
 <div class="page-wrapper chiller-theme toggled">
  <div th:replace = "admin/adminpage :: sidebar"></div>
  <main class="page-content">
     <div class="container-fluid">
       <hr>
       
-       	<section class="section">
+       	<section class="section" style = "margin-top: 51px">
 		<div class="container">
 			<h1 class="title">Users Form</h1>
 			
@@ -36,7 +37,7 @@
       
       <!-- start of main body -->
      <div class="container">
-		<div class="row">
+		<div class="row" style = "margin-top: 51px">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="box">					
 					<form th:object="${user}" method="POST" th:action="@{/admin/user/add-user}"  class="form-horizontal" enctype="multipart/form-data" >					

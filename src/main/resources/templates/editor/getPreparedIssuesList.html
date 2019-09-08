@@ -4,6 +4,7 @@
 </head>
 
 <body>
+<div th:replace="fragments/headerlayout :: header"></div>
  <div th:fragment = "resultsList" th:unless="${#lists.isEmpty(journalissues)}" id="results-block">
  	<table th:if="*{journalissues != null}" class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>

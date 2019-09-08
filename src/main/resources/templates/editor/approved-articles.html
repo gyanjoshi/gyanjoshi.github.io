@@ -4,6 +4,7 @@
 </head>
 
 <body>
+<div th:replace="fragments/headerlayout :: header"></div>
  <div th:fragment = "resultsList" th:unless="${#lists.isEmpty(articles)}" id="results-block">
  	<table>
             <thead>

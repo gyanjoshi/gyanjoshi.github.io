@@ -24,6 +24,7 @@
 </head>
 
 <body>
+<div th:replace="fragments/headerlayout :: header"></div>
 <div class="page-wrapper chiller-theme toggled">
 <div th:fragment = "sidebar">
   <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
@@ -40,9 +41,9 @@
         </div>
       </div>
       <div class="sidebar-header">
-        <div class="user-pic">
+        <!-- <div class="user-pic">
           <img th:if="*{currentProfile != null}"  th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(currentProfile)}}" width="50" height="50"/>
-        </div>
+        </div> -->
         <div class="user-info">
           
           <span th:text ="${#authentication.getName()}"></span>

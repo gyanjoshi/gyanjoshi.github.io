@@ -23,6 +23,7 @@
 </head>
 
 <body>
+<div th:replace="fragments/headerlayout :: header"></div>
 <div class="page-wrapper chiller-theme toggled">
 
    <div th:replace = "admin/adminpage :: sidebar"></div>
@@ -30,7 +31,7 @@
   <main class="page-content">
     <div class="container-fluid">
       <hr>
-       <div class = "row">
+       <div class = "row" style = "margin-top: 51px">
       <div class="container">
 			<h1 class="title">Downloads List</h1>
 		</div>

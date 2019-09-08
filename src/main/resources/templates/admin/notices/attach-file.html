@@ -21,6 +21,7 @@
 </head>
 
 <body>
+<div th:replace="fragments/headerlayout :: header"></div>
 <div class="page-wrapper chiller-theme toggled">
 
 <div th:replace = "/admin/adminpage :: sidebar"></div>
@@ -28,7 +29,7 @@
   <main class="page-content">
     <div class="container-fluid">
       <hr>
-       <div class = "row">
+       <div class = "row" style = "margin-top: 51px">
       <div class="container">
 			<h4 class="title">Attach File in Notice</h4>
 		</div>
@@ -53,7 +54,7 @@
 	</div>
       <!-- end of main body -->
       
-
+</div>
   </main>
   <!-- page-content" -->
 </div>

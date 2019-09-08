@@ -19,6 +19,7 @@ import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
+import com.example.projectx.service.EditorService;
 import com.example.projectx.service.JournalService;
 import com.example.projectx.service.UserDetailsServiceImpl;
 
@@ -40,6 +41,9 @@ public class IndexController {
 	
 	@Autowired
 	private JournalService journalService;
+	
+	@Autowired
+	private EditorService editorService;
 
 	
 	@Autowired
@@ -162,6 +166,8 @@ public class IndexController {
         
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
+        model.addAttribute("boardeditors",editorService.getAllEditors());
+        
   
         return "index";
     }
@@ -284,7 +290,10 @@ public class IndexController {
     @RequestMapping(value = "/editorboard", method = RequestMethod.GET)
     public String testEditorTeam( Model model)
     {
-    	
+    	model.addAttribute("exeditors",userService.getAllEditors());
+        model.addAttribute("boardeditors",editorService.getAllEditors());
+        model.addAttribute("profiles", userService.getEditorsProfilePictures());
+        model.addAttribute("boardprofiles", editorService.getAllProfilePictures());
     	return "editorial-board";
     }
     

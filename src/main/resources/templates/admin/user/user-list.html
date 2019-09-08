@@ -24,9 +24,16 @@
 <link th:href="@{/adminstatic/css/admin.css}" rel="stylesheet">
 
 <script th:src="@{/adminstatic/js/admin.js}"></script>
+<style>
 
+.pt-5, .py-5 {
+    padding-top: 3rem!important;
+}
+</style>
 </head>
 <body>
+<!-- Header -->
+<div th:replace="fragments/headerlayout :: header"></div>
 
 	<div class="page-wrapper chiller-theme toggled">
 
@@ -34,8 +41,9 @@
 
 		<main class="page-content">
 		<div class="container-fluid">
+		<div class = "topmargin " >
 			<hr>
-			<div class="row">
+			<div class="row" style = "margin-top: 51px">
 				<div class="container">
 					<h1 class="title">Users List</h1>
 				</div>
@@ -119,7 +127,8 @@
 										</a>
 										<a th:href="@{/admin/user/reset-password(uname=${user.userName})}">
 											<button type="button" class="btn btn-link">Password Reset</button>
-										</a>										
+										</a>
+										</td>										
 								</tr>
 							</tbody>
 						</table>
@@ -127,11 +136,13 @@
 				</div>
 			</div>
 			<!-- end of main body -->
-
+</div>
 		</div>
 		</main>
+		</div>
 		<!-- page-content" -->
-	</div>
+	
+
 	<!-- page-wrapper -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -4,6 +4,7 @@
 </head>
 
 <body>
+<div th:replace="fragments/headerlayout :: header"></div>
  <div th:fragment = "resultsList" th:unless="${#lists.isEmpty(journalissues)}" id="results-block">
  						<span th:text="${title}"></span>
 						<img th:if="*{coverimage != null}"  th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(coverimage)}}" width="100" height="200"/>

@@ -9,15 +9,30 @@
 
 <style>
 .card-img-top {
-    width: 70%;
-    }
+    width: 46%;
+    height: 183px;
+}
     border-0
     {
     border:0!important
     }
-    h1{
-    margin-top: 100px;
+    meetteam{
+    margin-top: 94px
     }
+    .singCourse_titles{
+    margin-left: 200px;
+    }
+    
+.xyz{
+    width: 26%;
+    }
+    
+.col-md-6 {
+    width: 33%;
+}
+
+   
+     
 </style>
 
 <!--resources for header layout  -->
@@ -37,206 +52,68 @@
  <!-- <hr><hr><hr> -->
 <div class="bg-primary text-center py-5 mb-4">
   <div class="container">
-    <h1 class="font-weight-light text-white" style="margin-top: 105;">Meet the Team</h1>
+    <h1 class="meetteam">Meet the Team</h1>
   </div>
-</div>
+</div> 
 <!-- Page Content -->
 <div class="container">
+<div class ="row">
+<div class="bg-primary text-center py-5 mb-4" style = "background-color: #cdd1d4">
+  <div class="container">
+    <h1 class="meetteam">Executive board members</h1>
+  </div>
+</div>
+</div>
+
+  <div class="row">
+ 
+   <div class="col-xl-3 col-md-6 mb-4"  style = "width: 33%" th:each="editor : ${exeditors}">
+      <div class="card border-0 shadow">
+        <!--  <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">  -->
+         <img  class="card-img-top" th:if="*{profiles.get(editor.userName) != null}"
+	th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(profiles.get(editor.userName))}}" 
+			th:alt="${editor.userName}"
+			/>   
+
+      </div>
+     <div class="singCourse_contents">
+                   <h3 class="tutors_name"><span th:text="${editor.fullName}"></span></h3>
+                    <p class="singCourse_price" th:text="${editor.qualification}"></p>
+                    
+                    
+                    </div>
+    </div>
+    
+   
+  </div>
+  <div class = "boardeditors">
+  <div class="bg-primary text-center py-5 mb-4" style = "background-color: #cdd1d4">
+  <div class="container">
+    <h1 class="meetteam">editorial board</h1>
+  </div>
+</div>
+  </div>
+ 
+ 
+ <!--list of all editors  -->
   <div class="row">
     <!-- Team Member 1 -->
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4 xyz" style = "width: 33%" th:each="editor : ${boardeditors}">
       <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
+          <!-- <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="..."> -->  
+          
+            <img th:if="*{boardprofiles.get(editor.id) != null}"
+	th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(boardprofiles.get(editor.id))}}"/>  
       </div>
+      <div class="singCourse_contents">
+                   <h3 class="tutors_name"><span th:text="${editor.fullName}"></span></h3>
+                   <p class="singCourse_price" th:text="${editor.qualification}"></p>
+                    </div>
     </div>
-    <!-- Team Member 2 -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <!-- Team Member 3 -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <!-- Team Member 4 -->
-    
- 
-  
-  
-  
-  <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    
-    
-    
-    
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    
-    
-    
-    
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    
-    
-    
-    
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    
-    
-    
-    
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    
-    
-    
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    
-    
-    
-    
-    
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-0 shadow">
-        <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-0">Team Member</h5>
-          <div class="card-text text-black-50">Web Developer</div>
-        </div>
-      </div>
+      
+
+   
+   
     </div>
   <!-- /.row -->
 

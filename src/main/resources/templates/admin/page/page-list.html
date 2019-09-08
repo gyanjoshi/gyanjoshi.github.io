@@ -19,6 +19,7 @@
 </head>
 
 <body>
+<div th:replace="fragments/headerlayout :: header"></div>
 <div class="page-wrapper chiller-theme toggled">
 
 <!--fragment part commented  -->
@@ -28,9 +29,9 @@
    <div th:replace = "admin/adminpage :: sidebar"></div>
  
   <main class="page-content">
-    <div class="container-fluid">
+    <div class="container-fluid" style = "margin-top: 51px">
       <hr>
-       <div class = "row">
+       <div class = "row" >
       <div class="container">
 			<h1 class="title">Pages List</h1>
 		</div>

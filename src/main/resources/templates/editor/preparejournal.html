@@ -45,7 +45,7 @@
 
 			<!-- start of main body -->
 			<div class="container">
-				<span th:if="*{journals == null}" th:text="${message}"></span>
+				<span th:if="*{message != null}" th:text="${message}" style="color:red;"></span>
 				<form th:if="*{journals != null}" th:action="@{/editor/preparejournal}" method="POST" enctype="multipart/form-data">
 				    <div class="form-group">
 							<select class="form-control" id="journalId" name="journalId" required="required" onchange="retrieveJournalIssues()">

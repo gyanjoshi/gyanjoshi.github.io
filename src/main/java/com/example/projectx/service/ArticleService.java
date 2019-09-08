@@ -260,5 +260,30 @@ public class ArticleService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void updateArticle(Integer id, MultipartFile file) {
+		// TODO Auto-generated method stub
+		Article article = getArticleById(id);
+		
+		String afilename = article.getFileName();
+		
+		String articleFileName = "Article_"+id+"."+FilenameUtils.getExtension(file.getOriginalFilename());
+        
+        
+        article.setStatus("Updated to PDF");
+        
+        article.setFileName(articleFileName);
+
+        article.setUploadDate(new java.sql.Date(System.currentTimeMillis()));
+        
+        FileStorageService.deleteFile(path, afilename);
+        
+        FileStorageService.uploadFile(path, articleFileName, file);
+        
+        
+        
+        articleRepo.save(article);
+		
+	}
 	
 }

@@ -1,5 +1,6 @@
 package com.example.projectx.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.projectx.dto.UserDto;
-
+import com.example.projectx.model.Article;
 import com.example.projectx.model.Journal;
 import com.example.projectx.model.JournalIssue;
 import com.example.projectx.model.Notice;
@@ -174,7 +175,7 @@ public class IndexController {
         model.addAttribute("notices",noticerepo.findAll() );
         
         model.addAttribute("journals",journalService.getAllPublishedJournals());
-        
+        model.addAttribute("coverimages", journalService.getAllCoverImage());
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
         return "index";
@@ -188,14 +189,11 @@ public class IndexController {
 	    return mav;
         }
     
-    
-    @RequestMapping(value = { "/contact" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/contact" }, method = RequestMethod.GET)
     public String contactPage(Model model) {
     	
         return "contactpage";
     }
-    
-    
     
     @RequestMapping(value = "/guidelines", method = RequestMethod.GET)
     public String authorGuideline(Model model) {
@@ -245,20 +243,40 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/viewjournal", method = RequestMethod.GET)
-	public String viewJournal(/* @RequestParam("id") int id , */ Model model)
+	public String viewJournal( @RequestParam("jid") int jid , @RequestParam("jiid") int jiid,  Model model)
     {
     	
     	//List<JournalIssue> journals = journalService.getAllPublishedJournalIssues(id);
     	
-    	//Journal selectedJournal = journalService.getJournalById(id);
     	
-    	//journalService.getAllJournalIssues(id);
+    	JournalIssue selectedJournal = journalService.getJournalIssueById(jiid);
     	
-    	//model.addAttribute("journals", journals);
-    	//model.addAttribute("selectedJournal", selectedJournal);
+    	List<Article> mainList = new ArrayList<Article>();
+    	mainList.addAll(selectedJournal.getArticles());    	
     	
+    	model.addAttribute("selectedJournal", selectedJournal);
+    	model.addAttribute("articles", mainList);
     	model.addAttribute("journals",journalService.getAllPublishedJournals());
-        model.addAttribute("coverimages", journalService.getAllCoverImage());
+        model.addAttribute("coverpage", journalService.getCoverImage(jid));
+        model.addAttribute("currentjournal", selectedJournal.getJournal());
+       
+    	
+    	return "viewjournal";
+    }
+    
+    @RequestMapping(value = "/current", method = RequestMethod.GET)
+	public String viewJournal( @RequestParam("jid") int jid , Model model)
+    {
+    	JournalIssue selectedJournal = journalService.getCurrentJournalIssue(jid);
+    	
+    	List<Article> mainList = new ArrayList<Article>();
+    	mainList.addAll(selectedJournal.getArticles());    	
+    	
+    	model.addAttribute("selectedJournal", selectedJournal);
+    	model.addAttribute("articles", mainList);
+    	model.addAttribute("journals",journalService.getAllPublishedJournals());
+        model.addAttribute("coverpage", journalService.getCoverImage(jid)); 
+        model.addAttribute("currentjournal", selectedJournal.getJournal());
     	
     	return "viewjournal";
     }
@@ -274,10 +292,35 @@ public class IndexController {
     
   //test journal archives
     @RequestMapping(value = "/journalarchives", method = RequestMethod.GET)
-    public String testJournalArchives( Model model)
+    public String getJournalArchives(@RequestParam("jid") int jid, Model model)
     {
     	
+    	List<JournalIssue> journals = journalService.getAllPublishedJournalIssues(jid);
+    	JournalIssue selectedJournal = journalService.getCurrentJournalIssue(jid);
+    	if(selectedJournal == null)
+    		model.addAttribute("currentjournal", null);
+    	else
+    		model.addAttribute("currentjournal", selectedJournal.getJournal());
+    		
+    	model.addAttribute("journals",journals);
+    	model.addAttribute("selectedJournal", selectedJournal);
+    	
+        model.addAttribute("coverpage", journalService.getCoverImage(jid));
+        
     	return "journalarchive";
+    }
+    
+    @RequestMapping(value = "/alljournals", method = RequestMethod.GET)
+    public String getAllJournalArchives(Model model)
+    {
+    	
+    	List<Journal> journals = journalService.getAllJournals();
+    	
+    	model.addAttribute("journals",journals);
+        model.addAttribute("coverimages", journalService.getAllCoverImage());
+        model.addAttribute("currentjournal", null);
+        
+    	return "alljournals";
     }
     
   //test editorboard

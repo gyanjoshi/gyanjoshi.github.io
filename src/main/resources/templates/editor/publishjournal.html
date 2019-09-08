@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    <meta name="description" content="Ghodaghodi multiple campus Sukkhad, Kailai - Research Journal">
+ 
     <title>Publish Journal</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -13,8 +14,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <link href="../adminstatic/css/admin.css" rel="stylesheet">
- <script src="../adminstatic/js/admin.js"></script>
+ <link th:href="@{/adminstatic/css/admin.css}" rel="stylesheet">
+ <script th:src="@{/adminstatic/js/admin.js}"></script>
 
 </head>
 
@@ -38,7 +39,7 @@
 		<div class="columns">
 			<div class="column is-full">
 			
-				<span th:if="*{journals == null}" th:text="${message}"></span>
+				<span th:if="*{message != null}" th:text="${message}"></span>
 				
 				<div class="form-group">
 							<select class="form-control" id="journalId" name="journalId" required="required" onchange="retrievePreparedIssues()">
@@ -56,14 +57,14 @@
 		</div>
 	</div>
       <!-- end of main body -->
-      
+   </div>   
 
   </main>
   <!-- page-content" -->
 </div>
 <script>
 function retrievePreparedIssues() {
-		var url = '/editor/getPreparedIssuesList';
+		var url = 'getPreparedIssuesList';
 
     	if ($('#journalId').val() != '') {
         url = url + '/' + $('#journalId').val();

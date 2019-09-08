@@ -4,7 +4,9 @@
 </head>
 
 <body>
- <div th:fragment = "resultsList" th:unless="${#lists.isEmpty(articles)}" id="results-block">
+<div th:fragment = "resultsList">
+<p th:if = "${message != null}" style="color:red;" th:text="${message}"></p>
+ <div th:unless="${#lists.isEmpty(articles)}" id="results-block">
  	<table>
             <thead>
                 <tr>
@@ -27,12 +29,12 @@
 							<td th:text="${article.status}"></td>							
 							<td>
 								
-								<a th:href="@{'/download/file/'+${article.fileName}}"  class="button is-primary is-small">Download</a>
-								
+								<a th:href="@{/download(type='article',file=${article.fileName})}"  class="button is-primary is-small">Download</a>
 							</td>
                 </tr>
             </tbody>
         </table>
+</div>
 </div>
 </body>
 </html> 

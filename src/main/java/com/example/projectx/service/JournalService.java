@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,6 @@ import com.example.projectx.model.JournalIssue;
 import com.example.projectx.repository.ArticleRepository;
 import com.example.projectx.repository.JournalIssueRepository;
 import com.example.projectx.repository.JournalRepository;
-import com.example.projectx.utils.PdfUtils;
 
 @Service
 public class JournalService {
@@ -74,6 +74,11 @@ public class JournalService {
 		return journalDao.getAllPublishedJournalIssues(jid);
 	}
 	
+	public List<JournalIssue> getDraftJournalIssues(int jid)
+	{
+		return journalDao.getDraftJournalIssues(jid);
+	}
+	
 	public Map<Integer,byte[]> getAllCoverImage()
 	{
 		Map<Integer,byte[]> coverPageMap = new HashMap<Integer,byte[]>();
@@ -92,6 +97,7 @@ public class JournalService {
 		
 		return coverPageMap;
 	}
+	
 	
 	private byte[] getCoverPage(int jid)
 	{
@@ -271,10 +277,14 @@ public class JournalService {
             
             mail.setTo(user.getEmail());
             mail.setSubject("Article "+a.getTopic()+" is published");
-            mail.setContent("Your article has been published");
+            mail.setContent("Dear "+user.getFullName()+",<br>"
+            		+ "Congratulations!! Your article has been published. "
+            		+ " Regards,<br>"
+            		+ "Editorial Borad<br>"
+            		+ journal.getJournal().getJournalTopic());
             
             try {
-     			emailService.sendSimpleMessage(mail,file);
+     			emailService.sendHtmlMessage(mail,file);
      		} catch (MessagingException e) {
      			// TODO Auto-generated catch block
      			e.printStackTrace();
@@ -294,58 +304,21 @@ public class JournalService {
 	}
 
 
-	public File prepare(int journalId, MultipartFile editorial) throws IOException {
-		// TODO Auto-generated method stub
+	public void prepare(int journalId, MultipartFile editorial) {
+		
 		JournalIssue journal = journalIssueRepository.getOne(journalId);
 		
-		Journal j = journal.getJournal();
-		
 		String editorialFileName = "Editorial_"+journal.getId()+"."+FilenameUtils.getExtension(editorial.getOriginalFilename());
-		String journalFileName = "Journal_"+journal.getId()+"."+FilenameUtils.getExtension(editorial.getOriginalFilename());
 		
 		journal.setEditorialFileName(editorialFileName);
 		
-		journal.setJournalFileName(journalFileName);
-		//journal.set
-		journal.setStatus("Prepared");
-		
-		FileStorageService.uploadFile(path, editorialFileName,editorial);
-		
+		FileStorageService.uploadFile(path, editorialFileName,editorial);	
 
-		
-		// prepare for merging pdf files
-		List<File> files = new ArrayList<File>();
-		
-		String coverFile=journalRepo.getCoverPageFileName(j.getId());
-		
-		File coverPage = new File(coverpage+coverFile);
-		
-		files.add(coverPage);
-		
-		
-		File editorialPage = new File(path+editorialFileName);
-		
-		files.add(editorialPage);		
-		
-		Set<Article> sa  = journal.getArticles();
-		
-	
-		
-		for(Article a: sa)
-		{
-			a.setStatus("Prepared");
-			File articleFile = new File(articlePath+a.getFileName());			
-			files.add(articleFile);
-			
-			articleRepo.save(a);
-			
-		}
-		
-		File f = PdfUtils.mergePdfs(files, path+journalFileName);
+		journal.setStatus("Prepared");
 		
 		journalIssueRepository.save(journal);
 		
-		return f;
+		
 	}
 
 	public Journal getJournalById(int id) {
@@ -411,5 +384,19 @@ public class JournalService {
 		}
 		
 		return list;
+	}
+
+	public JournalIssue getCurrentJournalIssue(int jid) {
+		List<JournalIssue> issues = journalDao.getAllPublishedJournalIssues(jid);
+		if(issues != null)
+		{
+			issues.sort(Comparator.comparing(JournalIssue::getUploaded_date).reversed());
+			return issues.get(0);
+		}
+		else
+			return null;
+		
+		
+		
 	}
 }

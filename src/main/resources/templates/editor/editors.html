@@ -77,12 +77,11 @@
 									<td><img th:if="*{profiles.get(editor.id) != null}"
 										th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(profiles.get(editor.id))}}"
 										width="50" height="50" /></td>
-									<td><a
-										th:href="@{/editor/edit-editor(id=${editor.id})}"
+									<td><a th:href="@{/editor/edit-editor(id=${editor.id})}"
 										class="button is-primary is-small">Edit</a>
 										<button type="button" class="btn btn-danger"
-											data-toggle="modal" data-target="#myModal">Delete</button>
-										<div class="modal fade" id="myModal">
+											data-toggle="modal" data-target="#myModal" th:attr="data-target='#myModal'+${editor.id}">Delete</button>
+										<div class="modal fade" th:id="myModal+${editor.id}">
 											<!-- The Modal -->
 											<div class="modal-dialog">
 												<div class="modal-content">

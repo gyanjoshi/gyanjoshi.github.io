@@ -168,6 +168,7 @@ public class IndexController {
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
         model.addAttribute("boardeditors",editorService.getAllEditors());
+        model.addAttribute("boardprofiles", editorService.getAllProfilePictures());
         
   
         return "index";
@@ -184,6 +185,8 @@ public class IndexController {
         model.addAttribute("coverimages", journalService.getAllCoverImage());
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("editors",userService.getAllEditors());
+        model.addAttribute("boardeditors",editorService.getAllEditors());
+        model.addAttribute("boardprofiles", editorService.getAllProfilePictures());
         return "index";
     }
 	@RequestMapping(value="403", method = RequestMethod.GET)
@@ -192,6 +195,15 @@ public class IndexController {
 	    String errorMessage= "You are not authorized for the requested data.";
 	    mav.addObject("errorMsg", errorMessage);
 	    mav.setViewName("403");
+	    return mav;
+        }
+	
+	@RequestMapping(value="/error", method = RequestMethod.GET)
+	public ModelAndView errorPage() {
+	    ModelAndView mav = new ModelAndView();
+	    String errorMessage= "Error occured. Please contact site administrator @ editor.craiaj2019@gmail.com";
+	    mav.addObject("errorMsg", errorMessage);
+	    mav.setViewName("error");
 	    return mav;
         }
     
@@ -203,15 +215,15 @@ public class IndexController {
     
     @RequestMapping(value = "/guidelines", method = RequestMethod.GET)
     public String authorGuideline(Model model) {
-    	model.addAttribute("guidelines", pagerepo.getOne(1));
-    	
+    	model.addAttribute("guidelines", pagerepo.getOne(3));
+    	model.addAttribute("page", pagerepo.getOne(1));
         return "/author-guidelines";
     }
     
     @RequestMapping(value = "/aboutus", method = RequestMethod.GET)
     public String aboutUs(Model model) {
     	model.addAttribute("aboutus", pagerepo.getOne(1));
-    	
+    	model.addAttribute("page", pagerepo.getOne(1));
         return "aboutus";
     }
     
@@ -337,6 +349,7 @@ public class IndexController {
         model.addAttribute("boardeditors",editorService.getAllEditors());
         model.addAttribute("profiles", userService.getEditorsProfilePictures());
         model.addAttribute("boardprofiles", editorService.getAllProfilePictures());
+        model.addAttribute("page", pagerepo.getOne(1));
     	return "editorial-board";
     }
     

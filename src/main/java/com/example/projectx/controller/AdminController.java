@@ -79,7 +79,7 @@ public class AdminController {
         return "/admin/user/user-form";
     }
     @RequestMapping(value = "/admin/user/add-user", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute UserForm user,BindingResult result, Model model) {
+    public String addUser(@ModelAttribute UserForm user,BindingResult result, Model model, Principal principal) {
     	
     	String returnPage;
     	
@@ -108,11 +108,21 @@ public class AdminController {
     		returnPage = "/admin/user/user-form";
     	}
     	else
-    		returnPage = "/admin/user/user-list";
+    	{
+    		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+    		String userInfo = WebUtils.toString(loginedUser);
+    		
+    		 	model.addAttribute("userInfo", userInfo);
+    	        model.addAttribute("profiles", userService.getAllProfilePictures());
+    	        model.addAttribute("currentProfile", userService.getAllProfilePictures().get(loginedUser.getUsername()));
+    	        model.addAttribute("message", message);    			
+    	    	model.addAttribute("users", userrepo.findAll());
+    	        returnPage = "/admin/user/user-list";
+    	        
+    	}
+    		
     	
-    	model.addAttribute("message", message);
-    			
-    	model.addAttribute("users", userrepo.findAll());
+    	
     	
         return returnPage;
     }

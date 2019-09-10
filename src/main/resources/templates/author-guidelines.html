@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/icon" th:href="@{/img/wpf-favicon.png}"/> 
+    <link rel="shortcut icon" type="image/icon" th:href="@{/img/ghodaghodilogo.png}"/> 
 
     <!-- CSS
     ================================================== -->   
@@ -52,15 +52,21 @@
   
 
 <hr><hr><hr><hr><hr>
- <div class="form-group" style = "margin-left: 109px;margin-right: 35px;" >
-  <label for="exampleFormControlTextarea1">Guidelines</label>
- 
+ <div style = "margin-left: 109px;margin-right: 35px;" >
   
-  <p><div th:each="p : ${guidelines}">
+  <p>
+  <div th:each="p : ${guidelines}">
                 <span th:utext="${p.html}"></span>
 </div>
+
 </div>
 </div>
+	<!--=========== BEGIN FOOTER SECTION ================-->
+    
+    
+    <div th:replace = "/fragments/fixedlayout :: footer"></div>
+    
+    <!--=========== END FOOTER SECTION ================--> 
 <!-- initialize jQuery Library -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
    

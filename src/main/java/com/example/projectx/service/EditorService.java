@@ -37,9 +37,6 @@ public class EditorService {
     private String path;
 	
 	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
-	
-	@Autowired
     private EmailService emailService;
 	
 	@Autowired

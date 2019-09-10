@@ -36,7 +36,8 @@
       </div>
       <div class="sidebar-header">
         <div class="user-pic">
-          <img th:if="*{currentProfile != null}"  th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(currentProfile)}}" width="50" height="50"/>
+          <img th:if="*{currentProfile != null}"  th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(currentProfile)}}" 
+          style="width: 30px; height: 30px;"/>
         </div>
         <div class="user-info">
           

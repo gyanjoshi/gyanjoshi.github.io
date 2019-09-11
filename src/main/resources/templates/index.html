@@ -85,7 +85,7 @@
                    <div class="slider_caption">
                     <h2>Quality Journals</h2>
                  
-                    <a class="slider_btn" href="#">Know More</a>
+                    <a class="slider_btn" th:href="@{/aboutus}">Know More</a>
                   </div>
                   <div>
                   
@@ -97,7 +97,6 @@
                   <img th:src="@{/img/slider/2.jpg}" alt="img">
                    <div class="slider_caption slider_right_caption">
                     <h2>Better Education Environment</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search</p>
                     <a class="slider_btn" href="#">Know More</a>
                   </div>
                 </li>
@@ -106,17 +105,9 @@
                   <img th:src="@{/img/slider/4.jpg}" alt="img">
                    <div class="slider_caption">
                     <h2>Find out you in better way</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search</p>
                     <a class="slider_btn" href="#">Know More</a>
                   </div>
-                </li>
-                   <!--  Start single slider -->
-                <li>
-                  <img th:src="@{/img/slider/5.jpg}" alt="img">
-                   <div class="slider_caption slider_right_caption">
-                   
-                  </div>
-                </li>
+                </li>                
             
               </ul>
               <nav class="slides-navigation">
@@ -364,7 +355,7 @@
                     <div class="singTutors_content">
                       <h3 class="tutors_name"><span th:text="${user.fullName}"></span></h3>                    
                       	            
-                    	<p> Execute Editor </p>
+                    	<p> Executive Editor </p>
                     </div> 
                   </div>
                 </li>
@@ -385,6 +376,10 @@
                   </div>
                 </li>
              </ul>
+             <nav class="slides-navigation">
+                <a href="#" class="next"></a>
+                <a href="#" class="prev"></a>
+              </nav>
             </div>
           </div>
         </div>

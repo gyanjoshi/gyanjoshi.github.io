@@ -226,7 +226,7 @@ public class ArticleService {
              
              
              try {
-     			emailService.sendSimpleMessage(mail,FileStorageService.multipartToFile(file,file.getOriginalFilename()));
+     			emailService.sendHtmlMessage(mail,FileStorageService.multipartToFile(file,file.getOriginalFilename()));
      		} catch (MessagingException e) {
      			// TODO Auto-generated catch block
      			e.printStackTrace();

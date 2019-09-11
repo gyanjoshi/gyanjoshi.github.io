@@ -300,6 +300,31 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		userRepo.save(user);
 		
+		// send email to user
+		
+					Mail mail = new Mail();
+
+		            
+		            mail.setTo(user.getEmail());
+		            mail.setSubject("Password reset");
+		            mail.setContent("Dear "+user.getFullName()+",<br>"
+		            		+ "Your Login password for craiaj.com has been changed. Following is your new password.<br>"		            		
+		            		+ "UserName :"+user.getUserName()+"<br>"
+		            		+ "Password :"+password+"<br>"
+		            		+ " Regards,<br>"
+		            		+ "Administrator<br>"
+		            		);
+		            
+		            try {
+		     			emailService.sendHtmlMessage(mail);
+		     		} catch (MessagingException e) {
+		     			// TODO Auto-generated catch block
+		     			e.printStackTrace();
+		     		} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		
 	}
 
 	public UserDto getUserByEmail(String email) {

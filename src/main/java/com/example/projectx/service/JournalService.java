@@ -173,7 +173,7 @@ public class JournalService {
                  mail.setContent(message);
                  
                  try {
-          			emailService.sendSimpleMessage(mail);
+          			emailService.sendHtmlMessage(mail);
           		} catch (MessagingException e) {
           			// TODO Auto-generated catch block
           			e.printStackTrace();

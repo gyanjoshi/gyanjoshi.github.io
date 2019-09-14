@@ -151,7 +151,7 @@
             <div class="tab-content">
               <!-- Start news tab content -->
               <div class="tab-pane fade in active" id="notice">                
-                <ul class="news_tab " style="overflow:scroll; height:200px; overflow-x: hidden; ">
+                <ul class="news_tab " style="overflow:scroll; height:100px; overflow-x: hidden; ">
                 <li>
                     <div class="media" th:each="notice : ${notices}">
                       <div class="media-left">
@@ -171,83 +171,13 @@
               </div>
               <!-- Start notice tab content -->  
               <div class="tab-pane fade " id="events">
-                <div class="single_notice_pane">
-                  <ul class="news_tab">
-                    <li>
-                      <div class="media">
-                        <div class="media-left">
-                          <a class="news_img" href="#">
-                            <img class="media-object" src="img/news.jpg" alt="img">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                         <a href="#">Dummy text of the printing and typesetting industry</a>
-                         <span class="feed_date">27.02.15</span>
-                        </div>
-                      </div>                   
-                    </li>
-                    
-                    <li>
-                      <div class="media">
-                        <div class="media-left">
-                          <a class="news_img" href="#">
-                            <img class="media-object" src="img/notice.jpg" alt="img">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                         <a href="#">Dummy text of the printing and typesetting industry</a>
-                         <span class="feed_date">28.02.15</span>             
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="media">
-                        <div class="media-left">
-                          <a class="news_img" href="#">
-                            <img class="media-object" src="img/notice.jpg" alt="img">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                         <a href="#">Dummy text of the printing and typesetting industry</a>
-                         <span class="feed_date">28.02.15</span>             
-                        </div>
-                      </div>
-                    </li>                                    
-                  </ul>
-                  <ul class="news_tab">
-                    <li>
-                      <div class="media">
-                        <div class="media-left">
-                          <a class="news_img" href="#">
-                            <img class="media-object" src="img/notice.jpg" alt="img">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                         <a href="#">Contrary to popular belief, Lorem Ipsum is not simply random text</a>
-                         <span class="feed_date">27.02.15</span>
-                        </div>
-                      </div>
-                    </li>
-
-                     <li>
-                    <div class="media">
-                      <div class="media-left">
-                        <a class="news_img" href="#">
-                          <img class="media-object" src="img/news.jpg" alt="img">
-                        </a>
-                      </div>
-                      <div class="media-body">
-                       <a href="#">Dummy text of the printing and typesetting industry</a>
-                       <span class="feed_date">27.02.15</span>UploadedDate
-                      </div>
-                    </div>                    
-                  </li>                                   
-                  </ul>
+                <div class="single_notice_pane">                  
+                  
                 </div>               
               </div>
               <!-- Start downloads tab content -->
               <div class="tab-pane fade " id="downloads">
-                <ul class="news_tab" style="overflow:scroll; height:200px; overflow-x: hidden; ">
+                <ul class="news_tab" style="overflow:scroll; height:100px; overflow-x: hidden; ">
                   <li>
                     <div class="media" th:each="downloadlist : ${downloads}">
                       <div class="media-left">

@@ -100,8 +100,7 @@
 									<td><img th:if="*{profiles.get(user.userName) != null}"
 										th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(profiles.get(user.userName))}}"
 										width="50" height="50" /></td>
-									<td><a	th:href="@{/admin/user/edit-user(uname=${user.userName})}"
-										<i class="fas fa-user-edit"></i>Edit </a>
+									<td><a	th:href="@{/admin/user/edit-user(uname=${user.userName})}" > Edit </a>
 										<button type="button" class="btn btn-danger"
 											data-toggle="modal" data-target="#myModal" th:attr="data-target='#myModal'+${user.userName}">Delete</button>
 										<div class="modal fade" th:id="myModal+${user.userName}">

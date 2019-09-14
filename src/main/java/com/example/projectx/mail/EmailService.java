@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -62,7 +63,29 @@ public class EmailService {
         helper.setTo(mail.getTo());
         helper.setFrom(mail.getTo());
         
-        helper.addAttachment(file.getName(), file);      
+        helper.addAttachment(file.getName(), file); 
+        
+
+        emailSender.send(message);
+
+    }
+    public void sendHtmlMessage(Mail mail, List<File> files) throws MessagingException {
+
+    	
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setSubject(mail.getSubject());
+        
+        helper.setText(mail.getContent(),true);
+        helper.setTo(mail.getTo());
+        helper.setFrom(mail.getTo());
+        
+        for(File file:files)
+        {
+        	helper.addAttachment(file.getName(), file); 
+        }        
+        
 
         emailSender.send(message);
 

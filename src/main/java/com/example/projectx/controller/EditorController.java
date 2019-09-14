@@ -24,7 +24,7 @@ import com.example.projectx.dto.ArticleDto;
 import com.example.projectx.dto.PreparedJournalDto;
 import com.example.projectx.form.EditorForm;
 import com.example.projectx.form.NewJournalIssueForm;
-
+import com.example.projectx.model.AppUser;
 import com.example.projectx.model.Article;
 import com.example.projectx.model.Editor;
 import com.example.projectx.model.Journal;
@@ -67,7 +67,7 @@ public class EditorController {
 		
 		User loginedUser = (User) ((Authentication) principal).getPrincipal();
 		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
-		return "/editor/editorpage";
+		return "/editor/editorspage";
 	}
 	
 	@RequestMapping(path = "/editor/editors", method = RequestMethod.GET)
@@ -663,10 +663,11 @@ public class EditorController {
 	
 	@RequestMapping(path = "/editor/to-reviewer", method = RequestMethod.POST)
 	public String toReviewerPost(@RequestParam int Id,@RequestParam String userName, @RequestParam String message,
-								 @RequestParam String selectedReviewers, Model model, Principal principal) {
+								 @RequestParam String selectedReviewers, Model model, Principal principal,
+								 @RequestParam MultipartFile file) {
 		
 		System.out.println("Reviewers:"+selectedReviewers);
-		editorService.toReviewer(Id, userName, message, selectedReviewers);
+		editorService.toReviewer(Id, userName, message, selectedReviewers, file);
 		
 		model.addAttribute("pending", articleService.getPendingArticles());
 		User loginedUser = (User) ((Authentication) principal).getPrincipal();
@@ -693,6 +694,36 @@ public class EditorController {
 		
 		return "/editor/editorpage";
 	 
+	}
+	
+	
+	@RequestMapping(path = "/editor/reject", method = RequestMethod.GET)
+	public String rejectArticle(@RequestParam int article,@RequestParam String author, Model model, Principal principal) {
+		
+		model.addAttribute("article", articleService.getArticleById(article));
+		model.addAttribute("author", userDetailsService.getUserByUsername(author));
+				
+		model.addAttribute("pending", articleService.getPendingArticles());
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+		
+	    
+		return "editor/reject";
+	}
+	
+	@RequestMapping(path = "/editor/reject", method = RequestMethod.POST)
+	public String rejectArticlePost(@RequestParam int Id,@RequestParam String userName, @RequestParam String message, Model model, Principal principal) {
+		
+		
+		
+		articleService.reject(Id,userName,message);
+				
+		model.addAttribute("pending", articleService.getPendingArticles());
+		User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+		
+	    
+		return "editor/pendingreview";
 	}
 	
 

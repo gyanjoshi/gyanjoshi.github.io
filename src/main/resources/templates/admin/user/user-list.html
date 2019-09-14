@@ -29,19 +29,22 @@
 .pt-5, .py-5 {
     padding-top: 3rem!important;
 }
+
 </style>
 </head>
 <body>
 <!-- Header -->
-<div th:replace="fragments/headerlayout :: header"></div>
+
 
 	<div class="page-wrapper chiller-theme toggled">
+	<div th:replace="fragments/headerlayout :: header"></div>
 
 		<div th:replace="admin/adminpage :: sidebar"></div>
+		
 
-		<main class="page-content">
-		<div class="container-fluid">
-		<div class = "topmargin " >
+		<main class="page-content" >
+		<div class="container-fluid" >
+		<div class = "topmargin" >
 			<hr>
 			<div class="row" style = "margin-top: 51px">
 				<div class="container">
@@ -51,16 +54,18 @@
 			</div>
 
 			<!-- start of main body -->
-			<div class="container">
+			
+			<div class="container content" style = "margin-top: 41px;">
+			
 				<span th:if="${message != null}" th:text="${message}"></span>
-				<div class="columns">
+				<div class="column">
 					<div class="column is-full">
 						<div class="field is-grouped">
 							<div class="col-sm-10">
 								<a th:href="@{/admin/user/add-user}"
-									class="button is-success is-small">Add Users</a>
+									class="button is-success is-small fas fa-user-plus">Add Users</a>
 							</div>
-						</div>
+							
 						<table
 							class="table content is-small is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 							<thead>
@@ -96,7 +101,7 @@
 										th:src="@{'data:image/jpg;base64,' + *{T(org.springframework.util.Base64Utils).encodeToString(profiles.get(user.userName))}}"
 										width="50" height="50" /></td>
 									<td><a	th:href="@{/admin/user/edit-user(uname=${user.userName})}"
-										class="button is-primary is-small">Edit</a>
+										<i class="fas fa-user-edit"></i>Edit </a>
 										<button type="button" class="btn btn-danger"
 											data-toggle="modal" data-target="#myModal" th:attr="data-target='#myModal'+${user.userName}">Delete</button>
 										<div class="modal fade" th:id="myModal+${user.userName}">
@@ -132,6 +137,7 @@
 							</tbody>
 						</table>
 					</div>
+				</div>
 				</div>
 			</div>
 			<!-- end of main body -->

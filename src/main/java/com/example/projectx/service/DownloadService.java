@@ -191,7 +191,7 @@ public class DownloadService {
 		Notice notice = noticerepo.getOne(id);
 		String filename = notice.getNoticeFileName();
 		FileStorageService.deleteFile(downloadspath, filename);
-		downloadrepo.deleteById(id);
+		noticeRepo.deleteById(id);
 		
 	}
 }

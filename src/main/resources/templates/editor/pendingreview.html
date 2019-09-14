@@ -70,6 +70,7 @@
 								<a th:href="@{/download(type='article',file=${article.fileName})}"  class="button is-primary is-small">Download</a>
 								<a th:href="@{/editor/uploadPDF(article=${article.articleId})}"  class="button is-primary is-small">Upload PDF</a>
 								<a th:href="@{/editor/approve(article=${article.articleId},author=${article.authorId})}"  class="button is-primary is-small">Approve</a>
+								<a th:href="@{/editor/reject(article=${article.articleId},author=${article.authorId})}"  class="button is-primary is-small " >Reject</a>
 							</td>
 								 
 

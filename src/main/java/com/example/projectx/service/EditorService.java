@@ -3,6 +3,7 @@ package com.example.projectx.service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -170,12 +171,23 @@ public class EditorService {
 		}
 	}
 
-	public void toReviewer(int id, String userName, String message, String reviewers) {
+	public void toReviewer(int id, String userName, String message, String reviewers, MultipartFile file) {
 		
 		Article a = articleRepo.findById(id).get();
 		//AppUser user = userDetailsService.getUserByUsername(userName);
 		
 		File f = new File(path+a.getFileName());
+		File f2=null;
+		try {
+			f2 = FileStorageService.multipartToFile(file, file.getOriginalFilename());
+		} catch (IllegalStateException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		List<File> files = new ArrayList<File>();
+		files.add(f);
+		files.add(f2);
 		
 		if(f.exists())
 		{
@@ -193,9 +205,10 @@ public class EditorService {
 	        	mail.setTo(e.getEmail());
 	            mail.setSubject("Request to Review article: "+a.getTopic());
 	            mail.setContent(message);
+	           
 	            
 	            try {
-	     			emailService.sendHtmlMessage(mail,f);
+	     			emailService.sendHtmlMessage(mail,files);
 	     			a.setStatus("Sent to Reviewer");	    	        
 	    	        articleRepo.save(a);
 	     			

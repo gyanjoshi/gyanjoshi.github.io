@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Ghodaghodi multiple campus Sukkhad, Kailai - Research Journal">
-    <title>Add Profile Picture</title>
+    <title>View Journals</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<link th:href="@{/adminstatic/css/admin.css}" rel="stylesheet">
-	<script th:src="@{/adminstatic/js/admin.js}"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <link th:href="@{/adminstatic/css/admin.css}" rel="stylesheet">
+ <script th:src="@{/adminstatic/js/admin.js}"></script>
 
 </head>
 
@@ -22,37 +22,31 @@
 <div th:replace="fragments/headerlayout :: header"></div>
 <div class="page-wrapper chiller-theme toggled">
 
-<div th:replace = "/admin/adminpage :: sidebar"></div>
+<div th:replace = "/editor/editorpage :: sidebar"></div>
  
   <main class="page-content">
-    <div class="container-fluid" style = "margin-top: 51px">
+    <div class="container-fluid">
+    
       <hr>
-       <div class = "row">
+       <div class = "row"  style = "margin-top: 51px">
       <div class="container">
-			<h1 class="title">Update Profile Picture</h1>
+			<h1 class="title">Editors Page</h1>
 		</div>
       
       </div> 
-      </div>
+      
       <!-- start of main body -->
       <div class="container">
 		<div class="columns">
 			<div class="column is-full">
-				<div class="box">
-			<form th:action="@{/admin/user/add-profile}" method="post" enctype="multipart/form-data">
-				 	<input th:value="${uname}" name="uname" id="uname" type=hidden>
-		           <input type="file" name="file" value="file" id="file">
-		             <button class="au-btn au-btn-icon au-btn--blue">
-		              <i class="zmdi zmdi-plus"></i>Submit</button>
-		     </form>
-				</div>
+			
 				
 			</div>
 		</div>
 	</div>
       <!-- end of main body -->
       
-
+</div>
   </main>
   <!-- page-content" -->
 </div>

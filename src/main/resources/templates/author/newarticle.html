@@ -29,13 +29,14 @@
 </head>
 
 <body>
+<div th:replace="fragments/headerlayout :: header"></div>
 	<div class="page-wrapper chiller-theme toggled">
 		<div th:replace="/author/authorpage :: sidebar"></div>
 		<main class="page-content">
 		<div class="container-fluid">
 			<hr>
 
-			<section class="section">
+			<section class="section" style = "margin-top: 51px">
 				<div class="container">
 					<h5 class="subtitle">Upload New Article</h5>
 					<span style="color: red;" th:if = "${message !=null}" th:text="${message}"></span>

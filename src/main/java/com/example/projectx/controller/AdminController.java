@@ -338,7 +338,7 @@ public class AdminController {
 	    
 	    @RequestMapping(value = "/admin/notices/delete-notice", method = RequestMethod.GET)
 	    public String deleteNotice(@RequestParam("id") int id ,Model model) {
-	    	downloadService.deleteDownload(id);
+	    	downloadService.deleteNotice(id);
 	    	//noticerepo.deleteById(id);  
 	    model.addAttribute("notices",noticerepo.findAll());
 	        return "admin/notices/notice-list";

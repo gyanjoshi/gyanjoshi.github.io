@@ -285,5 +285,33 @@ public class ArticleService {
         articleRepo.save(article);
 		
 	}
+
+	public void reject(int article,String authorid, String message) {
+		Article a = articleRepo.findById(article).get();
+		AppUser user = userDetailsService.getUserByUsername(authorid);
+		
+		
+		Mail mail = new Mail();
+
+        
+        mail.setTo(user.getEmail());
+        mail.setSubject("Your article has been rejected: "+a.getTopic());
+        mail.setContent(message);
+        
+        try {
+ 			emailService.sendHtmlMessage(mail);
+ 		} catch (MessagingException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        a.setStatus("rejected");
+        
+        articleRepo.save(a);
+		
+	}
 	
 }

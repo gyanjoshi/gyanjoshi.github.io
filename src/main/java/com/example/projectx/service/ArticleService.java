@@ -295,7 +295,7 @@ public class ArticleService {
 
         
         mail.setTo(user.getEmail());
-        mail.setSubject("Your article has been rejected: "+a.getTopic());
+        mail.setSubject("Your article has been returned: "+a.getTopic());
         mail.setContent(message);
         
         try {

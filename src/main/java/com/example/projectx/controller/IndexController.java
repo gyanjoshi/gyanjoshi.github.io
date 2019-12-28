@@ -276,6 +276,9 @@ public class IndexController {
     	JournalIssue selectedJournal = journalService.getJournalIssueById(jiid);
     	
     	String editorial = selectedJournal.getEditorialFileName();
+    	int editorpagecount = selectedJournal.getEditorialpageCount();
+    	
+    	
     	
     	List<ArticleDto> mainList = new ArrayList<ArticleDto>();
     	
@@ -291,7 +294,7 @@ public class IndexController {
 		});
     	
     	// update Page From and To for each item (for shwoing in Table of content)
-    	int curIdx = 0;
+    	int curIdx = editorpagecount;
     	for (ArticleDto a: mainList)
     	{
     		
@@ -311,6 +314,7 @@ public class IndexController {
     	
     	model.addAttribute("selectedJournal", selectedJournal);
     	model.addAttribute("editorial", editorial);
+    	model.addAttribute("epages", editorpagecount);
     	model.addAttribute("articles", mainList);
     	model.addAttribute("journals",journalService.getAllPublishedJournals());
         model.addAttribute("coverpage", journalService.getCoverImage(jid));
@@ -324,6 +328,8 @@ public class IndexController {
 	public String viewJournal( @RequestParam("jid") int jid , Model model)
     {
     	JournalIssue selectedJournal = journalService.getCurrentJournalIssue(jid);
+    	
+    	int pagecnt = selectedJournal.getEditorialpageCount();
     	
     	List<ArticleDto> mainList = new ArrayList<ArticleDto>();
     	
@@ -339,7 +345,7 @@ public class IndexController {
 		});
     	
     	// update Page From and To for each item (for shwoing in Table of content)
-    	int curIdx = 0;
+    	int curIdx = pagecnt;
     	for (ArticleDto a: mainList)
     	{
     		
@@ -355,6 +361,7 @@ public class IndexController {
     	}   	
     	
     	model.addAttribute("selectedJournal", selectedJournal);
+    	model.addAttribute("epages", pagecnt);
     	model.addAttribute("editorial", selectedJournal.getEditorialFileName());
     	model.addAttribute("articles", mainList);
     	model.addAttribute("journals",journalService.getAllPublishedJournals());

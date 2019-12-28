@@ -312,7 +312,9 @@ public class JournalService {
 		
 		journal.setEditorialFileName(editorialFileName);
 		
-		FileStorageService.uploadFile(path, editorialFileName,editorial);	
+		FileStorageService.uploadFile(path, editorialFileName,editorial);
+		
+		journal.setEditorialpageCount(FileStorageService.getPageCount(path, editorialFileName));
 
 		journal.setStatus("Prepared");
 		

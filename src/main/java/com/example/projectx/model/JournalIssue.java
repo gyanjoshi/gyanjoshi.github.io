@@ -39,6 +39,9 @@ public class JournalIssue {
 	@Column(name="editorialfile")
 	private String editorialFileName;
 	
+	@Column(name="editorpageCount")
+	private Integer editorialpageCount;
+	
 	@Column(name="journalfile")
 	private String journalFileName;
 	
@@ -134,6 +137,12 @@ public class JournalIssue {
 	}
 	public void setJournal(Journal journal) {
 		this.journal = journal;
+	}
+	public Integer getEditorialpageCount() {
+		return editorialpageCount;
+	}
+	public void setEditorialpageCount(Integer editorialpageCount) {
+		this.editorialpageCount = editorialpageCount;
 	}
 	
 	

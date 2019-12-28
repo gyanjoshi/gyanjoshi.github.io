@@ -104,6 +104,11 @@ public class JournalService {
 		String fileName=journalRepo.getCoverPageFileName(jid);
 		String absoultePath = coverpage + fileName;
 		
+		System.out.println("Journal ID :"+jid);
+		
+		System.out.println("Journal cover page :"+absoultePath);
+		
+		
 		File f = new File(absoultePath);
 		
 		if(f.exists())
@@ -134,7 +139,7 @@ public class JournalService {
 		
 		String fileName = "Journal_Cover_"+journal.getId()+"."+FilenameUtils.getExtension(file.getOriginalFilename());
 		
-		FileStorageService.deleteFile(coverPage, coverPage);
+		FileStorageService.deleteFile(coverpage, coverPage);
 		FileStorageService.uploadFile(coverpage,fileName, file);
 		
 		journal.setCoverImageFileName(fileName);

@@ -87,6 +87,8 @@ public class DownloadService {
 			return coverpagepath;
 		else if	(type.equalsIgnoreCase("download"))
 			return downloadspath;
+		else if	(type.equalsIgnoreCase("editorial"))
+			return journalspath;
 		else
 			return basepath;
 	}

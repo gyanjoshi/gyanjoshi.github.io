@@ -1,12 +1,14 @@
 package com.example.projectx.service;
 
 
+import java.io.File;
 import java.util.List;
 
 
 import javax.mail.MessagingException;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -143,7 +145,7 @@ public class ArticleService {
         articleRepo.save(a);
 	}
 
-	public void approve(int id, String userName, String message, int journalId, int jissueid, MultipartFile file) {
+	public void approve(int id, String userName, String message, int journalId, int jissueid, int tocorder, MultipartFile file) {
 		// TODO Auto-generated method stub
 		
 		Article a = articleRepo.findById(id).get();
@@ -169,6 +171,7 @@ public class ArticleService {
         
         a.setStatus("Approved");
         a.setJournal(j);
+        a.setTocOrder(tocorder);
         
         journalService.addArticle(j, a);        
         
@@ -188,20 +191,22 @@ public class ArticleService {
 		Article article = getArticleById(id);
 		String afilename = article.getFileName();
 		
-		String articleFileName = "Article_"+id+"."+FilenameUtils.getExtension(file.getOriginalFilename());
+		if(!file.isEmpty())
+		{
+			FileStorageService.deleteFile(path, afilename);
+	        
+	        FileStorageService.uploadFile(path, afilename, file);
+			
+		}
         
         article.setTopic(topic);
         article.setArticleAbstract(articleAbstract);
         article.setStatus("Re-submitted");
-        article.setAuthorid(uploadedBy);
-        article.setUploadedBy(uploadedBy);
-        article.setFileName(articleFileName);
+        
 
         article.setUploadDate(new java.sql.Date(System.currentTimeMillis()));
         
-        FileStorageService.deleteFile(path, afilename);
         
-        FileStorageService.uploadFile(path, articleFileName, file);
         
         
         
@@ -280,7 +285,7 @@ public class ArticleService {
         
         FileStorageService.uploadFile(path, articleFileName, file);
         
-        
+        article.setPageCount(FileStorageService.getPageCount(path, articleFileName));
         
         articleRepo.save(article);
 		
@@ -312,6 +317,11 @@ public class ArticleService {
         
         articleRepo.save(a);
 		
+	}
+
+	public List<ArticleDto> getPublishedArticles(int jiid) {
+		// TODO Auto-generated method stub
+		return articleRepo.getPublishedArticles(jiid);
 	}
 	
 }

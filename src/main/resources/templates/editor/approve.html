@@ -44,6 +44,7 @@
 						<input type="hidden" th:field="${article.Id}" />
 						<input type="hidden" th:field="${author.userName}" />
 						
+						
 						<div class="form-group">
 							<label class="label is-small">Article title</label>
 							<span th:text="*{topic}" class="form-control" ></span>							
@@ -72,7 +73,12 @@
 						    
 						    </select>
 						</div>
-						
+						<div class="form-group">
+							<label class="label is-small">Article Order (As shown in Table of Contents)</label>
+							<div class="col-sm-10">
+								<input type="text" name="tocorder" id="tocorder">
+							</div>							
+						</div>
 						<div class="form-group">
 					     <label for="message">Message (to be sent to author):</label>
 					      <textarea cols="20" rows="10"  name="message" id="message"> 

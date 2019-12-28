@@ -140,17 +140,20 @@ public class AuthorController {
 	
 	@RequestMapping(value = "/author/update-article", method = RequestMethod.GET)
     public String updateArticle(@RequestParam("article") int id,Model model, Principal principal) {
-    	//userrepo.deleteById(article);
-		// also delete file from file system
-		
-		//articleService.updateArticle(article);
-		
-		Article a = articleService.getArticleById(id);
-		
-		
-	    model.addAttribute("articleUploadForm", a);
-	  //  model.addAttribute("id", id);
+    	
+		ArticleUploadForm articleUploadForm = new ArticleUploadForm();	    
 	    
+		Article a = articleService.getArticleById(id);		
+		articleUploadForm.setTopic(a.getTopic());
+		articleUploadForm.setArticleAbstract(a.getArticleAbstract());
+		
+		//articleUploadForm.setFileData(file);
+		String articleFileName = a.getFileName();
+
+		model.addAttribute("articleUploadForm", articleUploadForm);
+		model.addAttribute("Id", id);
+		model.addAttribute("articleFileName", articleFileName);
+	  
 	    User loginedUser = (User) ((Authentication) principal).getPrincipal();
 		model.addAttribute("currentProfile", userService.getAllProfilePictures().get(loginedUser.getUsername()));
 		
@@ -158,40 +161,52 @@ public class AuthorController {
     }
 	
 	@RequestMapping(value = "/author/update-article", method = RequestMethod.POST)
-    public String updateArticlePost(@RequestParam("Id") int article,@RequestParam MultipartFile file, Model model, Principal principal) {
-    	//userrepo.deleteById(article);
-		// also delete file from file system
+    public String updateArticlePost(@RequestParam("id") int id, //
+	         Model model, //
+	         @ModelAttribute("articleUploadForm") ArticleUploadForm articleUploadForm,
+	         BindingResult errors,
+	         RedirectAttributes redirectAttributes) 
+	{
 		
-		//articleService.updateArticle(article);
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+    	System.out.println("Author="+username); 
+    	
 		
-		Article a = articleService.getArticleById(article);
-		
-		String topic = a.getTopic();
-		String abs = a.getArticleAbstract();
-	
+		String topic = articleUploadForm.getTopic();
+		String abs = articleUploadForm.getArticleAbstract();
+		MultipartFile file = articleUploadForm.getFileData();
 
-		String message = null;
+		String message = null;		
 		
-		User loginedUser = (User) ((Authentication) principal).getPrincipal();
-		model.addAttribute("currentProfile", userService.getAllProfilePictures().get(loginedUser.getUsername()));
-		
-		
-		if (file.isEmpty()) 
-        {
-
-			message =  "Please select a file to upload";
-			
-            
-        }
-		else
+		if(!file.isEmpty())
 		{
-			articleService.updateArticle(article, topic, abs, file, loginedUser.getUsername());
-			message =  "Article updated successfully!";
+			if(!file.getOriginalFilename().endsWith(".doc") && !file.getOriginalFilename().endsWith(".docx"))
+			{
+				message =  "Please select a Microsoft word (.doc or .docx) file to upload";
+				model.addAttribute("message",message);
+				System.out.println(message);
+				
+				Article a = articleService.getArticleById(id);
+				
+				model.addAttribute("Id", id);
+				model.addAttribute("articleFileName", a.getFileName());
+				
+				return "/author/update-article";
+			}			
 		}
-
-	    
-	    model.addAttribute("message", message);
 		
+		// weather or not file is empty or not.. it will update the Article Object. ArticleService will handle if file is null
+		// then it will not replace existing file.
+		
+		articleService.updateArticle(id, topic, abs, file, username);		    	
+		message = "Article updated successfully.";		    
+		
+		
+		model.addAttribute("currentProfile", userService.getAllProfilePictures().get(username));
+    	model.addAttribute("message",message);		    	
+    	model.addAttribute("pending", articleService.getPendingArticles(username));
+       
         return "/author/pending";
     }
 	

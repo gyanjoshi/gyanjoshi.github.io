@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -75,6 +75,31 @@ public class FileStorageService {
 			_file.delete();
 		
 		
+	}
+	
+	public static int getPageCount(String path, String file)
+	{
+		File _file = new File(path+file);
+		
+		PDDocument doc = null;
+		int count = 0;
+		try {
+			doc = PDDocument.load(_file);
+			count = doc.getNumberOfPages();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally
+		{
+			try {
+				doc.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return count;
 	}
 
 }

@@ -33,10 +33,12 @@
 		<main class="page-content">
 		<div class="container-fluid">
 			<hr>
-
-			<section class="section">
+			
+			
+			<section class="section" style = "margin-top: 51px">
 				<div class="container">
 					<h5 class="subtitle">Update article</h5>
+					<span style="color: red;" th:if = "${message !=null}" th:text="${message}"></span>
 				</div>
 			</section>
 
@@ -53,14 +55,18 @@
 								<div class="modal-body">
 									<form th:object="${articleUploadForm}" th:action="@{/author/update-article}"
 										method="post" enctype="multipart/form-data">
-										<input type="hidden" th:field="*{Id}">
+										<input type="hidden" id="id" name="id" th:value="${Id}">
 										<div class="form-group">
 											<label for="usr">Topic:</label> <input th:field="*{topic}"
 												type="text" class="form-control" id="topic" name="topic">
 										</div>
+										
 										<div class="form-group">
-											<input type="file" name="file"
-												value="file" id="file">
+										
+											<label for="file">Upload Article in Microsoft word format (.docx))</label> 
+											<input th:field="*{fileData}" type="file" name="file"
+												value="file" id="file" accept=".doc,.docx, application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
+											<a th:href="@{/download(type='article',file=${articleFileName})}" class="btn btn-info" role="button">Download existing article</a>
 										</div>
 
 										<div class="form-group">

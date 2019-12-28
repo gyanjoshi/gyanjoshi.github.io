@@ -66,25 +66,37 @@
 						</div>
 						<div class="sections" >
 							<div class="section">
-								<h2>Articles</h2>
-								<ul class="cmp_article_list articles">
-									<li th:each="article : ${articles}">
-										<div class="obj_article_summary">
-
-											<div class="title">
-												<a href="#" th:text="${article.topic}"></a>
-											</div>
-											<div class="meta">
-												<div class="authors" th:text="${article.authorid}"></div>												
-											</div>
-											<ul class="galleys_links">
-												<li>
-													<a th:href="@{/download(type='article',file=${article.fileName})}" class="btn btn-info" role="button">PDF</a>
-												</li>
-											</ul>
-										</div>
-									</li>										
-								</ul>
+								<h2>Table of Content</h2>
+								<table>
+									<thead>
+						                <tr>
+						                			<th>S. N. </th>
+						                    		<th>Title</th>
+													<th>Author</th>
+													<th></th>
+													<th>Pages</th>
+													<th></th>													
+						                </tr>
+						            </thead>
+						            <tbody>
+						            	<tr>
+						            		<td></td>
+						            		<td>Editorial</td>
+						            		<td></td>
+						            		<td></td>
+						            		<td></td>
+						            		<td><a th:href="@{/download(type='editorial',file=${editorial})}" class="btn btn-info" role="button">PDF</a></td>
+						            	</tr>
+						            	<tr th:each="article : ${articles}">
+						            		<td th:text="${article.tocorder}"></td>
+						            		<td th:text="${article.topic}"></td>
+						            		<td th:text="${article.authorName}"></td>
+						            		<td></td>
+						            		<td th:text="${article.pageFromTo}"></td>
+						            		<td><a th:href="@{/download(type='article',file=${article.fileName})}" class="btn btn-info" role="button">PDF</a></td>
+						            	</tr>
+						            </tbody>
+								</table>									
 							</div>
 						</div>
 						<!-- .sections -->

@@ -15,10 +15,10 @@ public interface ArticleRepository extends JpaRepository<Article , Integer> {
 			"FROM Article a\r\n" + 
 			"left join AppUser b\r\n" + 
 			"on a.authorid=b.userName\r\n" + 
-			"where a.status in ('Submitted','resubmitted','feedback-sent','Sent to Reviewer','Updated to PDF')")
+			"where a.status in ('Submitted','resubmitted','feedback-sent','Sent to Reviewer','Re-submitted','Updated to PDF')")
 	public List<ArticleDto> getPendingArticles();
 	
-	@Query("SELECT new com.example.projectx.dto.ArticleDto(a.Id, a.authorid, a.topic, b.fullName, b.address1, b.city, b.email, a.status, a.articleAbstract, a.fileName) \r\n" + 
+	@Query("SELECT new com.example.projectx.dto.ArticleDto(a.Id, a.authorid, a.topic, b.fullName, b.address1, a.tocOrder, a.pageCount, a.status, a.fileName) \r\n" + 
 			"FROM Article a\r\n" + 
 			"left join AppUser b\r\n" + 
 			"on a.authorid=b.userName\r\n" + 
@@ -33,6 +33,13 @@ public interface ArticleRepository extends JpaRepository<Article , Integer> {
 			"where a.status in ('Submitted','resubmitted','feedback-sent','Re-submitted')"
 			+ "AND a.authorid=:username")
 	public List<ArticleDto> getPendingArticles(@Param("username") String username);
+
+	@Query("SELECT new com.example.projectx.dto.ArticleDto(a.Id, a.authorid, a.topic, b.fullName, b.address1, a.tocOrder, a.pageCount, a.status, a.fileName) \r\n" + 
+			"FROM Article a\r\n" + 
+			"left join AppUser b\r\n" + 
+			"on a.authorid=b.userName\r\n" + 
+			"where a.status='Published'")
+	public List<ArticleDto> getPublishedArticles(int jiid);
 }
 
 ;

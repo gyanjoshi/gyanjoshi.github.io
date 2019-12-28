@@ -14,6 +14,10 @@ public class ArticleDto {
 	private String articleAbstract;
 	private String fileName;
 	
+	private Integer tocorder;
+	private Integer pageCount;
+	private String pageFromTo;
+	
 	public ArticleDto(int id, String authorid, String topic, String fullName, String address1, String city, String email, String status, String articleAbstract, String fileName) 
 	
 	{
@@ -27,6 +31,21 @@ public class ArticleDto {
 		this.status = status;
 		this.articleAbstract = articleAbstract;
 		this.fileName  = fileName;
+	}
+	
+public ArticleDto(int id, String authorid, String topic, String fullName,String address1, Integer tocorder, Integer pageCount, String status,String fileName) 
+	
+	{
+		this.articleId = id;
+		this.authorId = authorid;
+		this.topic = topic;
+		this.authorName = fullName;
+		this.address = address1;
+		this.tocorder = tocorder;
+		this.pageCount = pageCount;
+		
+		this.status = status;
+		this.fileName = fileName;
 	}
 	
 	public Integer getArticleId() {
@@ -90,6 +109,30 @@ public class ArticleDto {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public Integer getTocorder() {
+		return tocorder;
+	}
+
+	public void setTocorder(Integer tocorder) {
+		this.tocorder = tocorder;
+	}
+
+	public Integer getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public String getPageFromTo() {
+		return pageFromTo;
+	}
+
+	public void setPageFromTo(String pageFromTo) {
+		this.pageFromTo = pageFromTo;
 	}
 	
 	

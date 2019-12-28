@@ -475,11 +475,12 @@ public class EditorController {
 	public String approveArticlePost(@RequestParam int Id,@RequestParam String userName, @RequestParam String message, 
 									 @RequestParam int journalId,
 									 @RequestParam int jissueid,
+									 @RequestParam int tocorder,
 									 @RequestParam MultipartFile file,
 									 Model model,
 			Principal principal) {
 		
-		articleService.approve(Id, userName, message,journalId,jissueid,file );
+		articleService.approve(Id, userName, message,journalId,jissueid,tocorder,file );
 		model.addAttribute("pending", articleService.getPendingArticles());
 		User loginedUser = (User) ((Authentication) principal).getPrincipal();
 		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));

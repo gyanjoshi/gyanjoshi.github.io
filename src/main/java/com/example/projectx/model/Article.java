@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -25,8 +26,16 @@ public class Article {
 	private String topic;
 	@Column(name="status")
 	private String status;
-	@Column(name="abstract")
+	
+	@Lob
+	@Column(name="abstract")	
 	private String articleAbstract;
+	
+	@Column(name="pageCount")
+	private Integer pageCount;
+	
+	@Column(name="tocOrder")
+	private Integer tocOrder;
 	
 	@Column(name="authorid")
 	private String authorid;// matches with username of AppUser
@@ -103,6 +112,18 @@ public class Article {
 	}
 	public void setAuthorid(String authorid) {
 		this.authorid = authorid;
+	}
+	public Integer getPageCount() {
+		return pageCount;
+	}
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
+	}
+	public Integer getTocOrder() {
+		return tocOrder;
+	}
+	public void setTocOrder(Integer tocOrder) {
+		this.tocOrder = tocOrder;
 	}
 	
 	

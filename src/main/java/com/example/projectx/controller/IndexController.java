@@ -1,6 +1,7 @@
 package com.example.projectx.controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.projectx.dto.ArticleDto;
 import com.example.projectx.dto.UserDto;
 import com.example.projectx.model.Article;
 import com.example.projectx.model.Journal;
@@ -20,6 +22,7 @@ import com.example.projectx.repository.DownloadRepository;
 import com.example.projectx.repository.NoticeRepository;
 import com.example.projectx.repository.PageRepository;
 import com.example.projectx.repository.UserRepository;
+import com.example.projectx.service.ArticleService;
 import com.example.projectx.service.EditorService;
 import com.example.projectx.service.JournalService;
 import com.example.projectx.service.UserDetailsServiceImpl;
@@ -42,6 +45,9 @@ public class IndexController {
 	
 	@Autowired
 	private JournalService journalService;
+	
+	@Autowired
+	private ArticleService articleService;
 	
 	@Autowired
 	private EditorService editorService;
@@ -269,10 +275,42 @@ public class IndexController {
     	
     	JournalIssue selectedJournal = journalService.getJournalIssueById(jiid);
     	
-    	List<Article> mainList = new ArrayList<Article>();
-    	mainList.addAll(selectedJournal.getArticles());    	
+    	String editorial = selectedJournal.getEditorialFileName();
+    	
+    	List<ArticleDto> mainList = new ArrayList<ArticleDto>();
+    	
+    	mainList = articleService.getPublishedArticles(jiid);
+    	
+    	mainList.sort(new Comparator<ArticleDto>()
+		{
+    		public int compare(ArticleDto o1, ArticleDto o2){
+    	         if(o1.getTocorder() == o2.getTocorder())
+    	             return 0;
+    	         return o1.getTocorder() < o2.getTocorder() ? -1 : 1;
+    		}
+		});
+    	
+    	// update Page From and To for each item (for shwoing in Table of content)
+    	int curIdx = 0;
+    	for (ArticleDto a: mainList)
+    	{
+    		
+    		int numPages = a.getPageCount();
+    		
+    		int from = curIdx+1;
+    		int to = from+numPages-1;
+    		
+    		curIdx = to;
+    		
+    		String pagefromto = from + " - " + to;
+    		a.setPageFromTo(pagefromto);
+    	}
+    	
+//    	mainList.addAll(selectedJournal.getArticles());
+    	
     	
     	model.addAttribute("selectedJournal", selectedJournal);
+    	model.addAttribute("editorial", editorial);
     	model.addAttribute("articles", mainList);
     	model.addAttribute("journals",journalService.getAllPublishedJournals());
         model.addAttribute("coverpage", journalService.getCoverImage(jid));
@@ -287,10 +325,37 @@ public class IndexController {
     {
     	JournalIssue selectedJournal = journalService.getCurrentJournalIssue(jid);
     	
-    	List<Article> mainList = new ArrayList<Article>();
-    	mainList.addAll(selectedJournal.getArticles());    	
+    	List<ArticleDto> mainList = new ArrayList<ArticleDto>();
+    	
+    	mainList = articleService.getPublishedArticles(selectedJournal.getId());
+    	
+    	mainList.sort(new Comparator<ArticleDto>()
+		{
+    		public int compare(ArticleDto o1, ArticleDto o2){
+    	         if(o1.getTocorder() == o2.getTocorder())
+    	             return 0;
+    	         return o1.getTocorder() < o2.getTocorder() ? -1 : 1;
+    		}
+		});
+    	
+    	// update Page From and To for each item (for shwoing in Table of content)
+    	int curIdx = 0;
+    	for (ArticleDto a: mainList)
+    	{
+    		
+    		int numPages = a.getPageCount();
+    		
+    		int from = curIdx+1;
+    		int to = from+numPages-1;
+    		
+    		curIdx = to;
+    		
+    		String pagefromto = from + " - " + to;
+    		a.setPageFromTo(pagefromto);
+    	}   	
     	
     	model.addAttribute("selectedJournal", selectedJournal);
+    	model.addAttribute("editorial", selectedJournal.getEditorialFileName());
     	model.addAttribute("articles", mainList);
     	model.addAttribute("journals",journalService.getAllPublishedJournals());
         model.addAttribute("coverpage", journalService.getCoverImage(jid)); 

@@ -75,8 +75,7 @@
 						                <tr>
 						                			
 						                    		<th>Contents</th>
-													<!-- <th>Author</th> -->
-													<th></th>
+						                    		<th></th>
 													<th>Pages</th>
 													<th></th>													
 						                </tr>
@@ -85,10 +84,8 @@
 						            	<tr>
 						            		
 						            		<td>Editorial</td>
-						            		<!-- <td><span style="font-weight:bold;">First Name</span>  <br/>
-    										<span style="font-size:6px;">(on external website)</span></td> -->
-						            		<td></td>
-						            		<td></td>
+						            		<td></td>						            	
+						            		<td th:text="${epages}"></td>
 						            		<td><a th:href="@{/download(type='editorial',file=${editorial})}" class=""><i class="fa fa-file-pdf-o"style="color:red;font-size:24px;"></i></a></td>
 						            	</tr>
 						            	<tr th:each="article : ${articles}">

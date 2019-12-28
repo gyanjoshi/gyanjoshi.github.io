@@ -38,7 +38,8 @@ public interface ArticleRepository extends JpaRepository<Article , Integer> {
 			"FROM Article a\r\n" + 
 			"left join AppUser b\r\n" + 
 			"on a.authorid=b.userName\r\n" + 
-			"where a.status='Published'")
+			"where a.status='Published'"
+			+ " AND a.journalissue.id=:jiid")
 	public List<ArticleDto> getPublishedArticles(int jiid);
 }
 

@@ -59,6 +59,11 @@ public class Article {
 	public void setJournal(JournalIssue journal) {
 		this.journalissue = journal;
 	}
+	
+	public Integer getJournalIssueId()
+	{
+		return journalissue.getId();
+	}
 	public String getTopic() {
 		return topic;
 	}

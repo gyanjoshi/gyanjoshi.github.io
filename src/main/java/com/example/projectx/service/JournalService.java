@@ -176,6 +176,7 @@ public class JournalService {
                  mail.setTo(user.getEmail());
                  mail.setSubject("Call for Articles for journal "+journal.getJournalTopic());
                  mail.setContent(message);
+               
                  
                  try {
           			emailService.sendHtmlMessage(mail);

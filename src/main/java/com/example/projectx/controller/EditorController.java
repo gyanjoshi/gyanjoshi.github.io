@@ -405,7 +405,20 @@ public class EditorController {
         return "/editor/viewjournalissues";
     }
 	
-	
+	@RequestMapping(value = "editor/deletejournalissue", method = RequestMethod.GET)
+    public String deleteJournalIssue(@RequestParam int jid,Model model, Principal principal) {
+		
+		System.out.println("Deleting journal issue :"+jid);
+		journalIssueRepo.deleteById(jid);
+		model.addAttribute("journals", journalService.getAllJournals());
+	    model.addAttribute("coverimages", journalService.getAllCoverImage());
+	    
+	    User loginedUser = (User) ((Authentication) principal).getPrincipal();
+		model.addAttribute("currentProfile", userDetailsService.getAllProfilePictures().get(loginedUser.getUsername()));
+		
+    	
+		 return "/editor/viewjournalissues";
+    }
 	@RequestMapping(path = "/editor/pendingreview", method = RequestMethod.GET)
 	public String pendingReview(Model model, Principal principal) {
 		

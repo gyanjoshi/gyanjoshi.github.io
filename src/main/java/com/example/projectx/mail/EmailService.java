@@ -94,8 +94,10 @@ public class EmailService {
 
     	
         MimeMessage message = emailSender.createMimeMessage();
+        
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
+        
         helper.setSubject(mail.getSubject());
         
         helper.setText(mail.getContent(),true);
